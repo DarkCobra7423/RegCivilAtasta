@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <p align="center">
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
@@ -231,3 +232,7 @@ vendor/bin/codecept run functional,unit --coverage --coverage-html --coverage-xm
 ```
 
 You can see code coverage output under the `tests/_output` directory.
+=======
+# RegCivilAtasta
+Problemática: El registro civil, presenta dificultades en el manejo y control de envíos(oficios), a los diferentes departamentos de la unidad administrativa. Por lo que se requiere de un sistema de correspondencia, para las unidades de administración de la coordinación e innovación, en donde se manejarán oficios de manera externa e interna en los diferentes departamentos ya mencionados.  Implementación del sistema: Si el oficio es externo, se registran los campos necesarios. Si el oficio es interno, el departamento verifica los datos que recibe. Unidad administrativa. Sección de carpetas. Consultar datos ya sea por folios o nombre del oficio. Escanear oficios. Implementar formatos: .pdf, .doc, .xls, .png, .jpg, .mp4, .avi  Implementación de la aplicación: Consulta de datos, ya sea por folios o nombre del oficio. Bandeja de Entrada Notificaciones
+>>>>>>> origin/main
