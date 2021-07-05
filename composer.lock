@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "77755871e28899f8f536b88c748459a6",
+    "content-hash": "998f5127b81dedd87868627c823eb284",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -65,6 +65,24 @@
             "license": [
                 "MIT"
             ]
+        },
+        {
+            "name": "bower-asset/owl.carousel",
+            "version": "2.3.4",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:OwlFonk/OwlCarousel2.git",
+                "reference": "af851f9b567630d115930abd5480ffebccc72372"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/OwlFonk/OwlCarousel2/zipball/af851f9b567630d115930abd5480ffebccc72372",
+                "reference": "af851f9b567630d115930abd5480ffebccc72372"
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.8.3"
+            },
+            "type": "bower-asset"
         },
         {
             "name": "bower-asset/punycode",
@@ -419,6 +437,60 @@
                 "source": "https://github.com/Ikimea/Browser/tree/1.12.0"
             },
             "time": "2015-08-26T20:05:14+00:00"
+        },
+        {
+            "name": "kv4nt/yii2-owl-carousel2",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kv4nt/yii2-owl-carousel2.git",
+                "reference": "0cc0ccdd811d3d9b9c6d417daa9272a3b91547cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kv4nt/yii2-owl-carousel2/zipball/0cc0ccdd811d3d9b9c6d417daa9272a3b91547cb",
+                "reference": "0cc0ccdd811d3d9b9c6d417daa9272a3b91547cb",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/owl.carousel": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kv4nt\\owlcarousel\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Victor Shumeyko",
+                    "email": "kvant90@gmail.com"
+                }
+            ],
+            "description": "A Yii2 widget for owl carousel 2",
+            "keywords": [
+                "carousel",
+                "extension",
+                "owl",
+                "owlcarousel",
+                "owlcarousel2",
+                "yii2",
+                "yii2 carousel",
+                "yii2 owl",
+                "yii2 owl carousel",
+                "yii2 owlcarousel",
+                "yii2-owl-carousel"
+            ],
+            "support": {
+                "issues": "https://github.com/kv4nt/yii2-owl-carousel2/issues",
+                "source": "https://github.com/kv4nt/yii2-owl-carousel2/tree/v1.0.3"
+            },
+            "time": "2021-04-12T12:08:21+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -5601,5 +5673,5 @@
         "php": ">=5.6.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }

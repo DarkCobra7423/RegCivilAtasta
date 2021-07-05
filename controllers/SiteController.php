@@ -71,7 +71,7 @@ class SiteController extends Controller {
         //$units = Administrativeunit::find()->orderBy('RAND()')->all();
         $units = Administrativeunit::find()->all();
         
-        $carousels = Administrativeunit::find()->orderBy('RAND()')->limit(3);
+        $carousels = Administrativeunit::find()->orderBy('RAND()')->limit(3)->all();
         
         return $this->render('index', ['units' => $units, 'carousels' => $carousels]);
     }
