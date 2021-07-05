@@ -75,6 +75,16 @@ class SiteController extends Controller {
         
         return $this->render('index', ['units' => $units, 'carousels' => $carousels]);
     }
+    
+    public function actionCreateoffice() {
+        
+        //$units = Administrativeunit::find()->orderBy('RAND()')->all();
+        $units = Administrativeunit::find()->all();
+        
+        $carousels = Administrativeunit::find()->orderBy('RAND()')->limit(3)->all();
+        
+        return $this->render('newoffice', ['units' => $units, 'carousels' => $carousels]);
+    }
 
     /**
      * Login action.

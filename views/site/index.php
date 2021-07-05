@@ -2,9 +2,12 @@
 /* @var $this yii\web\View */
 
 use kv4nt\owlcarousel\OwlCarouselWidget;
+use yii\helpers\Html;
 
 $this->title = 'Inicio';
 ?>
+<br>
+<br>
 <div class="site-index">
     <link href="<?= Yii::$app->homeUrl; ?>css/homeStyle.css" rel="stylesheet" type="text/css"/>
 
@@ -31,18 +34,28 @@ $this->title = 'Inicio';
             background-image: none;
             border-color: #d39e00;
         }
+
+        .owl-carousel .owl-item img{
+            display: block;  width: 100%; 
+        }
+
+        .item-class img{
+            min-height: 640px; max-height: 640px; 
+        }
+        .size{
+            font-size: 1.3rem;
+        }
     </style>
-     <style>
-        .owl-carousel .owl-item img{  display: block;  width: 100%; }
-        .item-class img{ min-height: 640px; max-height: 640px; }
-    </style>
-<?php if (Yii::$app->user->isSuperadmin) { ?>
-        <div class="row" style="margin-left: 0px;margin-right: 0px;">
-            <h1>Bienvenido <?= Yii::$app->profile->name ?></h1>
-            <h2>Estas son las unidades administrativas que actualmente existen.</h2>
-        </div>
-        <div class="row" style="margin-left: 0px;margin-right: 0px;">
-            <button class="btn btn-warning" style="font-size: 1.3rem;"> Nueva Unidad Administrativa</button>
+    
+    <?php if (Yii::$app->user->isSuperadmin) { ?>
+    <div class="container" style="margin-top: 13px;">
+            <div class="row" style="margin-left: 0px;margin-right: 0px;">
+                <h1>Bienvenido <?= Yii::$app->profile->name ?></h1>
+                <h2>Estas son las unidades administrativas que actualmente existen.</h2>
+            </div>
+            <div class="row" style="margin-left: 0px;margin-right: 0px;">                
+                <?= Html::a('Nueva Unidad Administrativa', ['administrativeunit/createUnit'], ['class' => 'btn btn-warning size']) ?>
+            </div>
         </div>
         <br>
         <?php
@@ -74,49 +87,59 @@ $this->title = 'Inicio';
 
         <br>
     <?php } ?>
-
-    <div class="row">
-        <?php foreach ($units as $unit): ?>
-            <div class="col-md-4">
-                <div class="card mb-4 text-white bg-dark" style="max-height: 443px;min-height: 443px;">
-                    <img class="card-img-top" src="<?= $unit->image; ?>" alt="<?= $unit->name ?>">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <font style="vertical-align: inherit;">
-                            <font style="vertical-align: inherit; font-size: 20px; text-transform: capitalize;"><?= $unit->name; ?></font></font>
-                        </h5>
-                        <p class="card-text">
-                            <font style="vertical-align: inherit;">
-                            <font style="vertical-align: inherit;  text-align: justify"><?= $unit->description; ?></font>                       
-                            </font>
-                        </p>
-                        <h5 style="color: red;"><?= $unit->note; ?></h5>
-                        <a href="#" class="btn btn-outline-light btn-sm">
-                            <font style="vertical-align: inherit;">
-                            <font style="vertical-align: inherit; font-size: 17px;">Crear Oficio</font>                       
-                            </font>
-                        </a>
-                        <?php if (Yii::$app->user->isSuperadmin) { ?>
-                            <a href="#" class="btn btn-outline-light btn-sm">
+    <div class="container">
+        <div class="row">
+            <?php foreach ($units as $unit): ?>
+                <div class="col-md-4">
+                    <div class="card mb-4 text-white bg-dark" style="max-height: 443px;min-height: 443px;">
+                        <img class="card-img-top" src="<?= $unit->image; ?>" alt="<?= $unit->name ?>">
+                        <div class="card-body">
+                            <h5 class="card-title">
                                 <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit; font-size: 17px;">Editar</font>                       
-                                </font>
-                            </a>
-
-                            <a href="#" class="btn btn-outline-light btn-sm">
+                                <font style="vertical-align: inherit; font-size: 20px; text-transform: capitalize;"><?= $unit->name; ?></font></font>
+                            </h5>
+                            <p class="card-text">
                                 <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit; font-size: 17px;">Eliminar</font>                       
+                                <font style="vertical-align: inherit;  text-align: justify"><?= $unit->description; ?></font>                       
                                 </font>
-                            </a>
-                        <?php } else {
-                            
-                        } ?>
+                            </p>
+                            <h5 style="color: red;"><?= $unit->note; ?></h5>
 
+                            <?= Html::a('<font style="vertical-align: inherit;">
+                                <font style="vertical-align: inherit; font-size: 17px;">Crear Oficio</font>                       
+                                </font>', ['site/createoffice'], ['class' => 'btn btn-outline-light btn-sm']) ?>
+
+                            <?php if (Yii::$app->user->isSuperadmin) { ?>                                
+                                <?= Html::a('<font style="vertical-align: inherit;">
+                                    <font style="vertical-align: inherit; font-size: 17px;">Editar</font>                       
+                                    </font>', ['administrativeunit/update', 'id' => $unit->idadministrativeunit], ['class' => 'btn btn-outline-light btn-sm']) ?>
+
+                                <?=
+                                Html::a('<font style="vertical-align: inherit;">
+                                    <font style="vertical-align: inherit; font-size: 17px;">Eliminar</font>', ['administrativeunit/delete', 'id' => $unit->idadministrativeunit], [
+                                    'class' => 'btn btn-outline-light btn-sm',
+                                    'data' => [
+                                        'confirm' => '¿Estás seguro de que quieres eliminar esta unidad?',
+                                        'method' => 'post',
+                                    ],
+                                ])
+                                ?>
+
+                                <?php
+                            } else {
+                                
+                            }
+                            ?>
+
+                        </div>
                     </div>
-                </div>
-            </div>        
-<?php endforeach; ?>        
+                </div>        
+            <?php endforeach; ?>        
+        </div>
     </div>
 
-
 </div>
+<script>
+    var divContainer = document.getElementById('idcontainer');
+    divContainer.className = '';
+</script>

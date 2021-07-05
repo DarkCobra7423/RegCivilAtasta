@@ -47,17 +47,17 @@ AppAsset::register($this);
             -moz-border-radius: 4px;
             border-radius: 4px;
         }
-        
+
         .pading{
             padding-bottom: 0px;
             padding-top: 10px;
         }
     </style>
-
+    <link href="<?= Yii::$app->homeUrl; ?>css/NavbarStyle.css" rel="stylesheet" type="text/css"/>
     <body>
         <?php $this->beginBody() ?>
 
-        <div class="wrap">
+        <div id="idwrap" class="wrap">
             <?php
             NavBar::begin([
                 //'brandImage' => Yii::$app->homeUrl . 'image/regcivil.svg',
@@ -85,34 +85,51 @@ AppAsset::register($this);
                             ]),
                     Yii::$app->user->isSuperadmin ? (
                                 [
-                                'label' => 'Rutas backend',
-                                'items' => UserManagementModule::menuItems()
-                            ]) : (''),
-                    Yii::$app->user->isSuperadmin ? (
-                                [
-                                'label' => 'Rutas frontend',
+                                'label' => '<i class="fas fa-users"></i> Usuarios',
                                 'items' => [
-                                        ['label' => 'Login', 'url' => ['/user-management/auth/login']],
-                                        ['label' => 'Logout', 'url' => ['/user-management/auth/logout']],
-                                        ['label' => 'Registration', 'url' => ['/user-management/auth/registration']],
-                                        ['label' => 'Change own password', 'url' => ['/user-management/auth/change-own-password']],
-                                        ['label' => 'Password recovery', 'url' => ['/user-management/auth/password-recovery']],
-                                        ['label' => 'E-mail confirmation', 'url' => ['/user-management/auth/confirm-email']],
+                                        ['label' => 'Perfiles', 'url' => ['/profile/index']],
+                                    '<li class="divider"></li>',
+                                    '<li class="dropdown-header">Rutas Backend</li>',
+                                        ['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Users'), 'url' => ['/user-management/user/index']],
+                                        ['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Roles'), 'url' => ['/user-management/role/index']],
+                                        ['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Permissions'), 'url' => ['/user-management/permission/index']],
+                                        ['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Permission groups'), 'url' => ['/user-management/auth-item-group/index']],
+                                        ['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Visit log'), 'url' => ['/user-management/user-visit-log/index']],
+                                    '<li class="divider"></li>',
+                                    '<li class="dropdown-header">Rutas Frontend</li>',
+                                        ['label' => '<i class="fa fa-angle-double-right"></i> Login', 'url' => ['/user-management/auth/login']],
+                                        ['label' => '<i class="fa fa-angle-double-right"></i> Logout', 'url' => ['/user-management/auth/logout']],
+                                        ['label' => '<i class="fa fa-angle-double-right"></i> Registration', 'url' => ['/user-management/auth/registration']],
+                                        ['label' => '<i class="fa fa-angle-double-right"></i> Change own password', 'url' => ['/user-management/auth/change-own-password']],
+                                        ['label' => '<i class="fa fa-angle-double-right"></i> Password recovery', 'url' => ['/user-management/auth/password-recovery']],
+                                        ['label' => '<i class="fa fa-angle-double-right"></i> E-mail confirmation', 'url' => ['/user-management/auth/confirm-email']],
                                 ],
                             ]) : (''),
                         ['label' => '<i class="far fa-address-card"></i> Contacto', 'url' => ['/site/contact']],
                         ['label' => '<i class="fas fa-question-circle"></i> Acerca de nosotros', 'url' => ['/site/about']],
+                        [
+                        'label' => '<i id="notificationsIcon" class="far fa-bell" aria-hidden="true"></i> '
+                        . '<span id="notificationsBadge" class="badge badge-danger">'
+                        . '<i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i>'
+                        . '</span> Notificaciones',
+                        'items' => [
+                            '<li class="dropdown-header">Notificaciones</li>',
+                                ['label' => '<i id="notificationsIcon" class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i> Cargando las últimas notificaciones ...', 'url' => ['#']],
+                                ['label' => 'No hay notificaciones nuevas', 'url' => ['#']],
+                                ['label' => 'Ver todas las notificaciones', 'url' => ['/notifications/index'], 'options' => ['class' => 'backg']],
+                        ],
+                    ],
                     Yii::$app->user->isGuest ? (
 
                                 ['label' => '<i class="far fa-user"></i> Iniciar Sesion', 'url' => ['/user-management/auth/login']]
                             ) : (
                                 [
-                                'label' => '<img class="profile-icon" src="' . Yii::$app->homeUrl . '/resourcesFiles/avatar/default/avatar1.png' . '">',                                     
+                                'label' => '<img class="profile-icon" src="' . Yii::$app->homeUrl . '/resourcesFiles/avatar/default/avatar1.png' . '">',
                                 'items' => [
                                         ['label' => 'Perfil', 'url' => ['/dashboard/helpcenter']],
                                         ['label' => '<li class="divider"></li>'],
                                         ['label' => 'Cerrar Sesion', 'url' => ['/user-management/auth/logout']],
-                                ],                                    
+                                ],
                             ]
                             ),
                 //['label' => '', ],
@@ -122,12 +139,12 @@ AppAsset::register($this);
             NavBar::end();
             ?>
 
-            <div class="container">
-            <?=
-            Breadcrumbs::widget([
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ])
-            ?>
+            <div id="idcontainer" class="container">
+                <?=
+                Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ])
+                ?>
                 <?= Alert::widget() ?>
                 <?= $content ?>
             </div>
@@ -144,7 +161,7 @@ AppAsset::register($this);
             </div>
         </footer>
 
-<?php $this->endBody() ?>
+        <?php $this->endBody() ?>
     </body>
 </html>
 <?php $this->endPage() ?>

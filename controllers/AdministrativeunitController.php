@@ -43,6 +43,19 @@ class AdministrativeunitController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    
+    public function actionCreateUnit()
+    {
+        $model = new Administrativeunit();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->idadministrativeunit]);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
 
     /**
      * Displays a single Administrativeunit model.
