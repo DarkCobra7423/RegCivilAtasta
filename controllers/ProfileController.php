@@ -17,6 +17,17 @@ class ProfileController extends Controller
     /**
      * {@inheritdoc}
      */
+    
+    ////////IMPORTANTE///////////
+    //En caso de error revisar que exista la siguiente funcion en:
+    //  \vendor\yiisoft\yii2\web\Application.php
+    /*
+    public function getProfile() {        
+        $idprofile = \app\models\Profile::find()->where(['fkuser' => \Yii::$app->user->id])->one();
+        
+        return $idprofile;
+    }
+     */
     public function behaviors()
     {
         return [

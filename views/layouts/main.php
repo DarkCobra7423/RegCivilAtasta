@@ -1,5 +1,4 @@
 <?php
-
 /* @var $this \yii\web\View */
 /* @var $content string */
 
@@ -17,87 +16,135 @@ AppAsset::register($this);
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
-<head>
-    <meta charset="<?= Yii::$app->charset ?>">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
-</head>
-<body>
-<?php $this->beginBody() ?>
+    <head>
+        <meta charset="<?= Yii::$app->charset ?>">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <?php $this->registerCsrfMetaTags() ?>
+        <title><?= Html::encode($this->title) ?></title>
+        <?php $this->head() ?>
+        <script defer="" src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
+    </head>
 
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'encodeLabels'=>false,
-        'activateParents'=>true,
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+    <style>
+        .navbar-brand > img {
+            display: initial;            
+        }
 
-            [
-            'label' => 'Backend routes',
-            'items'=>UserManagementModule::menuItems()
-        ],
-        [
-            'label' => 'Frontend routes',
-            'items'=>[
-                ['label'=>'Login', 'url'=>['/user-management/auth/login']],
-                ['label'=>'Logout', 'url'=>['/user-management/auth/logout']],
-                ['label'=>'Registration', 'url'=>['/user-management/auth/registration']],
-                ['label'=>'Change own password', 'url'=>['/user-management/auth/change-own-password']],
-                ['label'=>'Password recovery', 'url'=>['/user-management/auth/password-recovery']],
-                ['label'=>'E-mail confirmation', 'url'=>['/user-management/auth/confirm-email']],
-            ],
-        ],
-            Yii::$app->user->isGuest ? (
+        .navbar-brand{
+            padding-top: 8px;
+        }
 
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
-    ]);
-    NavBar::end();
-    ?>
+        .imglogo{
+            width: 50px;
+        }
 
+        .profile-icon {
+            vertical-align: middle;
+            height: 32px;
+            width: 32px;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+        
+        .pading{
+            padding-bottom: 0px;
+            padding-top: 10px;
+        }
+    </style>
 
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
-</div>
+    <body>
+        <?php $this->beginBody() ?>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <div class="wrap">
+            <?php
+            NavBar::begin([
+                //'brandImage' => Yii::$app->homeUrl . 'image/regcivil.svg',
+                'brandLabel' => '<img src="' . Yii::$app->homeUrl . 'image/regcivil.svg' . '" alt="Logo" class="imglogo" style="margin-top: -7px; margin-right: 3px;">' . Yii::$app->name,
+                'brandUrl' => Yii::$app->homeUrl,
+                'options' => [
+                    'class' => 'navbar-inverse navbar-fixed-top',
+                ],
+            ]);
+            ?>
+            <?=
+            Nav::widget([
+                'options' => ['class' => 'navbar-nav navbar-right'],
+                'encodeLabels' => false,
+                'activateParents' => true,
+                'items' => [
+                        ['label' => '<i class="fas fa-home"></i> Inicio', 'url' => ['/site/index']],
+                    Yii::$app->user->isGuest ? ('') : (
+                                [
+                                'label' => '<i class="fas fa-file-pdf"></i> Oficios',
+                                'items' => [
+                                        ['label' => '<i class="far fa-check-circle"></i> Evaluar Oficios', 'url' => ['/office/evaluate']],
+                                        ['label' => '<i class="fas fa-upload"></i> Subir Oficios', 'url' => ['/office/upload']],
+                                ],
+                            ]),
+                    Yii::$app->user->isSuperadmin ? (
+                                [
+                                'label' => 'Rutas backend',
+                                'items' => UserManagementModule::menuItems()
+                            ]) : (''),
+                    Yii::$app->user->isSuperadmin ? (
+                                [
+                                'label' => 'Rutas frontend',
+                                'items' => [
+                                        ['label' => 'Login', 'url' => ['/user-management/auth/login']],
+                                        ['label' => 'Logout', 'url' => ['/user-management/auth/logout']],
+                                        ['label' => 'Registration', 'url' => ['/user-management/auth/registration']],
+                                        ['label' => 'Change own password', 'url' => ['/user-management/auth/change-own-password']],
+                                        ['label' => 'Password recovery', 'url' => ['/user-management/auth/password-recovery']],
+                                        ['label' => 'E-mail confirmation', 'url' => ['/user-management/auth/confirm-email']],
+                                ],
+                            ]) : (''),
+                        ['label' => '<i class="far fa-address-card"></i> Contacto', 'url' => ['/site/contact']],
+                        ['label' => '<i class="fas fa-question-circle"></i> Acerca de nosotros', 'url' => ['/site/about']],
+                    Yii::$app->user->isGuest ? (
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
+                                ['label' => '<i class="far fa-user"></i> Iniciar Sesion', 'url' => ['/user-management/auth/login']]
+                            ) : (
+                                [
+                                'label' => '<img class="profile-icon" src="' . Yii::$app->homeUrl . '/resourcesFiles/avatar/default/avatar1.png' . '">',                                     
+                                'items' => [
+                                        ['label' => 'Perfil', 'url' => ['/dashboard/helpcenter']],
+                                        ['label' => '<li class="divider"></li>'],
+                                        ['label' => 'Cerrar Sesion', 'url' => ['/user-management/auth/logout']],
+                                ],                                    
+                            ]
+                            ),
+                //['label' => '', ],
+                ],
+            ]);
+
+            NavBar::end();
+            ?>
+
+            <div class="container">
+            <?=
+            Breadcrumbs::widget([
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ])
+            ?>
+                <?= Alert::widget() ?>
+                <?= $content ?>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p class="pull-left">&REG; Instituto Tecnologico De Villahermosa <?= date('Y') ?></p>
+
+                <p class="pull-right">Desarrollado por: 
+                    <a href="//www.facebook.com/carlosdaniel.angelpadilla.3"><i class="fab fa-facebook-f"></i> Carlos Angel, </a>
+                    <a href="//www.facebook.com/yesenia.diazhernandez.75"><i class="fab fa-facebook-f"></i> Yesenia Diaz, </a>
+                    <a href="//www.facebook.com/lupita.gordillo.godez"><i class="fab fa-facebook-f"></i> Maria Gordillo.</a></p>                
+            </div>
+        </footer>
 
 <?php $this->endBody() ?>
-</body>
+    </body>
 </html>
 <?php $this->endPage() ?>

@@ -9,12 +9,15 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Administrativeunit;
 
 class SiteController extends Controller {
 
     /**
      * {@inheritdoc}
      */
+    public $freeAccess = true;
+    
     public function behaviors() {
         return [
             'ghost-access' => [
@@ -64,7 +67,13 @@ class SiteController extends Controller {
      * @return string
      */
     public function actionIndex() {
-        return $this->render('index');
+        
+        //$units = Administrativeunit::find()->orderBy('RAND()')->all();
+        $units = Administrativeunit::find()->all();
+        
+        $carousels = Administrativeunit::find()->orderBy('RAND()')->limit(3);
+        
+        return $this->render('index', ['units' => $units, 'carousels' => $carousels]);
     }
 
     /**
