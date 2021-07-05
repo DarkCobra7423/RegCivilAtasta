@@ -187,7 +187,12 @@ class Application extends \yii\base\Application
     {
         return $this->get('user');
     }
-
+    
+    public function getProfile() {        
+        $idprofile = \app\models\Profile::find()->where(['fkuser' => \Yii::$app->user->id])->one();
+        
+        return $idprofile;
+    }
     /**
      * {@inheritdoc}
      */
