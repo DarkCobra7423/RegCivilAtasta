@@ -1,6 +1,8 @@
 <?php
 /* @var $this yii\web\View */
 
+use kv4nt\owlcarousel\OwlCarouselWidget;
+
 $this->title = 'Inicio';
 ?>
 <div class="site-index">
@@ -30,7 +32,11 @@ $this->title = 'Inicio';
             border-color: #d39e00;
         }
     </style>
-        <?php if (Yii::$app->user->isSuperadmin) { ?>
+     <style>
+        .owl-carousel .owl-item img{  display: block;  width: 100%; }
+        .item-class img{ min-height: 640px; max-height: 640px; }
+    </style>
+<?php if (Yii::$app->user->isSuperadmin) { ?>
         <div class="row" style="margin-left: 0px;margin-right: 0px;">
             <h1>Bienvenido <?= Yii::$app->profile->name ?></h1>
             <h2>Estas son las unidades administrativas que actualmente existen.</h2>
@@ -39,14 +45,35 @@ $this->title = 'Inicio';
             <button class="btn btn-warning" style="font-size: 1.3rem;"> Nueva Unidad Administrativa</button>
         </div>
         <br>
-        <?php         
-        } else {
+        <?php
+    } else {
         ?>
-        
-        <h1>Aqui ira el carousel</h1>
-        
+        <?php
+        OwlCarouselWidget::begin([
+            'container' => 'div',
+            'containerOptions' => [
+                'id' => 'container-id',
+                'class' => 'container-class'
+            ],
+            'pluginOptions' => [
+                'autoplay' => true,
+                'autoplayTimeout' => 4000,
+                'items' => 1,
+                'loop' => true,
+                'itemsDesktop' => [1199, 3],
+                'itemsDesktopSmall' => [979, 3]
+            ]
+        ]);
+        ?>
+        <?php foreach ($carousels as $carousel): ?>
+            <div class="item-class">
+                <img src="<?= $carousel->image; ?>" alt="<?= $carousel->name; ?>">
+            </div>
+        <?php endforeach; ?>      
+        <?php OwlCarouselWidget::end(); ?>
+
         <br>
-        <?php } ?>
+    <?php } ?>
 
     <div class="row">
         <?php foreach ($units as $unit): ?>
@@ -81,12 +108,14 @@ $this->title = 'Inicio';
                                 <font style="vertical-align: inherit; font-size: 17px;">Eliminar</font>                       
                                 </font>
                             </a>
-                        <?php } else { } ?>
+                        <?php } else {
+                            
+                        } ?>
 
                     </div>
                 </div>
             </div>        
-        <?php endforeach; ?>        
+<?php endforeach; ?>        
     </div>
 
 

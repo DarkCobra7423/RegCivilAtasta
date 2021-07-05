@@ -22,6 +22,7 @@ return array(
     'webvimark\\extensions\\BootstrapSwitch\\' => array($vendorDir . '/webvimark/bootstrap-switch'),
     'webvimark\\components\\' => array($vendorDir . '/webvimark/components'),
     'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
+    'kv4nt\\owlcarousel\\' => array($vendorDir . '/kv4nt/yii2-owl-carousel2'),
     'cebe\\markdown\\' => array($vendorDir . '/cebe/markdown'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
