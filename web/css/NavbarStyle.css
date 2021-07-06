@@ -7,23 +7,16 @@ li .backg a{
     color: white;
 }
 
-/*! CSS Used from: http://cobratechnologies.org/CORRESPONDENCIA-REGISTRO-CIVIL-ATASTA/vendor1/bootstrap/css/bootstrap.min.css */
-@media print {
-    *,
-    ::after,
-    ::before {
-        text-shadow: none !important;
-        box-shadow: none !important;
-    }
-    .badge {
-        border: 1px solid #000;
-    }
+
+.personalize{
+
 }
-*,
-::after,
-::before {
-    box-sizing: inherit;
+
+.navbar-nav .perzonalize a{
+    padding-bottom: 0px;
+    padding-top: 10px;
 }
+
 .badge {
     display: inline-block;
     padding: 0.25em 0.4em;
@@ -42,87 +35,4 @@ li .backg a{
 .badge-danger {
     color: #fff;
     background-color: #dc3545;
-}
-/*! CSS Used from: http://cobratechnologies.org/CORRESPONDENCIA-REGISTRO-CIVIL-ATASTA/vendor1/fontawesome/css/all.min.css */
-.fa {
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    display: inline-block;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-    line-height: 1;
-}
-.fa-fw {
-    text-align: center;
-    width: 1.25em;
-}
-.fa-pulse {
-    -webkit-animation: fa-spin 1s steps(8) infinite;
-    animation: fa-spin 1s steps(8) infinite;
-}
-.fa-spinner:before {
-    content: "\f110";
-}
-.fa {
-    font-family: "Font Awesome 5 Free";
-}
-.fa {
-    font-weight: 900;
-}
-/*! CSS Used keyframes */
-@-webkit-keyframes fa-spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    to {
-        -webkit-transform: rotate(1turn);
-        transform: rotate(1turn);
-    }
-}
-@keyframes fa-spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    to {
-        -webkit-transform: rotate(1turn);
-        transform: rotate(1turn);
-    }
-}
-/*! CSS Used fontfaces */
-@font-face {
-    font-family: "Font Awesome 5 Free";
-    font-style: normal;
-    font-weight: 400;
-    font-display: block;
-    src: url(http://cobratechnologies.org/CORRESPONDENCIA-REGISTRO-CIVIL-ATASTA/vendor1/fontawesome/webfonts/fa-regular-400.eot);
-    src: url(http://cobratechnologies.org/CORRESPONDENCIA-REGISTRO-CIVIL-ATASTA/vendor1/fontawesome/webfonts/fa-regular-400.eot#iefix)
-        format("embedded-opentype"),
-        url(http://cobratechnologies.org/CORRESPONDENCIA-REGISTRO-CIVIL-ATASTA/vendor1/fontawesome/webfonts/fa-regular-400.woff2)
-        format("woff2"),
-        url(http://cobratechnologies.org/CORRESPONDENCIA-REGISTRO-CIVIL-ATASTA/vendor1/fontawesome/webfonts/fa-regular-400.woff)
-        format("woff"),
-        url(http://cobratechnologies.org/CORRESPONDENCIA-REGISTRO-CIVIL-ATASTA/vendor1/fontawesome/webfonts/fa-regular-400.ttf)
-        format("truetype"),
-        url(http://cobratechnologies.org/CORRESPONDENCIA-REGISTRO-CIVIL-ATASTA/vendor1/fontawesome/webfonts/fa-regular-400.svg#fontawesome)
-        format("svg");
-}
-@font-face {
-    font-family: "Font Awesome 5 Free";
-    font-style: normal;
-    font-weight: 900;
-    font-display: block;
-    src: url(http://cobratechnologies.org/CORRESPONDENCIA-REGISTRO-CIVIL-ATASTA/vendor1/fontawesome/webfonts/fa-solid-900.eot);
-    src: url(http://cobratechnologies.org/CORRESPONDENCIA-REGISTRO-CIVIL-ATASTA/vendor1/fontawesome/webfonts/fa-solid-900.eot#iefix)
-        format("embedded-opentype"),
-        url(http://cobratechnologies.org/CORRESPONDENCIA-REGISTRO-CIVIL-ATASTA/vendor1/fontawesome/webfonts/fa-solid-900.woff2)
-        format("woff2"),
-        url(http://cobratechnologies.org/CORRESPONDENCIA-REGISTRO-CIVIL-ATASTA/vendor1/fontawesome/webfonts/fa-solid-900.woff)
-        format("woff"),
-        url(http://cobratechnologies.org/CORRESPONDENCIA-REGISTRO-CIVIL-ATASTA/vendor1/fontawesome/webfonts/fa-solid-900.ttf)
-        format("truetype"),
-        url(http://cobratechnologies.org/CORRESPONDENCIA-REGISTRO-CIVIL-ATASTA/vendor1/fontawesome/webfonts/fa-solid-900.svg#fontawesome)
-        format("svg");
 }
