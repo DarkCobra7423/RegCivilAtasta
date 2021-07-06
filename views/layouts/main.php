@@ -52,6 +52,7 @@ AppAsset::register($this);
             padding-bottom: 0px;
             padding-top: 10px;
         }
+        
     </style>
     <link href="<?= Yii::$app->homeUrl; ?>css/NavbarStyle.css" rel="stylesheet" type="text/css"/>
     <body>
@@ -87,7 +88,7 @@ AppAsset::register($this);
                                 [
                                 'label' => '<i class="fas fa-users"></i> Usuarios',
                                 'items' => [
-                                        ['label' => 'Perfiles', 'url' => ['/profile/index']],
+                                        ['label' => '<i class="far fa-user"></i> Perfiles', 'url' => ['/profile/profiles']],
                                     '<li class="divider"></li>',
                                     '<li class="dropdown-header">Rutas Backend</li>',
                                         ['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Users'), 'url' => ['/user-management/user/index']],
@@ -107,6 +108,8 @@ AppAsset::register($this);
                             ]) : (''),
                         ['label' => '<i class="far fa-address-card"></i> Contacto', 'url' => ['/site/contact']],
                         ['label' => '<i class="fas fa-question-circle"></i> Acerca de nosotros', 'url' => ['/site/about']],
+                    
+                    Yii::$app->user->isGuest ? ('') : (
                         [
                         'label' => '<i id="notificationsIcon" class="far fa-bell" aria-hidden="true"></i> '
                         . '<span id="notificationsBadge" class="badge badge-danger">'
@@ -118,13 +121,14 @@ AppAsset::register($this);
                                 ['label' => 'No hay notificaciones nuevas', 'url' => ['#']],
                                 ['label' => 'Ver todas las notificaciones', 'url' => ['/notifications/index'], 'options' => ['class' => 'backg']],
                         ],
-                    ],
+                    ]),
+                    
                     Yii::$app->user->isGuest ? (
 
                                 ['label' => '<i class="far fa-user"></i> Iniciar Sesion', 'url' => ['/user-management/auth/login']]
                             ) : (
                                 [
-                                'label' => '<img class="profile-icon" src="' . Yii::$app->homeUrl . '/resourcesFiles/avatar/default/avatar1.png' . '">',
+                                'label' => '<img class="profile-icon" src="' . Yii::$app->homeUrl . '/resourcesFiles/avatar/default/avatar1.png' . '">', 'options' => ['class' => 'perzonalize'],
                                 'items' => [
                                         ['label' => 'Perfil', 'url' => ['/dashboard/helpcenter']],
                                         ['label' => '<li class="divider"></li>'],

@@ -45,6 +45,7 @@ $this->title = 'Inicio';
         .size{
             font-size: 1.3rem;
         }
+        
     </style>
     
     <?php if (Yii::$app->user->isSuperadmin) { ?>

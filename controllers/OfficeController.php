@@ -43,12 +43,15 @@ class OfficeController extends Controller {
     }
     
     public function actionUpload() {
-        $searchModel = new OfficeSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+        $model = new Office();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->idoffice]);
+        }
+
+        return $this->render('upload', [
+                    'model' => $model,
         ]);
     }
     

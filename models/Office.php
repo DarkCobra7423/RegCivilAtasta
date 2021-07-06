@@ -62,18 +62,18 @@ class Office extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idoffice' => 'Idoffice',
-            'expedient' => 'Expedient',
-            'nooffice' => 'Nooffice',
-            'subject' => 'Subject',
-            'creationdate' => 'Creationdate',
-            'category' => 'Category',
-            'fkstateoffice' => 'Fkstateoffice',
-            'fkadministrativeunit' => 'Fkadministrativeunit',
-            'shifteddate' => 'Shifteddate',
-            'fkto' => 'Fkto',
-            'reviseddate' => 'Reviseddate',
-            'observations' => 'Observations',
+            'idoffice' => 'ID',
+            'expedient' => 'Expediente',
+            'nooffice' => 'No. Oficio',
+            'subject' => 'Asunto',
+            'creationdate' => 'Fecha de creacion',
+            'category' => 'Categoria',
+            'fkstateoffice' => 'Estado Oficio',
+            'fkadministrativeunit' => 'Unidad Admin.',
+            'shifteddate' => 'Fecha Turnado',
+            'fkto' => 'Para',
+            'reviseddate' => 'Fecha Revisado',
+            'observations' => 'Observaciones',
         ];
     }
 

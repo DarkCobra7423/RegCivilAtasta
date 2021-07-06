@@ -45,8 +45,9 @@ class Profile extends \yii\db\ActiveRecord
         return [
             [['name', 'lastname', 'gender', 'birthdate', 'photo', 'fkjobtitle', 'fkworksin'], 'required'],
             [['birthdate'], 'safe'],
-            [['phone', 'fkjobtitle', 'fkworksin', 'fkuser'], 'integer'],
+            [['fkjobtitle', 'fkworksin', 'fkuser'], 'integer'],
             [['review'], 'string'],
+            [['phone'], 'string', 'max' => 15],
             [['name'], 'string', 'max' => 45],
             [['lastname'], 'string', 'max' => 50],
             [['gender'], 'string', 'max' => 10],
@@ -54,7 +55,7 @@ class Profile extends \yii\db\ActiveRecord
             [['photo'], 'string', 'max' => 255],
             [['fkworksin'], 'exist', 'skipOnError' => true, 'targetClass' => Administrativeunit::className(), 'targetAttribute' => ['fkworksin' => 'idadministrativeunit']],
             [['fkjobtitle'], 'exist', 'skipOnError' => true, 'targetClass' => Jobtitle::className(), 'targetAttribute' => ['fkjobtitle' => 'idjobtitle']],
-            [['fkuser'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['fkuser' => 'id']],
+            [['fkuser'], 'exist', 'skipOnError' => true, 'targetClass' => \webvimark\modules\UserManagement\models\User::className(), 'targetAttribute' => ['fkuser' => 'id']],
         ];
     }
 
@@ -74,8 +75,8 @@ class Profile extends \yii\db\ActiveRecord
             'photo' => 'Photo',
             'review' => 'Review',
             'fkjobtitle' => 'Fkjobtitle',
-            'fkworksin' => 'Fkworksin',
-            'fkuser' => 'Fkuser',
+            'fkworksin' => 'Labora en',
+            'fkuser' => 'User',
         ];
     }
 
@@ -137,5 +138,9 @@ class Profile extends \yii\db\ActiveRecord
     public function getFkuser0()
     {
         return $this->hasOne(User::className(), ['id' => 'fkuser']);
+    }
+    
+    public function getWorksin(){        
+        return $this->getFkworksin0();
     }
 }

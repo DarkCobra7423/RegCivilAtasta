@@ -54,6 +54,16 @@ class ProfileController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    
+    public function actionProfiles()
+    {
+       
+        $profiles = Profile::find()->all();
+        
+        return $this->render('profiles', [
+            'profiles' => $profiles,
+        ]);
+    }
 
     /**
      * Displays a single Profile model.
