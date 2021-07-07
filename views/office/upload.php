@@ -13,10 +13,23 @@ use yii\widgets\ActiveForm;
 <div class="container">
 
     <div class="row">
+        <?php if($sends != NULL){ ?>
+        <div class="col-lg-8 col-lg-offset-2">
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Enviado!</strong> El oficio <?= $sends->expedient; ?> se a enviado con exito.
+        </div>
+        </div>
+        <?php }else{} ?>
 
         <div class="col-lg-8 col-lg-offset-2">
 
-            <?php $form = ActiveForm::begin(); ?>
+            <?php
+            $form = ActiveForm::begin([
+                             'method' => 'post',
+                             'action' => ['office/upload'],
+            ]);
+            ?>
 
             <div class="messages"></div>
 
@@ -48,23 +61,26 @@ use yii\widgets\ActiveForm;
                     </div>
 
                     <!------------------------->
-                    <?php $form->field($model, 'creationdate')->textInput(['value' => NULL]) ?>
+                    <div class="" hidden="">
+                        <?= $form->field($model, 'creationdate')->textInput(['value' => date('Y-m-d H:i:s')]) ?>
 
-                    <?php $form->field($model, 'category')->textInput(['maxlength' => true, 'value' => 'Interno']) ?>
+                        <?= $form->field($model, 'category')->textInput(['maxlength' => true, 'value' => 'Interno']) ?>
 
-                    <?php $form->field($model, 'fkstateoffice')->textInput(['value' => '4']) ?>
+                        <?= $form->field($model, 'fkstateoffice')->textInput(['value' => '2']) ?>
 
-                    <?php $form->field($model, 'shifteddate')->textInput(['value' => NULL]) ?>
+                        <?php $form->field($model, 'shifteddate')->textInput(['value' => NULL]) ?>
 
-                    <?php $form->field($model, 'fkto')->textInput(['value' => NULL]) ?>
+                        <?php $form->field($model, 'fkto')->textInput(['value' => NULL]) ?>
 
-                    <?php $form->field($model, 'reviseddate')->textInput(['value' => NULL]) ?>
+                        <?php $form->field($model, 'reviseddate')->textInput(['value' => NULL]) ?>
 
-                    <?php $form->field($model, 'observations')->textarea(['rows' => 6, 'value' => NULL]) ?>
+                        <?php $form->field($model, 'observations')->textarea(['rows' => 6, 'value' => NULL]) ?>
+                    </div>
                     <!------------------------->
 
                     <div class="col-md-12">                            
                         <?= Html::submitButton('Enviar Oficio', ['class' => 'btn btn-success btn-send']) ?>
+                        <?= Html::resetButton('Reset', ['class' => 'reset']) ?>
                     </div>
                 </div>
 

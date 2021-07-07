@@ -44,7 +44,7 @@ $this->title = 'Contacto';
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="form-group">
+                                <div class="form-group" style="margin-left: 15px;margin-right: 15px;">
                                     <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Su asunto" rows="3" required=""></textarea>
                                 </div>
                             </div>

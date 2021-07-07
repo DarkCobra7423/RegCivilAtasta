@@ -45,23 +45,46 @@ class OfficeController extends Controller {
     public function actionUpload() {
 
         $model = new Office();
-
+        //print_r($_POST);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idoffice]);
+            //return $this->redirect(['view', 'id' => $model->idoffice]);
+            //$sends = Office::find()->select('expedient')->where(['idoffice' => $model->idoffice])->one();
+            //print_r($send); die();
+            return $this->redirect(['uploadconfirm', 'id' => $model->idoffice]);
         }
 
         return $this->render('upload', [
                     'model' => $model,
+                    'sends' => NULL,
         ]);
     }
     
-    public function actionEvaluate() {
-        $searchModel = new OfficeSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    public function actionUploadconfirm($id) {
 
-        return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+        $model = new Office();
+        //print_r($_POST);
+        //if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //return $this->redirect(['view', 'id' => $model->idoffice]);
+            $sends = Office::find()->select('expedient')->where(['idoffice' => $id])->one();
+            //print_r($send); die();
+            return $this->render('upload', [
+                    'model' => $model,
+                    'sends' => $sends,
+        ]);
+        //}
+        /*
+        return $this->render('upload', [
+                    'model' => $model,
+                    'sends' => NULL,
+        ]);*/
+    }
+    
+    public function actionEvaluate() {
+        
+        $offices = Office::find()->all();
+        
+        return $this->render('evaluate', [
+                    'offices' => $offices,                    
         ]);
     }
 
