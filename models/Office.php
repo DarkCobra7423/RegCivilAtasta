@@ -136,4 +136,8 @@ class Office extends \yii\db\ActiveRecord
     {
         return $this->hasMany(File::className(), ['idfile' => 'idfile'])->viaTable('officefile', ['idoffice' => 'idoffice']);
     }
+    
+    public function getState(){
+        return $this->fkstateoffice0->state;
+    }
 }

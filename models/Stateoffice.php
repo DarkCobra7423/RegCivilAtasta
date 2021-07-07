@@ -39,7 +39,7 @@ class Stateoffice extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idstateoffice' => 'Idstateoffice',
+            'idstateoffice' => 'ID',
             'state' => 'State',
         ];
     }

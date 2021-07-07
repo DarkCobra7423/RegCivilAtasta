@@ -88,7 +88,7 @@ AppAsset::register($this);
                                 [
                                 'label' => '<i class="fas fa-users"></i> Usuarios',
                                 'items' => [
-                                        ['label' => '<i class="far fa-user"></i> Perfiles', 'url' => ['/profile/profiles']],
+                                        ['label' => '<i class="fas fa-users"></i> Perfiles', 'url' => ['/profile/profiles']],
                                     '<li class="divider"></li>',
                                     '<li class="dropdown-header">Rutas Backend</li>',
                                         ['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Users'), 'url' => ['/user-management/user/index']],
@@ -106,9 +106,9 @@ AppAsset::register($this);
                                         ['label' => '<i class="fa fa-angle-double-right"></i> E-mail confirmation', 'url' => ['/user-management/auth/confirm-email']],
                                 ],
                             ]) : (''),
-                        ['label' => '<i class="far fa-address-card"></i> Contacto', 'url' => ['/site/contact']],
-                        ['label' => '<i class="fas fa-question-circle"></i> Acerca de nosotros', 'url' => ['/site/about']],
-                    
+                    Yii::$app->user->isGuest ? (['label' => '<i class="far fa-address-card"></i> Contacto', 'url' => ['/site/contact']]) : (''),
+                    Yii::$app->user->isGuest ? (['label' => '<i class="fas fa-question-circle"></i> Acerca de nosotros', 'url' => ['/site/about']]) : (''),
+                        
                     Yii::$app->user->isGuest ? ('') : (
                         [
                         'label' => '<i id="notificationsIcon" class="far fa-bell" aria-hidden="true"></i> '
@@ -130,9 +130,10 @@ AppAsset::register($this);
                                 [
                                 'label' => '<img class="profile-icon" src="' . Yii::$app->homeUrl . '/resourcesFiles/avatar/default/avatar1.png' . '">', 'options' => ['class' => 'perzonalize'],
                                 'items' => [
-                                        ['label' => 'Perfil', 'url' => ['/dashboard/helpcenter']],
-                                        ['label' => '<li class="divider"></li>'],
-                                        ['label' => 'Cerrar Sesion', 'url' => ['/user-management/auth/logout']],
+                                        ['label' => '<i class="far fa-user"></i> Perfil', 'url' => ['profile/profile']],
+                                        ['label' => '<i class="fa fa-angle-double-right"></i> Cambiar contraseña', 'url' => ['/user-management/auth/change-own-password']],                                        
+                                        ['label' => '<i class="fa fa-angle-double-right"></i> Confirmación de E-mail', 'url' => ['/user-management/auth/confirm-email']],
+                                        ['label' => '<i class="fas fa-sign-out-alt"></i> Cerrar Sesion', 'url' => ['/user-management/auth/logout']],
                                 ],
                             ]
                             ),
