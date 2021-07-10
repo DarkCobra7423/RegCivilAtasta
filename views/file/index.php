@@ -27,7 +27,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'idfile',
+            'name',
             'file',
+            'format',
+            'size',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

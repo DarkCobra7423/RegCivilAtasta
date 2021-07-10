@@ -9,24 +9,23 @@ use app\models\Profile;
 /**
  * ProfileSearch represents the model behind the search form of `app\models\Profile`.
  */
-class ProfileSearch extends Profile
-{
+class ProfileSearch extends Profile {
+
+    public $username;
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['idprofile', 'phone', 'fkjobtitle', 'fkworksin', 'fkuser'], 'integer'],
-            [['name', 'lastname', 'gender', 'birthdate', 'address', 'photo', 'review'], 'safe'],
+                [['idprofile', 'phone', 'fkjobtitle', 'fkworksin', 'fkuser'], 'integer'],
+                [['name', 'lastname', 'gender', 'birthdate', 'address', 'photo', 'review', 'username'], 'safe'],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -38,15 +37,38 @@ class ProfileSearch extends Profile
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Profile::find();
+        $query = $query->joinWith(['fkuser0']);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        //---------------------
+        $dataProvider->setSort([
+            'attributes' => [
+                'idprofile',
+                'name',
+                'lastname',
+                'gender',
+                'birthdate',
+                'phone',
+                'address',
+                'photo',
+                'review:ntext',
+                'fkjobtitle',
+                'fkworksin',
+                'fkuser',
+                'username' => [
+                    'asc' => ['username' => SORT_ASC],
+                    'desc' => ['username' => SORT_DESC],
+                    'default' => SORT_ASC],
+            ]
+        ]);
+        //---------------------
 
         $this->load($params);
 
@@ -55,6 +77,15 @@ class ProfileSearch extends Profile
             // $query->where('0=1');
             return $dataProvider;
         }
+        
+        //---------------------
+        /*
+        $query->andFilterWhere([
+            'idprofile' => $this->idprofile,
+            'fkuser' => $this->fkuser,
+        ]);
+         */
+        //---------------------
 
         // grid filtering conditions
         $query->andFilterWhere([
@@ -64,15 +95,22 @@ class ProfileSearch extends Profile
             'fkjobtitle' => $this->fkjobtitle,
             'fkworksin' => $this->fkworksin,
             'fkuser' => $this->fkuser,
+            //------------------------
+            
+            //------------------------
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'lastname', $this->lastname])
-            ->andFilterWhere(['like', 'gender', $this->gender])
-            ->andFilterWhere(['like', 'address', $this->address])
-            ->andFilterWhere(['like', 'photo', $this->photo])
-            ->andFilterWhere(['like', 'review', $this->review]);
+                ->andFilterWhere(['like', 'lastname', $this->lastname])
+                ->andFilterWhere(['like', 'gender', $this->gender])
+                ->andFilterWhere(['like', 'address', $this->address])
+                ->andFilterWhere(['like', 'photo', $this->photo])
+                ->andFilterWhere(['like', 'review', $this->review])
+                //-----------------------------
+                ->andFilterWhere(['like', 'username', $this->username]);
+                //-----------------------------
 
         return $dataProvider;
     }
+
 }

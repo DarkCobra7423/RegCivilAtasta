@@ -74,6 +74,7 @@ class Office extends \yii\db\ActiveRecord
             'fkto' => 'Para',
             'reviseddate' => 'Fecha Revisado',
             'observations' => 'Observaciones',
+            'stateoffice' => 'Estado Oficio'
         ];
     }
 
@@ -138,6 +139,7 @@ class Office extends \yii\db\ActiveRecord
     }
     
     public function getState(){
+        //var_dump($this->fkstateoffice0); die();
         return $this->fkstateoffice0->state;
     }
 }

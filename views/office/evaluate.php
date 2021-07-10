@@ -7,19 +7,71 @@ use yii\helpers\Html;
     <div class="row">
         <div class="col-md-12">
 
-            <div class="alert alert-info">
-                Please Wait...
+            <div class="row" style="margin-bottom: 8px;margin-right: 0px;">
+                <div class="pull-right"><?= Html::a('Oficios', ['file/files'], ['class' => 'btn btn-primary']) ?> <?= Html::a('Filtrar Oficios', ['office/filter'], ['class' => 'btn btn-primary']) ?></div>
             </div>
-            <div class="alert alert-success" style="display:none;">
-                <span class="glyphicon glyphicon-ok"></span> Drag table row and cange Order
-            </div>
+            
+            <table class="table">
 
-            <div class="pull-right">
-                <button class="btn btn-primary">Buscar</button>
-            </div>
+                <div class="alert alert-info">
+                    <label>Dirigidos a <b><?= Yii::$app->profile->name." ".Yii::$app->profile->lastname ?></b></label>
+                </div>
 
+                <thead>
+                    <tr>
+                        <th>
+                            Expediente
+                        </th>
+                        <th>
+                            No. Oficio
+                        </th>
+                        <th>
+                            Asunto
+                        </th>
+                        <th>
+                            Estado
+                        </th>
+                        <th>
+                            Enviado
+                        </th>
+                        <th>
+                            Acciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    <?php foreach ($formes as $forme): ?>
+                        <tr>
+                            <td>
+                                <?= $forme->expedient ?>
+                            </td>
+                            <td>
+                                <?= $forme->nooffice ?>
+                            </td>
+                            <td>
+                                <?= $forme->subject ?>
+                            </td>
+                            <td>
+                                <span class="label label-info"><?= $forme->getState(); ?></span>
+                            </td>
+                            <td>
+                                <?= $forme->creationdate ?>
+                            </td>
+                            <td>
+                                <?= Html::a('<i class="far fa-edit"></i>', ['evaluating', 'id' => $forme->idoffice], ['title' => 'Evaluar']) ?>
+                                <?= Html::a('<i class="far fa-share-square"></i>', ['update', 'id' => $forme->idoffice], ['title' => 'Turnar']) ?>                                
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>    
+                </tbody>
+            </table>
 
             <table class="table">
+                
+                <div class="alert alert-success">
+                    Correspondencia dirigida a su unidad administrativa
+                </div>
+                
                 <thead>
                     <tr>
                         <th>
@@ -61,29 +113,28 @@ use yii\helpers\Html;
                                 <?= $office->creationdate ?>
                             </td>
                             <td>
-                                <?= Html::a('<i class="far fa-edit"></i>', ['update', 'id' => $office->idoffice], ['class' => '']) ?>
-                                <?= Html::a('<i class="far fa-share-square">', ['update', 'id' => $office->idoffice], ['class' => '']) ?>
-                                <?= Html::a('<i class="far fa-eye">', ['delete', 'id' => $office->idoffice], ['class' => '', 'data' => ['confirm' => 'Are you sure you want to delete this item?', 'method' => 'post',],]) ?>
+                                <?= Html::a('<i class="far fa-edit"></i>', ['evaluating', 'id' => $office->idoffice], ['title' => 'Evaluar']) ?>
+                                <?= Html::a('<i class="far fa-share-square"></i>', ['update', 'id' => $office->idoffice], ['title' => 'Turnar']) ?>                                
                             </td>
                         </tr>
                     <?php endforeach; ?>      
-            <!--<tr class="success">
-                <td>
-                    Column content
-                </td>
-                <td>
-                    Column content
-                </td>
-                <td>
-                    Column content
-                </td>
-                <td>
-                    Column content
-                </td>
-                <td>
-                    Column content
-                </td>
-            </tr>-->
+        <!--<tr class="success">
+            <td>
+                Column content
+            </td>
+            <td>
+                Column content
+            </td>
+            <td>
+                Column content
+            </td>
+            <td>
+                Column content
+            </td>
+            <td>
+                Column content
+            </td>
+        </tr>-->
                 </tbody>
             </table>
         </div>

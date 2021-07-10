@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use webvimark\modules\UserManagement\models\User;
 
 /**
  * This is the model class for table "profile".
@@ -27,43 +28,40 @@ use Yii;
  * @property Jobtitle $fkjobtitle0
  * @property User $fkuser0
  */
-class Profile extends \yii\db\ActiveRecord
-{
+class Profile extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'profile';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['name', 'lastname', 'gender', 'birthdate', 'photo', 'fkjobtitle', 'fkworksin'], 'required'],
-            [['birthdate'], 'safe'],
-            [['fkjobtitle', 'fkworksin', 'fkuser'], 'integer'],
-            [['review'], 'string'],
-            [['phone'], 'string', 'max' => 15],
-            [['name'], 'string', 'max' => 45],
-            [['lastname'], 'string', 'max' => 50],
-            [['gender'], 'string', 'max' => 10],
-            [['address'], 'string', 'max' => 100],
-            [['photo'], 'string', 'max' => 255],
-            [['fkworksin'], 'exist', 'skipOnError' => true, 'targetClass' => Administrativeunit::className(), 'targetAttribute' => ['fkworksin' => 'idadministrativeunit']],
-            [['fkjobtitle'], 'exist', 'skipOnError' => true, 'targetClass' => Jobtitle::className(), 'targetAttribute' => ['fkjobtitle' => 'idjobtitle']],
-            [['fkuser'], 'exist', 'skipOnError' => true, 'targetClass' => \webvimark\modules\UserManagement\models\User::className(), 'targetAttribute' => ['fkuser' => 'id']],
+                [['name', 'lastname', 'gender', 'birthdate', 'photo', 'fkjobtitle', 'fkworksin'], 'required'],
+                [['birthdate'], 'safe'],
+                [['fkjobtitle', 'fkworksin', 'fkuser'], 'integer'],
+                [['review'], 'string'],
+                [['phone'], 'string', 'max' => 15],
+                [['name'], 'string', 'max' => 45],
+                [['lastname'], 'string', 'max' => 50],
+                [['gender'], 'string', 'max' => 10],
+                [['address'], 'string', 'max' => 100],
+                [['photo'], 'string', 'max' => 255],
+                [['fkworksin'], 'exist', 'skipOnError' => true, 'targetClass' => Administrativeunit::className(), 'targetAttribute' => ['fkworksin' => 'idadministrativeunit']],
+                [['fkjobtitle'], 'exist', 'skipOnError' => true, 'targetClass' => Jobtitle::className(), 'targetAttribute' => ['fkjobtitle' => 'idjobtitle']],
+                [['fkuser'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['fkuser' => 'id']],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'idprofile' => 'Idprofile',
             'name' => 'Name',
@@ -77,6 +75,7 @@ class Profile extends \yii\db\ActiveRecord
             'fkjobtitle' => 'Fkjobtitle',
             'fkworksin' => 'Labora en',
             'fkuser' => 'User',
+            'username' => 'Nombre Usuario',
         ];
     }
 
@@ -85,8 +84,7 @@ class Profile extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getAdministrativeunits()
-    {
+    public function getAdministrativeunits() {
         return $this->hasMany(Administrativeunit::className(), ['fkheadline' => 'idprofile']);
     }
 
@@ -95,8 +93,7 @@ class Profile extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getNotifications()
-    {
+    public function getNotifications() {
         return $this->hasMany(Notifications::className(), ['fkprofile' => 'idprofile']);
     }
 
@@ -105,8 +102,7 @@ class Profile extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getOffices()
-    {
+    public function getOffices() {
         return $this->hasMany(Office::className(), ['fkto' => 'idprofile']);
     }
 
@@ -115,8 +111,7 @@ class Profile extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getFkworksin0()
-    {
+    public function getFkworksin0() {
         return $this->hasOne(Administrativeunit::className(), ['idadministrativeunit' => 'fkworksin']);
     }
 
@@ -125,8 +120,7 @@ class Profile extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getFkjobtitle0()
-    {
+    public function getFkjobtitle0() {
         return $this->hasOne(Jobtitle::className(), ['idjobtitle' => 'fkjobtitle']);
     }
 
@@ -135,12 +129,17 @@ class Profile extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getFkuser0()
-    {
-        return $this->hasOne(User::className(), ['id' => 'fkuser']);
+    public function getFkuser0() {
+         return $this->hasOne(User::className(), ['id' => 'fkuser']);
     }
-    
-    public function getWorksin(){        
+
+    public function getWorksin() {
         return $this->getFkworksin0();
     }
+
+    public function getUsername() {
+        //var_dump($this->fkuser0); die();
+        return $this->fkuser0->username;
+    }
+
 }

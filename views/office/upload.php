@@ -2,6 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Administrativeunit;
+
+$unit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadministrativeunit', 'name');
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Office */
@@ -45,7 +49,7 @@ use yii\widgets\ActiveForm;
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <?= $form->field($model, 'fkadministrativeunit')->textInput(['placeholder' => 'Por favor, seleccione la unidad adm.']) ?>
+                        <?= $form->field($model, 'fkadministrativeunit')->dropDownList($unit, ['prompt' => 'Selecione uno...']) ?>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">

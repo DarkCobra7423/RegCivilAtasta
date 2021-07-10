@@ -8,7 +8,10 @@ use Yii;
  * This is the model class for table "file".
  *
  * @property int $idfile
+ * @property string $name
  * @property string $file
+ * @property string $format
+ * @property string $size
  *
  * @property Officefile[] $officefiles
  * @property Office[] $idoffices
@@ -29,8 +32,11 @@ class File extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['file'], 'required'],
+            [['name', 'file', 'format', 'size'], 'required'],
+            [['name'], 'string', 'max' => 100],
             [['file'], 'string', 'max' => 255],
+            [['format'], 'string', 'max' => 5],
+            [['size'], 'string', 'max' => 20],
         ];
     }
 
@@ -41,7 +47,10 @@ class File extends \yii\db\ActiveRecord
     {
         return [
             'idfile' => 'Idfile',
+            'name' => 'Name',
             'file' => 'File',
+            'format' => 'Format',
+            'size' => 'Size',
         ];
     }
 
@@ -63,5 +72,9 @@ class File extends \yii\db\ActiveRecord
     public function getIdoffices()
     {
         return $this->hasMany(Office::className(), ['idoffice' => 'idoffice'])->viaTable('officefile', ['idfile' => 'idfile']);
+    }
+    
+    public function getUrlfile(){
+        return Yii::$app->homeUrl . 'resourcesFiles/office/' . $this->file; 
     }
 }
