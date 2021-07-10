@@ -18,7 +18,7 @@ class FileSearch extends File
     {
         return [
             [['idfile'], 'integer'],
-            [['file'], 'safe'],
+            [['name', 'file', 'format', 'size'], 'safe'],
         ];
     }
 
@@ -61,7 +61,10 @@ class FileSearch extends File
             'idfile' => $this->idfile,
         ]);
 
-        $query->andFilterWhere(['like', 'file', $this->file]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'file', $this->file])
+            ->andFilterWhere(['like', 'format', $this->format])
+            ->andFilterWhere(['like', 'size', $this->size]);
 
         return $dataProvider;
     }

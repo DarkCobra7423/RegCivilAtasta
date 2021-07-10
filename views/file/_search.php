@@ -17,7 +17,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'idfile') ?>
 
+    <?= $form->field($model, 'name') ?>
+
     <?= $form->field($model, 'file') ?>
+
+    <?= $form->field($model, 'format') ?>
+
+    <?= $form->field($model, 'size') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

@@ -8,6 +8,9 @@ use app\models\FileSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Administrativeunit;
+use app\models\Office;
+use app\models\Officefile;
 
 /**
  * FileController implements the CRUD actions for File model.
@@ -44,6 +47,34 @@ class FileController extends Controller
         ]);
     }
 
+    public function actionFiles()
+    {
+        //$searchModel = new FileSearch();
+        //$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $offices = Office::find()->where(['fkadministrativeunit' => Yii::$app->profile->fkworksin])->all();
+        
+        //$officefiles = Officefile::find();
+        
+        //$files = File::find();
+        
+        $unit = Administrativeunit::find()->where(['idadministrativeunit' => Yii::$app->profile->fkworksin])->one();
+        //print_r($unit); die();
+        return $this->render('files', [
+            'unit' => $unit,
+            'offices' => $offices,
+            //'officefiles' => $officefiles,
+            //'files' => $files,
+            //'searchModel' => $searchModel,
+            //'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    public function actionDocumentviewer($id)
+    {
+        return $this->render('documentviewer', [
+            'model' => $this->findModel($id),
+        ]);
+    }
     /**
      * Displays a single File model.
      * @param integer $id

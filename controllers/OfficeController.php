@@ -19,11 +19,8 @@ class OfficeController extends Controller {
      */
     public function behaviors() {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
+            'ghost-access' => [
+                'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
             ],
         ];
     }
@@ -33,10 +30,29 @@ class OfficeController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
-        $searchModel = new OfficeSearch();
+        $searchModel = new OfficeSearch();        
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    public function actionFilter() {
+        $searchModel = new OfficeSearch();
+        //var_dump(Yii::$app->request->queryParams); die();
+        //$dataProvider = $searchModel->search(Office::find()->where(['AND','fkadministrativeunit = '.Yii::$app->profile->fkworksin, 'fkstateoffice = 2 OR fkstateoffice = 3'])->all());
+        $dataProvider = $searchModel->searchFilter(Yii::$app->request->queryParams);
+        /*
+        echo '<pre>';
+        print_r($dataProvider); 
+        echo '<br>Aqui es otro--------------------------------';
+        var_dump($dataProvider);
+        echo '</pre>';
+        die();*/
+
+        return $this->render('filter', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
         ]);
@@ -81,11 +97,33 @@ class OfficeController extends Controller {
     
     public function actionEvaluate() {
         
-        $offices = Office::find()->all();
+        $offices = Office::find()->where(['AND','fkadministrativeunit = '.Yii::$app->profile->fkworksin, 'fkstateoffice = 2 OR fkstateoffice = 3'])->all();
+        $formes = Office::find()->where(['AND','fkadministrativeunit = '.Yii::$app->profile->fkworksin, 'fkstateoffice = 2 OR fkstateoffice = 3', 'fkto = '.Yii::$app->profile->idprofile])->all();
         
         return $this->render('evaluate', [
                     'offices' => $offices,                    
+                    'formes' => $formes,                    
         ]);
+    }
+    
+    public function actionEvaluating($id){
+        $model = $this->findModel($id);
+        
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->idoffice]);
+        }
+
+        return $this->render('evaluating', [
+                    'model' => $model,
+        ]);
+    }
+    
+    public function actionWorksin($unit){
+        $tos = \app\models\Profile::find()->where(['fkworksin' => $unit])->all();
+        echo "<option value=''>Selecione uno...</option>\n";
+        foreach ($tos as $to){
+            echo "<option value='{$to->idprofile}'>{$to->name} {$to->lastname}</option>\n";
+        }
     }
 
     /**

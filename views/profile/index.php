@@ -37,7 +37,8 @@ $this->params['breadcrumbs'][] = $this->title;
             //'review:ntext',
             //'fkjobtitle',
             //'fkworksin',
-            //'fkuser',
+            'fkuser',
+            'username',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
