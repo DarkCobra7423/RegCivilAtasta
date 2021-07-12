@@ -20,38 +20,35 @@ use Yii;
  * @property Office $fkoffice0
  * @property Profile $fkprofile0
  */
-class Notifications extends \yii\db\ActiveRecord
-{
+class Notifications extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'notifications';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['title', 'read', 'fkprofile', 'fkoffice', 'fkadministrativeunit'], 'required'],
-            [['datatime'], 'safe'],
-            [['read', 'fkprofile', 'fkoffice', 'fkadministrativeunit'], 'integer'],
-            [['title'], 'string', 'max' => 40],
-            [['message'], 'string', 'max' => 50],
-            [['fkadministrativeunit'], 'exist', 'skipOnError' => true, 'targetClass' => Administrativeunit::className(), 'targetAttribute' => ['fkadministrativeunit' => 'idadministrativeunit']],
-            [['fkoffice'], 'exist', 'skipOnError' => true, 'targetClass' => Office::className(), 'targetAttribute' => ['fkoffice' => 'idoffice']],
-            [['fkprofile'], 'exist', 'skipOnError' => true, 'targetClass' => Profile::className(), 'targetAttribute' => ['fkprofile' => 'idprofile']],
+                [['title', 'read', 'fkprofile', 'fkoffice', 'fkadministrativeunit'], 'required'],
+                [['datatime'], 'safe'],
+                [['read', 'fkprofile', 'fkoffice', 'fkadministrativeunit'], 'integer'],
+                [['title'], 'string', 'max' => 40],
+                [['message'], 'string', 'max' => 50],
+                [['fkadministrativeunit'], 'exist', 'skipOnError' => true, 'targetClass' => Administrativeunit::className(), 'targetAttribute' => ['fkadministrativeunit' => 'idadministrativeunit']],
+                [['fkoffice'], 'exist', 'skipOnError' => true, 'targetClass' => Office::className(), 'targetAttribute' => ['fkoffice' => 'idoffice']],
+                [['fkprofile'], 'exist', 'skipOnError' => true, 'targetClass' => Profile::className(), 'targetAttribute' => ['fkprofile' => 'idprofile']],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'idnotifications' => 'Idnotifications',
             'title' => 'Title',
@@ -69,8 +66,7 @@ class Notifications extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getFkadministrativeunit0()
-    {
+    public function getFkadministrativeunit0() {
         return $this->hasOne(Administrativeunit::className(), ['idadministrativeunit' => 'fkadministrativeunit']);
     }
 
@@ -79,8 +75,7 @@ class Notifications extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getFkoffice0()
-    {
+    public function getFkoffice0() {
         return $this->hasOne(Office::className(), ['idoffice' => 'fkoffice']);
     }
 
@@ -89,8 +84,31 @@ class Notifications extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getFkprofile0()
-    {
+    public function getFkprofile0() {
         return $this->hasOne(Profile::className(), ['idprofile' => 'fkprofile']);
     }
+    
+    public function getOffice(){
+        return $this->getFkoffice0();
+    }
+
+    public static function notificationsPush() {
+
+        $nofications = Notifications::find()->all();
+
+        foreach ($nofications as $nofication) {
+
+            return '
+                notifications.push({
+                href: "'.$nofication->idnotifications.'",
+                image: "#aqui la imagen",
+                texte: "'.$nofication->title.' " + makeBadge("'.$nofication->fkoffice0->idoffice.'"),
+                date: "'.$nofication->datatime.'"
+                });
+                ';
+        }
+
+        //return $nofications;
+    }
+
 }

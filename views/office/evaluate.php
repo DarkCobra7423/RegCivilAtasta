@@ -3,6 +3,13 @@
 use yii\helpers\Html;
 ?>
 
+<style>
+    .badge-success {
+        color: #fff;
+        background-color: #28a745;
+    }
+</style>
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -10,11 +17,11 @@ use yii\helpers\Html;
             <div class="row" style="margin-bottom: 8px;margin-right: 0px;">
                 <div class="pull-right"><?= Html::a('Oficios', ['file/files'], ['class' => 'btn btn-primary']) ?> <?= Html::a('Filtrar Oficios', ['office/filter'], ['class' => 'btn btn-primary']) ?></div>
             </div>
-            
+
             <table class="table">
 
                 <div class="alert alert-info">
-                    <label>Dirigidos a <b><?= Yii::$app->profile->name." ".Yii::$app->profile->lastname ?></b></label>
+                    <label>Dirigidos a <b><?= Yii::$app->profile->name . " " . Yii::$app->profile->lastname ?></b></label>
                 </div>
 
                 <thead>
@@ -35,7 +42,7 @@ use yii\helpers\Html;
                             Enviado
                         </th>
                         <th>
-                            Acciones
+                            Evaluar
                         </th>
                     </tr>
                 </thead>
@@ -52,14 +59,18 @@ use yii\helpers\Html;
                                 <?= $forme->subject ?>
                             </td>
                             <td>
-                                <span class="label label-info"><?= $forme->getState(); ?></span>
+                                <?php if ($forme->getState() == 'Turnado') { ?>
+                                    <span class="badge badge-warning"><?= $forme->getState(); ?></span>
+                                <?php } else { ?>
+                                    <span class="badge badge-success"><?= $forme->getState(); ?></span>
+                                <?php } ?>
                             </td>
                             <td>
                                 <?= $forme->creationdate ?>
                             </td>
                             <td>
                                 <?= Html::a('<i class="far fa-edit"></i>', ['evaluating', 'id' => $forme->idoffice], ['title' => 'Evaluar']) ?>
-                                <?= Html::a('<i class="far fa-share-square"></i>', ['update', 'id' => $forme->idoffice], ['title' => 'Turnar']) ?>                                
+                                <?php // Html::a('<i class="far fa-share-square"></i>', ['update', 'id' => $forme->idoffice], ['title' => 'Turnar']) ?>                                
                             </td>
                         </tr>
                     <?php endforeach; ?>    
@@ -67,11 +78,11 @@ use yii\helpers\Html;
             </table>
 
             <table class="table">
-                
+
                 <div class="alert alert-success">
                     Correspondencia dirigida a su unidad administrativa
                 </div>
-                
+
                 <thead>
                     <tr>
                         <th>
@@ -90,7 +101,7 @@ use yii\helpers\Html;
                             Enviado
                         </th>
                         <th>
-                            Acciones
+                            Evaluar
                         </th>
                     </tr>
                 </thead>
@@ -107,34 +118,38 @@ use yii\helpers\Html;
                                 <?= $office->subject ?>
                             </td>
                             <td>
-                                <span class="label label-warning"><?= $office->getState(); ?></span>
+                                <?php if ($office->getState() == 'Turnado') { ?>
+                                    <span class="badge badge-warning"><?= $office->getState(); ?></span>
+                                <?php } else { ?>
+                                    <span class="badge badge-success"><?= $office->getState(); ?></span>
+                                <?php } ?>
                             </td>
                             <td>
                                 <?= $office->creationdate ?>
                             </td>
                             <td>
                                 <?= Html::a('<i class="far fa-edit"></i>', ['evaluating', 'id' => $office->idoffice], ['title' => 'Evaluar']) ?>
-                                <?= Html::a('<i class="far fa-share-square"></i>', ['update', 'id' => $office->idoffice], ['title' => 'Turnar']) ?>                                
+                                <?php // Html::a('<i class="far fa-share-square"></i>', ['update', 'id' => $office->idoffice], ['title' => 'Turnar']) ?>                                
                             </td>
                         </tr>
                     <?php endforeach; ?>      
-        <!--<tr class="success">
-            <td>
-                Column content
-            </td>
-            <td>
-                Column content
-            </td>
-            <td>
-                Column content
-            </td>
-            <td>
-                Column content
-            </td>
-            <td>
-                Column content
-            </td>
-        </tr>-->
+    <!--<tr class="success">
+        <td>
+            Column content
+        </td>
+        <td>
+            Column content
+        </td>
+        <td>
+            Column content
+        </td>
+        <td>
+            Column content
+        </td>
+        <td>
+            Column content
+        </td>
+    </tr>-->
                 </tbody>
             </table>
         </div>

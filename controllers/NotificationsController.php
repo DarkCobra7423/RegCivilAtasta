@@ -44,6 +44,73 @@ class NotificationsController extends Controller
         ]);
     }
 
+    public function navnotifications(){
+        ?>
+        <!------------------MODERNO------------------------->
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<li class="dropdown nav-button notifications-button hidden-sm-down">
+  <a id="notifications-dropdown" class="btn btn-secondary dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i id="notificationsIcon" class="far fa-bell" aria-hidden="true"></i>
+
+    <span id="notificationsBadge" class="badge badge-danger"><i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i></span> Efecto Oficios
+
+    <span class="caret"></span>
+  </a>
+  <!--A-->
+
+  <ul id="w4" class="dropdown-menu notification-dropdown-menu" aria-labelledby="notifications-dropdown">
+    <li class="dropdown-header">Notificaciones</li>
+    <!--Termina la cabecera-->
+    <!-- CHARGEMENT -->
+    <li>
+      <a id="notificationsLoader" href="#" class="dropdown-item dropdown-notification">
+
+        <p class="notification-solo text-center"><i id="notificationsIcon" class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i> Cargando las últimas notificaciones ...</p>
+      </a>
+    </li>
+
+    <li id="notificationsContainer" class="notifications-container">
+
+      <a id="notificationAucune" class="dropdown-item dropdown-notification" href="#">
+        <p class="notification-solo text-center">No hay notificaciones nuevas</p>
+      </a>
+
+      <a class="dropdown-item dropdown-notification-all" href="#">
+        Ver todas las notificaciones
+      </a>
+
+    </li>
+    <!--
+<li class="backg">
+  <a href="#" tabindex="-1">Ver todas las notificaciones</a>
+</li>-->
+  </ul>
+
+</li>
+
+<!-- TEMPLATE NOTIFICATION -->
+<script id="notificationTemplate" type="text/html">
+  <!-- NOTIFICATION -->
+<a class="dropdown-item dropdown-notification" href="{{href}}">
+  <div class="notification-read">
+    <i class="fa fa-times" aria-hidden="true"></i>
+  </div>
+  <img class="notification-img" src="//placehold.it/48x48" alt="Icone" />
+  <div class="notifications-body">
+    <p class="notification-texte">{{texte}}</p>
+    <p class="notification-date text-muted">
+      <i class="fa fa-clock-o" aria-hidden="true"></i> {{date}}
+    </p>
+  </div>
+</a>
+</script>
+
+<!----------------------------------------------->
+        <?php
+        return $dropnotification;
+    }
+
     /**
      * Displays a single Notifications model.
      * @param integer $id

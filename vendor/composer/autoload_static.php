@@ -56,6 +56,9 @@ class ComposerStaticInit856b8316e0a13991e09c3e8354f6d8d1
         'k' => 
         array (
             'kv4nt\\owlcarousel\\' => 18,
+            'kartik\\plugins\\fileinput\\' => 25,
+            'kartik\\file\\' => 12,
+            'kartik\\base\\' => 12,
         ),
         'c' => 
         array (
@@ -194,6 +197,18 @@ class ComposerStaticInit856b8316e0a13991e09c3e8354f6d8d1
         'kv4nt\\owlcarousel\\' => 
         array (
             0 => __DIR__ . '/..' . '/kv4nt/yii2-owl-carousel2',
+        ),
+        'kartik\\plugins\\fileinput\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/bootstrap-fileinput',
+        ),
+        'kartik\\file\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-fileinput/src',
+        ),
+        'kartik\\base\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-krajee-base/src',
         ),
         'cebe\\markdown\\' => 
         array (
