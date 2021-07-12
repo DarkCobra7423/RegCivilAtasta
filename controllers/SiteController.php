@@ -85,6 +85,10 @@ class SiteController extends Controller {
         
         return $this->render('newoffice', ['units' => $units, 'carousels' => $carousels]);
     }
+    
+    public function actionModoprueba(){
+        return $this->render('modoprueba');
+    }
 
     /**
      * Login action.

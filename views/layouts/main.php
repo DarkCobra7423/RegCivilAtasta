@@ -10,6 +10,7 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use webvimark\modules\UserManagement\components\GhostMenu;
 use webvimark\modules\UserManagement\UserManagementModule;
+use app\models\Notifications;
 
 AppAsset::register($this);
 ?>
@@ -53,7 +54,7 @@ AppAsset::register($this);
             padding-bottom: 0px;
             padding-top: 10px;
         }
-        
+
     </style>
     <link href="<?= Yii::$app->homeUrl; ?>css/NavbarStyle.css" rel="stylesheet" type="text/css"/>
     <body>
@@ -109,21 +110,25 @@ AppAsset::register($this);
                             ]) : (''),
                     Yii::$app->user->isGuest ? (['label' => '<i class="far fa-address-card"></i> Contacto', 'url' => ['/site/contact']]) : (''),
                     Yii::$app->user->isGuest ? (['label' => '<i class="fas fa-question-circle"></i> Acerca de nosotros', 'url' => ['/site/about']]) : (''),
-                        
                     Yii::$app->user->isGuest ? ('') : (
-                        [
-                        'label' => '<i id="notificationsIcon" class="far fa-bell" aria-hidden="true"></i> '
-                        . '<span id="notificationsBadge" class="badge badge-danger">'
-                        . '<i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i>'
-                        . '</span> Notificaciones',
-                        'items' => [
-                            '<li class="dropdown-header">Notificaciones</li>',
-                                ['label' => '<i id="notificationsIcon" class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i> Cargando las últimas notificaciones ...', 'url' => ['#']],
-                                ['label' => 'No hay notificaciones nuevas', 'url' => ['#']],
-                                ['label' => 'Ver todas las notificaciones', 'url' => ['/notifications/index'], 'options' => ['class' => 'backg']],
-                        ],
-                    ]),
-                    
+                                [
+                                'label' => '<i id="notificationsIcon" class="far fa-bell" aria-hidden="true"></i> '
+                                . '<span id="notificationsBadge" class="badge badge-danger">'
+                                . '<i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i>'
+                                . '</span> Notificaciones',
+                                'items' => [
+                                    '<li class="dropdown-header">Notificaciones</li>',
+                                        ['label' => '<a id="notificationsLoader" href="#" class="dropdown-item dropdown-notification">
+                                            <p class="notification-solo text-center">
+                                            <i id="notificationsIcon" class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i> Cargando las últimas notificaciones ...</p>
+                                            </a>', 'options' => ['class' => '']],
+                                        ['label' => '<a id="notificationAucune" class="dropdown-item dropdown-notification" href="#">
+                                                        <p class="notification-solo text-center">No hay notificaciones nuevas</p>
+                                                    </a>', 'options' => ['id' => 'notificationsContainer']],
+                                        ['label' => 'Ver todas las notificaciones', 'url' => ['/notifications/allnotifications'], 'options' => ['class' => 'dropdown-item dropdown-notification-all backg']],
+                                ],
+                                'options' => ['id' => 'notifications-dropdown'],
+                            ]),
                     Yii::$app->user->isGuest ? (
 
                                 ['label' => '<i class="far fa-user"></i> Iniciar Sesion', 'url' => ['/user-management/auth/login']]
@@ -132,7 +137,7 @@ AppAsset::register($this);
                                 'label' => '<img class="profile-icon" src="' . Yii::$app->homeUrl . '/resourcesFiles/avatar/default/avatar1.png' . '">', 'options' => ['class' => 'perzonalize'],
                                 'items' => [
                                         ['label' => '<i class="far fa-user"></i> Perfil', 'url' => ['profile/profile']],
-                                        ['label' => '<i class="fa fa-angle-double-right"></i> Cambiar contraseña', 'url' => ['/user-management/auth/change-own-password']],                                        
+                                        ['label' => '<i class="fa fa-angle-double-right"></i> Cambiar contraseña', 'url' => ['/user-management/auth/change-own-password']],
                                         ['label' => '<i class="fa fa-angle-double-right"></i> Confirmación de E-mail', 'url' => ['/user-management/auth/confirm-email']],
                                         ['label' => '<i class="fas fa-sign-out-alt"></i> Cerrar Sesion', 'url' => ['/user-management/auth/logout']],
                                 ],
@@ -169,5 +174,244 @@ AppAsset::register($this);
 
         <?php $this->endBody() ?>
     </body>
+    
+    <!-- TEMPLATE NOTIFICATION -->
+<script id="notificationTemplate" type="text/html">
+  <!-- NOTIFICATION -->
+<a class="dropdown-item dropdown-notification" href="{{href}}">
+  <div class="notification-read">
+    <i class="fa fa-times" aria-hidden="true"></i>
+  </div>
+  <img class="notification-img" src="//placehold.it/48x48" alt="Icone" />
+  <div class="notifications-body">
+    <p class="notification-texte">{{texte}}</p>
+    <p class="notification-date text-muted">
+      <i class="fa fa-clock-o" aria-hidden="true"></i> {{date}}
+    </p>
+  </div>
+</a>
+</script>
+
+<script type="text/javascript">
+$(function () { 
+
+  var count = 1;
+  var lastCount = 0;
+
+  // Pour la maquette
+  var notifications = new Array();
+
+  notifications.push({
+    href: "#",
+    image: "#aqui la imagen",
+    texte: "Acta Nacimiento " + makeBadge("Pendiente"),
+    date: "Mercredi 10 Mai, à 9h53"
+  });
+
+
+  function makeBadge(texte) {
+    return "<span class=\"badge badge-warning\">" + texte + "11</span>";
+  }
+
+  appNotifications = {
+
+    // Initialisation
+    init: function () {
+      // On masque les éléments
+      $("#notificationsBadge").hide();
+      $("#notificationAucune").hide();
+
+      // On bind le clic sur les notifications
+      $("#notifications-dropdown").on('click', function () {
+
+        var open = $("#notifications-dropdown").attr("aria-expanded");
+
+        // Vérification si le menu est ouvert au moment du clic
+        if (open === "false") {
+          appNotifications.loadAll();
+        }
+
+      });
+
+      // On charge les notifications
+      appNotifications.loadAll();
+
+      // Polling
+      // Toutes les 3 minutes on vérifie si il n'y a pas de nouvelles notifications
+      setInterval(function () {
+        appNotifications.loadNumber();
+      }, 180000);
+
+      // Binding de marquage comme lue desktop
+      $('.notification-read-desktop').on('click', function (event) {
+        appNotifications.markAsReadDesktop(event, $(this));
+      });
+
+    },
+
+    // Déclenche le chargement du nombre et des notifs
+    loadAll: function () {
+
+      // On ne charge les notifs que si il y a une différence
+      // Ou si il n'y a aucune notifs
+      if (count !== lastCount || count === 0) {
+        appNotifications.load();
+      }
+      appNotifications.loadNumber();
+
+    },
+
+    // Masque de chargement pour l'icône et le badge
+    badgeLoadingMask: function (show) {
+      if (show === true) {
+        $("#notificationsBadge").html(appNotifications.badgeSpinner);
+        $("#notificationsBadge").show();
+        // Mobile
+        $("#notificationsBadgeMobile").html(count);
+        $("#notificationsBadgeMobile").show();
+      }
+      else {
+        $("#notificationsBadge").html(count);
+        if (count > 0) {
+          $("#notificationsIcon").removeClass("fa-bell-o");
+          $("#notificationsIcon").addClass("fa-bell");
+          $("#notificationsBadge").show();
+          // Mobile
+          $("#notificationsIconMobile").removeClass("fa-bell-o");
+          $("#notificationsIconMobile").addClass("fa-bell");
+          $("#notificationsBadgeMobile").show();
+        }
+        else {
+          $("#notificationsIcon").addClass("fa-bell-o");
+          $("#notificationsBadge").hide();
+          // Mobile
+          $("#notificationsIconMobile").addClass("fa-bell-o");
+          $("#notificationsBadgeMobile").hide();
+        }
+
+      }
+    },
+
+    // Indique si chargement des notifications
+    loadingMask: function (show) {
+
+      if (show === true) {
+        $("#notificationAucune").hide();
+        $("#notificationsLoader").show();
+      } else {
+        $("#notificationsLoader").hide();
+        if (count > 0) {
+          $("#notificationAucune").hide();
+        }
+        else {
+          $("#notificationAucune").show();
+        }
+      }
+
+    },
+
+    // Chargement du nombre de notifications
+    loadNumber: function () {
+      appNotifications.badgeLoadingMask(true);
+
+      // TODO : API Call pour récupérer le nombre
+
+      // TEMP : pour le template
+      setTimeout(function () {
+        $("#notificationsBadge").html(count);
+        appNotifications.badgeLoadingMask(false);
+      }, 1000);
+    },
+
+    // Chargement de notifications
+    load: function () {
+      appNotifications.loadingMask(true);
+
+      // On vide les notifs
+      $('#notificationsContainer').html("");
+
+      // Sauvegarde du nombre de notifs
+      lastCount = count;
+
+      // TEMP : pour le template
+      setTimeout(function () {
+
+        // TEMP : pour le template
+        for (i = 0; i < count; i++) {
+
+          var template = $('#notificationTemplate').html();
+          template = template.replace("{{href}}", notifications[i].href);
+          template = template.replace("{{image}}", notifications[i].image);
+          template = template.replace("{{texte}}", notifications[i].texte);
+          template = template.replace("{{date}}", notifications[i].date);
+
+          $('#notificationsContainer').append(template);
+        }
+
+        // On bind le marquage comme lue
+        $('.notification-read').on('click', function (event) {
+          appNotifications.markAsRead(event, $(this));
+        });
+
+        // On arrête le chargement
+        appNotifications.loadingMask(false);
+
+        // On réactive le bouton
+        $("#notifications-dropdown").prop("disabled", false);
+      }, 1000);
+    },
+
+    // Marquer une notification comme lue
+    markAsRead: function (event, elem) {
+      // Permet de garde la liste ouverte
+      event.preventDefault();
+      event.stopPropagation();
+
+      // Suppression de la notification
+      elem.parent('.dropdown-notification').remove();
+
+      // TEMP : pour le template
+      count--;
+
+      // Mise à jour du nombre
+      appNotifications.loadAll();
+    },
+
+    // Marquer une notification comme lue version bureau
+    markAsReadDesktop: function (event, elem) {
+      // Permet de ne pas change de page
+      event.preventDefault();
+      event.stopPropagation();
+
+      // Suppression de la notification
+      elem.parent('.dropdown-notification').removeClass("notification-unread");
+      elem.remove();
+
+      // On supprime le focus
+      if (document.activeElement) {
+        document.activeElement.blur();
+      }
+
+      // TEMP : pour le template
+      count--;
+
+      // Mise à jour du nombre
+      appNotifications.loadAll();
+    },
+
+    add: function () {
+      lastCount = count;
+      count++;
+    },
+
+    // Template du badge
+    badgeSpinner: '<i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i>'
+  };
+
+  appNotifications.init();
+
+});
+</script>
+    
 </html>
 <?php $this->endPage() ?>

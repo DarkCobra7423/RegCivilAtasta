@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use app\models\Administrativeunit;
 use app\models\Office;
 use app\models\Officefile;
+use yii\web\UploadedFile;
 
 /**
  * FileController implements the CRUD actions for File model.
@@ -96,9 +97,23 @@ class FileController extends Controller
     public function actionCreate()
     {
         $model = new File();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+       /* if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idfile]);
+        }*/
+          if ($model->load(Yii::$app->request->post())) {
+            $files = UploadedFile::getInstance($model, 'files');
+            if (!is_null($files)) {
+                $name = explode(".", $files->name);
+                $ext = end($name);
+                $model->file = Yii::$app->security->generateRandomString() . ".{$ext}";
+                $resourcesFiles = Yii::$app->basePath . '/web/resourcesFiles/office/';
+                $path = $resourcesFiles . $model->file;
+                if ($files->saveAs($path)) {
+                    if ($model->save()) {
+                        return $this->redirect(['view', 'id' => $model->idfile]);
+                    }
+                }
+            }
         }
 
         return $this->render('create', [

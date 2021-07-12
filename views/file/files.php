@@ -70,7 +70,7 @@ use yii\helpers\Html;
                                                 <!--TXT-->
                                                 <div class="drive-item module text-center">
                                                     <div class="drive-item-inner module-inner">
-                                                        <div class="drive-item-title"><a href="<?= $file->urlfile ?>"><?= $file->name ?></a></div>
+                                                        <div class="drive-item-title"><a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>"><?= $file->name ?></a></div>
                                                         <div class="drive-item-thumb">
                                                             <a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>" style="font-size: 70px;"><i class="far fa-file-alt text-primary"></i></a>
                                                         </div>
@@ -82,13 +82,13 @@ use yii\helpers\Html;
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            <?php } else if (($file->format == '.jpg') || ($file->format == '.png')) { ?>
+                                            <?php } else if (($file->format == '.jpg') || ($file->format == '.png') || ($file->format == '.jpeg') || ($file->format == '.gif')) { ?>
                                                 <!--JPG-->
                                                 <div class="drive-item module text-center">
                                                     <div class="drive-item-inner module-inner">
-                                                        <div class="drive-item-title"><a href="<?= $file->urlfile ?>"><?= $file->name ?></a></div>
+                                                        <div class="drive-item-title"><a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>"><?= $file->name ?></a></div>
                                                         <div class="drive-item-thumb">
-                                                            <a href="#"><img class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt=""></a>
+                                                            <a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>"><img class="img-responsive" src="<?= $file->urlfile ?>" alt="<?= $file->name ?>"></a>
                                                         </div>
                                                     </div>
                                                     <div class="drive-item-footer module-footer">
@@ -98,11 +98,11 @@ use yii\helpers\Html;
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            <?php } else if ($file->format == '.ppt') { ?>
+                                            <?php } else if (($file->format == '.ppt') || ($file->format == '.pptx')) { ?>
                                                 <!--PPT-->
                                                 <div class="drive-item module text-center">
                                                     <div class="drive-item-inner module-inner">
-                                                        <div class="drive-item-title"><a href="<?= $file->urlfile ?>"><?= $file->name ?></a></div>
+                                                        <div class="drive-item-title"><a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>"><?= $file->name ?></a></div>
                                                         <div class="drive-item-thumb">
                                                             <a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>" style="font-size: 70px;"><i class="far fa-file-powerpoint text-warning"></i></a>
                                                         </div>
@@ -114,11 +114,11 @@ use yii\helpers\Html;
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            <?php } else if ($file->format == '.csv') { ?>
+                                            <?php } else if (($file->format == '.csv') || ($file->format == '.xls')) { ?>
                                                 <!--CSV-->
                                                 <div class="drive-item module text-center">
                                                     <div class="drive-item-inner module-inner">
-                                                        <div class="drive-item-title"><a href="<?= $file->urlfile ?>"><?= $file->name ?></a></div>
+                                                        <div class="drive-item-title"><a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>"><?= $file->name ?></a></div>
                                                         <div class="drive-item-thumb">
                                                             <a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>" style="font-size: 70px;"><i class="far fa-file-excel text-success"></i></a>
                                                         </div>
@@ -134,7 +134,7 @@ use yii\helpers\Html;
                                                 <!--PDF-->
                                                 <div class="drive-item module text-center">
                                                     <div class="drive-item-inner module-inner">
-                                                        <div class="drive-item-title"><a href="<?= $file->urlfile ?>"><?= $file->name ?></a></div>
+                                                        <div class="drive-item-title"><a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>"><?= $file->name ?></a></div>
                                                         <div class="drive-item-thumb">
                                                             <a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>" style="font-size: 70px;"><i class="far fa-file-pdf text-danger"></i></a>
                                                         </div>
@@ -146,12 +146,12 @@ use yii\helpers\Html;
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            <?php } else if ($file->format == '.zip') { ?>
+                                            <?php } else if (($file->format == '.zip') || ($file->format == '.rar')) { ?>
 
                                                 <!--ZIP-->
                                                 <div class="drive-item module text-center">
                                                     <div class="drive-item-inner module-inner">
-                                                        <div class="drive-item-title"><a href="<?= $file->urlfile ?>"><?= $file->name ?></a></div>
+                                                        <div class="drive-item-title"><a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>"><?= $file->name ?></a></div>
                                                         <div class="drive-item-thumb">
                                                             <a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>" style="font-size: 70px;"><i class="far fa-file-archive text-primary"></i></a>
                                                         </div>
@@ -163,11 +163,11 @@ use yii\helpers\Html;
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            <?php } else if ($file->format == '.docx') { ?>
+                                            <?php } else if (($file->format == '.docx') || ($file->format == '.doc')) { ?>
                                                 <!--DOC-->
                                                 <div class="drive-item module text-center">
                                                     <div class="drive-item-inner module-inner">
-                                                        <div class="drive-item-title"><a href="<?= $file->urlfile ?>"><?= $file->name ?></a></div>
+                                                        <div class="drive-item-title"><a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>"><?= $file->name ?></a></div>
                                                         <div class="drive-item-thumb">
                                                             <a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>" style="font-size: 70px;"><i class="far fa-file-word text-info"></i></a>
                                                         </div>
@@ -184,7 +184,7 @@ use yii\helpers\Html;
                                                 <!--HMTL-->
                                                 <div class="drive-item module text-center">
                                                     <div class="drive-item-inner module-inner">
-                                                        <div class="drive-item-title"><a href="<?= $file->urlfile ?>"><?= $file->name ?></a></div>
+                                                        <div class="drive-item-title"><a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>"><?= $file->name ?></a></div>
                                                         <div class="drive-item-thumb">
                                                             <a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>" style="font-size: 70px;"><i class="far fa-file-code text-primary"></i></a>
                                                         </div>
@@ -196,12 +196,12 @@ use yii\helpers\Html;
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            <?php } else if ($file->format == '.mp4') { ?>
-
+                                            <?php } else if (($file->format == '.mp4') || ($file->format == '.avi') || ($file->format == '.wmv') || ($file->format == '.mov') || ($file->format == '.rmvb') || ($file->format == '.mkb'))  { ?>
+ 
                                                 <!--VIDEO-->
                                                 <div class="drive-item module text-center">
                                                     <div class="drive-item-inner module-inner">
-                                                        <div class="drive-item-title"><a href="<?= $file->urlfile ?>"><?= $file->name ?></a></div>
+                                                        <div class="drive-item-title"><a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>"><?= $file->name ?></a></div>
                                                         <div class="drive-item-thumb">
                                                             <a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>" style="font-size: 70px;"><i class="far fa-file-video text-primary"></i></a>                                                
                                                         </div>
@@ -213,11 +213,11 @@ use yii\helpers\Html;
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            <?php } else if ($file->format == '.mp3') { ?>
+                                            <?php } else if (($file->format == '.mp3') || ($file->format == '.mp4')){ ?>
                                                 <!--AUDIO-->
                                                 <div class="drive-item module text-center">
                                                     <div class="drive-item-inner module-inner">
-                                                        <div class="drive-item-title"><a href="<?= $file->urlfile ?>"><?= $file->name ?></a></div>
+                                                        <div class="drive-item-title"><a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>"><?= $file->name ?></a></div>
                                                         <div class="drive-item-thumb">
                                                             <a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>" style="font-size: 70px;"><i class="far fa-file-audio text-primary"></i></a>
                                                         </div>
@@ -233,7 +233,7 @@ use yii\helpers\Html;
                                                 <!--OTRO-->
                                                 <div class="drive-item module text-center">
                                                     <div class="drive-item-inner module-inner">
-                                                        <div class="drive-item-title"><a href="<?= $file->urlfile ?>"><?= $file->name ?></a></div>
+                                                        <div class="drive-item-title"><a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>"><?= $file->name ?></a></div>
                                                         <div class="drive-item-thumb">
                                                             <a href="<?= Yii::$app->homeUrl ?>file/documentviewer/<?= $file->idfile ?>" style="font-size: 70px;"><i class="far fa-file text-primary"></i></a>
                                                         </div>
@@ -294,7 +294,7 @@ use yii\helpers\Html;
                                                                 <?= Html::a('<i class="fa fa-trash"></i>', ['delete', 'id' => $file->idfile], ['class' => '', 'data' => ['confirm' => '¿Realmente desea eliminar el archivo ' . $file->name . '?', 'method' => 'post',],]) ?>
                                                             </td>
                                                         </tr>
-                                                    <?php } else if ($file->format == '.jpg') { ?>
+                                                <?php } else if (($file->format == '.jpg') || ($file->format == '.png') || ($file->format == '.jpeg') || ($file->format == '.gif')) { ?>
                                                         <!--JPG-->
                                                         <tr>
                                                             <td class="type"><i class="far fa-file-image text-primary"></i></td>
@@ -306,7 +306,7 @@ use yii\helpers\Html;
                                                                 <?= Html::a('<i class="fa fa-trash"></i>', ['delete', 'id' => $file->idfile], ['class' => '', 'data' => ['confirm' => '¿Realmente desea eliminar el archivo ' . $file->name . '?', 'method' => 'post',],]) ?>
                                                             </td>
                                                         </tr>
-                                                    <?php } else if ($file->format == '.ppt') { ?>
+                                        <?php } else if (($file->format == '.ppt') || ($file->format == '.pptx')) { ?>
                                                         <!--PPT-->
                                                         <tr>
                                                             <td class="type"><i class="far fa-file-powerpoint text-warning"></i></td>
@@ -318,7 +318,7 @@ use yii\helpers\Html;
                                                                 <?= Html::a('<i class="fa fa-trash"></i>', ['delete', 'id' => $file->idfile], ['class' => '', 'data' => ['confirm' => '¿Realmente desea eliminar el archivo ' . $file->name . '?', 'method' => 'post',],]) ?>
                                                             </td>
                                                         </tr>
-                                                    <?php } else if ($file->format == '.csv') { ?>
+                                            <?php } else if (($file->format == '.csv') || ($file->format == '.xls')) { ?>
                                                         <!--CSV-->
                                                         <tr>
                                                             <td class="type"><i class="far fa-file-excel text-success"></i></td>
@@ -342,7 +342,7 @@ use yii\helpers\Html;
                                                                 <?= Html::a('<i class="fa fa-trash"></i>', ['delete', 'id' => $file->idfile], ['class' => '', 'data' => ['confirm' => '¿Realmente desea eliminar el archivo ' . $file->name . '?', 'method' => 'post',],]) ?>
                                                             </td>
                                                         </tr>
-                                                    <?php } else if (($file->format == '.docx') || $file->format == '.doc') { ?>
+                                            <?php } else if (($file->format == '.docx') || ($file->format == '.doc')) { ?>
                                                         <!--DOC-->
                                                         <tr>
                                                             <td class="type"><i class="far fa-file-word text-info"></i></td>
@@ -366,7 +366,7 @@ use yii\helpers\Html;
                                                                 <?= Html::a('<i class="fa fa-trash"></i>', ['delete', 'id' => $file->idfile], ['class' => '', 'data' => ['confirm' => '¿Realmente desea eliminar el archivo ' . $file->name . '?', 'method' => 'post',],]) ?>
                                                             </td>
                                                         </tr>
-                                                    <?php } else if ($file->format == '.mp4') { ?>
+                                                    <?php } else if (($file->format == '.mp4') || ($file->format == '.avi') || ($file->format == '.wmv') || ($file->format == '.mov') || ($file->format == '.rmvb') || ($file->format == '.mkb')) { ?>
                                                         <!--MP4-->
                                                         <tr>
                                                             <td class="type"><i class="far fa-file-video text-primary"></i></td>
@@ -378,7 +378,7 @@ use yii\helpers\Html;
                                                                 <?= Html::a('<i class="fa fa-trash"></i>', ['delete', 'id' => $file->idfile], ['class' => '', 'data' => ['confirm' => '¿Realmente desea eliminar el archivo ' . $file->name . '?', 'method' => 'post',],]) ?>
                                                             </td>
                                                         </tr>
-                                                    <?php } else if ($file->format == '.mp3') { ?>
+                                               <?php } else if (($file->format == '.mp3') || ($file->format == '.mp4'))  { ?>
                                                         <!--MP3-->
                                                         <tr>
                                                             <td class="type"><i class="far fa-file-audio text-primary"></i></td>

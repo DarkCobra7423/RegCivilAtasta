@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Administrativeunit;
+use kartik\file\FileInput;
 
 $unit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadministrativeunit', 'name');
 
@@ -48,20 +49,16 @@ $unit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadministrativeuni
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-md-6">                        
+                        <?= $form->field($model, 'subject')->textInput(['maxlength' => true, 'placeholder' => 'Por favor, introduzca el asunto']) ?>
+                    </div>
                     <div class="col-md-6">
                         <?= $form->field($model, 'fkadministrativeunit')->dropDownList($unit, ['prompt' => 'Selecione uno...']) ?>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="form_phone">Archivo</label>
-                            <input id="form_phone" type="file" name="phone" class="form-control" placeholder="Please enter your phone">
-                            <div class="help-block with-errors"></div>
-                        </div>
-                    </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
-                        <?= $form->field($model, 'subject')->textInput(['maxlength' => true, 'placeholder' => 'Por favor, introduzca el asunto']) ?>
+                    <div class="col-md-12">                        
+                        <?= $form->field($modelfile, 'files')->widget(FileInput::classname(), ['options' => ['accept' => 'files/*'],]); ?>                        
                     </div>
 
                     <!------------------------->
@@ -83,8 +80,7 @@ $unit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadministrativeuni
                     <!------------------------->
 
                     <div class="col-md-12">                            
-                        <?= Html::submitButton('Enviar Oficio', ['class' => 'btn btn-success btn-send']) ?>
-                        <?= Html::resetButton('Reset', ['class' => 'reset']) ?>
+                        <?= Html::submitButton('Enviar Oficio', ['class' => 'btn btn-success btn-send']) ?>                        
                     </div>
                 </div>
 

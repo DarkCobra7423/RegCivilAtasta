@@ -32,6 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'idfile',
             'name',
             'file',
+             [   'attribute' => 'urlfile',
+                'format' => 'raw',
+                'value' => function($model){
+                    return Html::tag('iframe', Html::encode(''), ['src' => $model->urlfile]);
+                    //return Html::img($model->urlfile);
+                }
+            ],
             'format',
             'size',
         ],

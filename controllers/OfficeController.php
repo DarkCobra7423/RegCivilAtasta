@@ -8,6 +8,8 @@ use app\models\OfficeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\File;
+use yii\web\UploadedFile;
 
 /**
  * OfficeController implements the CRUD actions for Office model.
@@ -61,15 +63,60 @@ class OfficeController extends Controller {
     public function actionUpload() {
 
         $model = new Office();
-        //print_r($_POST);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //return $this->redirect(['view', 'id' => $model->idoffice]);
-            //$sends = Office::find()->select('expedient')->where(['idoffice' => $model->idoffice])->one();
-            //print_r($send); die();
-            return $this->redirect(['uploadconfirm', 'id' => $model->idoffice]);
+        
+        $modelfile = new File();
+        
+        if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
+            $files = UploadedFile::getInstance($modelfile, 'files');
+            if (!is_null($files)) {
+                $name = explode(".", $files->name);
+                $ext = end($name);
+                $modelfile->file = Yii::$app->security->generateRandomString() . ".{$ext}";
+                $resourcesFiles = Yii::$app->basePath . '/web/resourcesFiles/office/';
+                $path = $resourcesFiles . $modelfile->file;
+                                
+                //Aqui los datos
+                
+                $modelfile->name = "{$files->name}";
+                $modelfile->format = ".{$ext}";
+                $modelfile->size = "{$files->size}";
+                /*
+                echo '<pre>';
+                print_r($modelfile); 
+                echo '</pre>';
+                die();
+                
+                */
+                /*
+                if($modelfile->save()){
+                    echo 'se guardo'; die();
+                }else{
+                    echo 'no se guardo '; die();
+                }*/
+                
+                if ($files->saveAs($path)) {
+                    if ($model->save() && $modelfile->save()) {
+                        
+                        $officefile = new \app\models\Officefile();
+                        
+                        $officefile->idoffice = $model->idoffice;
+                        $officefile->idfile = $modelfile->idfile;
+                        
+                        if($officefile->save()){
+                            return $this->redirect(['uploadconfirm', 'id' => $model->idoffice]);
+                        }                        
+                    }
+                }
+            }
         }
+        
+        /*
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['uploadconfirm', 'id' => $model->idoffice]);
+        }*/
 
         return $this->render('upload', [
+                    'modelfile' => $modelfile,
                     'model' => $model,
                     'sends' => NULL,
         ]);
@@ -78,12 +125,15 @@ class OfficeController extends Controller {
     public function actionUploadconfirm($id) {
 
         $model = new Office();
+        
+        $modelfile = new File();
         //print_r($_POST);
         //if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //return $this->redirect(['view', 'id' => $model->idoffice]);
             $sends = Office::find()->select('expedient')->where(['idoffice' => $id])->one();
             //print_r($send); die();
             return $this->render('upload', [
+                    'modelfile' => $modelfile,
                     'model' => $model,
                     'sends' => $sends,
         ]);
@@ -97,8 +147,8 @@ class OfficeController extends Controller {
     
     public function actionEvaluate() {
         
-        $offices = Office::find()->where(['AND','fkadministrativeunit = '.Yii::$app->profile->fkworksin, 'fkstateoffice = 2 OR fkstateoffice = 3'])->all();
-        $formes = Office::find()->where(['AND','fkadministrativeunit = '.Yii::$app->profile->fkworksin, 'fkstateoffice = 2 OR fkstateoffice = 3', 'fkto = '.Yii::$app->profile->idprofile])->all();
+        $offices = Office::find()->where(['AND','fkadministrativeunit = '.Yii::$app->profile->fkworksin, 'fkstateoffice = 2 OR fkstateoffice = 3'])->orderBy('creationdate ASC')->all();
+        $formes = Office::find()->where(['AND','fkadministrativeunit = '.Yii::$app->profile->fkworksin, 'fkstateoffice = 2 OR fkstateoffice = 3', 'fkto = '.Yii::$app->profile->idprofile])->orderBy('creationdate ASC')->all();
         
         return $this->render('evaluate', [
                     'offices' => $offices,                    
@@ -109,11 +159,14 @@ class OfficeController extends Controller {
     public function actionEvaluating($id){
         $model = $this->findModel($id);
         
+        $offices = Office::find()->where(['fkadministrativeunit' => Yii::$app->profile->fkworksin, 'idoffice' => $id])->all();
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idoffice]);
         }
-
+        
         return $this->render('evaluating', [
+                    'offices' => $offices,
                     'model' => $model,
         ]);
     }
