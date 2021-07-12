@@ -51,12 +51,12 @@ class Administrativeunit extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idadministrativeunit' => 'Idadministrativeunit',
-            'image' => 'Image',
-            'name' => 'Name',
-            'description' => 'Description',
-            'note' => 'Note',
-            'fkheadline' => 'Fkheadline',
+            'idadministrativeunit' => 'ID',
+            'image' => 'Imagen',
+            'name' => 'Nombre',
+            'description' => 'Descripcion',
+            'note' => 'Nota',
+            'fkheadline' => 'Titular',
         ];
     }
 
@@ -98,5 +98,9 @@ class Administrativeunit extends \yii\db\ActiveRecord
     public function getProfiles()
     {
         return $this->hasMany(Profile::className(), ['fkworksin' => 'idadministrativeunit']);
+    }
+    
+    public function getHeadline(){
+        return $this->fkheadline0->name . " ". $this->fkheadline0->lastname;
     }
 }

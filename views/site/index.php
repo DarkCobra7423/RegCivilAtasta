@@ -55,7 +55,7 @@ $this->title = 'Inicio';
                 <h2>Estas son las unidades administrativas que actualmente existen.</h2>
             </div>
             <div class="row" style="margin-left: 0px;margin-right: 0px;">                
-                <?= Html::a('Nueva Unidad Administrativa', ['administrativeunit/createUnit'], ['class' => 'btn btn-warning size']) ?>
+                <?= Html::a('Nueva Unidad Administrativa', ['administrativeunit/createunit'], ['class' => 'btn btn-warning size']) ?>
             </div>
         </div>
         <br>
@@ -108,7 +108,7 @@ $this->title = 'Inicio';
 
                             <?= Html::a('<font style="vertical-align: inherit;">
                                 <font style="vertical-align: inherit; font-size: 17px;">Crear Oficio</font>                       
-                                </font>', ['site/createoffice'], ['class' => 'btn btn-outline-light btn-sm']) ?>
+                                </font>', ['site/createoffice', 'id' => $unit->idadministrativeunit], ['class' => 'btn btn-outline-light btn-sm']) ?>
 
                             <?php if (Yii::$app->user->isSuperadmin) { ?>                                
                                 <?= Html::a('<font style="vertical-align: inherit;">

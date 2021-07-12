@@ -19,6 +19,14 @@ class AdministrativeunitController extends Controller
      */
     public function behaviors()
     {
+
+        return [
+            'ghost-access' => [
+                'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+            ],
+        ];
+
+        /*
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -26,7 +34,7 @@ class AdministrativeunitController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-        ];
+        ];*/
     }
 
     /**
@@ -44,7 +52,7 @@ class AdministrativeunitController extends Controller
         ]);
     }
     
-    public function actionCreateUnit()
+    public function actionCreateunit()
     {
         $model = new Administrativeunit();
 
@@ -52,7 +60,7 @@ class AdministrativeunitController extends Controller
             return $this->redirect(['view', 'id' => $model->idadministrativeunit]);
         }
 
-        return $this->render('create', [
+        return $this->render('createunit', [
             'model' => $model,
         ]);
     }

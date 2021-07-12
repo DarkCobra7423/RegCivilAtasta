@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'birthdate',
             'phone',
             'address',
-            'photo',
+            'photo',            
             'review:ntext',
             'fkjobtitle',
             'fkworksin',

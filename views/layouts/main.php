@@ -92,20 +92,12 @@ AppAsset::register($this);
                                 'items' => [
                                         ['label' => '<i class="fas fa-users"></i> Perfiles', 'url' => ['/profile/profiles']],
                                     '<li class="divider"></li>',
-                                    '<li class="dropdown-header">Rutas Backend</li>',
-                                        ['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Users'), 'url' => ['/user-management/user/index']],
-                                        ['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Roles'), 'url' => ['/user-management/role/index']],
-                                        ['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Permissions'), 'url' => ['/user-management/permission/index']],
-                                        ['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Permission groups'), 'url' => ['/user-management/auth-item-group/index']],
-                                        ['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Visit log'), 'url' => ['/user-management/user-visit-log/index']],
-                                    '<li class="divider"></li>',
-                                    '<li class="dropdown-header">Rutas Frontend</li>',
-                                        ['label' => '<i class="fa fa-angle-double-right"></i> Login', 'url' => ['/user-management/auth/login']],
-                                        ['label' => '<i class="fa fa-angle-double-right"></i> Logout', 'url' => ['/user-management/auth/logout']],
-                                        ['label' => '<i class="fa fa-angle-double-right"></i> Registration', 'url' => ['/user-management/auth/registration']],
-                                        ['label' => '<i class="fa fa-angle-double-right"></i> Change own password', 'url' => ['/user-management/auth/change-own-password']],
-                                        ['label' => '<i class="fa fa-angle-double-right"></i> Password recovery', 'url' => ['/user-management/auth/password-recovery']],
-                                        ['label' => '<i class="fa fa-angle-double-right"></i> E-mail confirmation', 'url' => ['/user-management/auth/confirm-email']],
+                                    '<li class="dropdown-header">Administrar Accesos</li>',
+                                        ['label' => '<i class="fas fa-users"></i> ' . UserManagementModule::t('back', 'Users'), 'url' => ['/user-management/user/index']],
+                                        ['label' => '<i class="fas fa-users-cog"></i> ' . UserManagementModule::t('back', 'Roles'), 'url' => ['/user-management/role/index']],
+                                        ['label' => '<i class="fas fa-user-shield"></i> ' . UserManagementModule::t('back', 'Permissions'), 'url' => ['/user-management/permission/index']],
+                                        ['label' => '<i class="fas fa-user-lock"></i> ' . UserManagementModule::t('back', 'Permission groups'), 'url' => ['/user-management/auth-item-group/index']],
+                                        ['label' => '<i class="fas fa-clipboard-list"></i> ' . UserManagementModule::t('back', 'Visit log'), 'url' => ['/user-management/user-visit-log/index']],
                                 ],
                             ]) : (''),
                     Yii::$app->user->isGuest ? (['label' => '<i class="far fa-address-card"></i> Contacto', 'url' => ['/site/contact']]) : (''),
@@ -134,11 +126,11 @@ AppAsset::register($this);
                                 ['label' => '<i class="far fa-user"></i> Iniciar Sesion', 'url' => ['/user-management/auth/login']]
                             ) : (
                                 [
-                                'label' => '<img class="profile-icon" src="' . Yii::$app->homeUrl . '/resourcesFiles/avatar/default/avatar1.png' . '">', 'options' => ['class' => 'perzonalize'],
+                                'label' => '<img class="profile-icon" src="' . Yii::$app->profile->avatar . '">', 'options' => ['class' => 'perzonalize'],
                                 'items' => [
                                         ['label' => '<i class="far fa-user"></i> Perfil', 'url' => ['profile/profile']],
-                                        ['label' => '<i class="fa fa-angle-double-right"></i> Cambiar contraseña', 'url' => ['/user-management/auth/change-own-password']],
-                                        ['label' => '<i class="fa fa-angle-double-right"></i> Confirmación de E-mail', 'url' => ['/user-management/auth/confirm-email']],
+                                        ['label' => '<i class="fas fa-key"></i> Cambiar contraseña', 'url' => ['/user-management/auth/change-own-password']],
+                                        ['label' => '<i class="far fa-check-circle"></i> Confirmación de E-mail', 'url' => ['/user-management/auth/confirm-email']],
                                         ['label' => '<i class="fas fa-sign-out-alt"></i> Cerrar Sesion', 'url' => ['/user-management/auth/logout']],
                                 ],
                             ]
@@ -174,244 +166,258 @@ AppAsset::register($this);
 
         <?php $this->endBody() ?>
     </body>
-    
+
     <!-- TEMPLATE NOTIFICATION -->
-<script id="notificationTemplate" type="text/html">
-  <!-- NOTIFICATION -->
-<a class="dropdown-item dropdown-notification" href="{{href}}">
-  <div class="notification-read">
-    <i class="fa fa-times" aria-hidden="true"></i>
-  </div>
-  <img class="notification-img" src="//placehold.it/48x48" alt="Icone" />
-  <div class="notifications-body">
-    <p class="notification-texte">{{texte}}</p>
-    <p class="notification-date text-muted">
-      <i class="fa fa-clock-o" aria-hidden="true"></i> {{date}}
-    </p>
-  </div>
-</a>
-</script>
+    <script id="notificationTemplate" type="text/html">
+        <!-- NOTIFICATION -->
+        <a class="dropdown-item dropdown-notification" href="{{href}}">
+            <div class="notification-read">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </div>
+            <img class="notification-img" src="//placehold.it/48x48" alt="Icone" />
+            <div class="notifications-body">
+                <p class="notification-texte">{{texte}}</p>
+                <p class="notification-date text-muted">
+                    <i class="fa fa-clock-o" aria-hidden="true"></i> {{date}}
+                </p>
+            </div>
+        </a>
+    </script>
 
-<script type="text/javascript">
-$(function () { 
+    <script type="text/javascript">
+$(function () {
 
-  var count = 1;
-  var lastCount = 0;
+    var count = 1;
+    var lastCount = 0;
 
-  // Pour la maquette
-  var notifications = new Array();
+    // Pour la maquette
+    //$.post(Yii::$app->homeUrl."office/worksin?unit="+$(this).val()
+    var notifications = new Array();
+    /*
+    var notifications = new Array([
+            //var notifications = 
+            {
+                "href": "#",
+                "image": "#aqui la imagen",
+                "texte": "Acta Nacimiento " + makeBadge("Pendiente"),
+                "date": "Mercredi 10 Mai, à 9h53"
+                /*
+                href: "#",
+                image: "#aqui la imagen",
+                texte: "Acta Nacimiento " + makeBadge("Pendiente"),
+                date: "Mercredi 10 Mai, à 9h53"
+                *
+            },
+            //alert(notifications);
+    ]);*/
+    
+     notifications.push({
+     href: "#",
+     image: "#aqui la imagen",
+     texte: "Acta Nacimiento " + makeBadge("Pendiente"),
+     date: "Mercredi 10 Mai, à 9h53"
+     });
 
-  notifications.push({
-    href: "#",
-    image: "#aqui la imagen",
-    texte: "Acta Nacimiento " + makeBadge("Pendiente"),
-    date: "Mercredi 10 Mai, à 9h53"
-  });
+    function makeBadge(texte) {
+        return "<span class=\"badge badge-warning\">" + texte + "11</span>";
+    }
 
+    appNotifications = {
 
-  function makeBadge(texte) {
-    return "<span class=\"badge badge-warning\">" + texte + "11</span>";
-  }
+        // Initialisation
+        init: function () {
+            // On masque les éléments
+            $("#notificationsBadge").hide();
+            $("#notificationAucune").hide();
 
-  appNotifications = {
+            // On bind le clic sur les notifications
+            $("#notifications-dropdown").on('click', function () {
 
-    // Initialisation
-    init: function () {
-      // On masque les éléments
-      $("#notificationsBadge").hide();
-      $("#notificationAucune").hide();
+                var open = $("#notifications-dropdown").attr("aria-expanded");
 
-      // On bind le clic sur les notifications
-      $("#notifications-dropdown").on('click', function () {
+                // Vérification si le menu est ouvert au moment du clic
+                if (open === "false") {
+                    appNotifications.loadAll();
+                }
 
-        var open = $("#notifications-dropdown").attr("aria-expanded");
+            });
 
-        // Vérification si le menu est ouvert au moment du clic
-        if (open === "false") {
-          appNotifications.loadAll();
-        }
+            // On charge les notifications
+            appNotifications.loadAll();
 
-      });
+            // Polling
+            // Toutes les 3 minutes on vérifie si il n'y a pas de nouvelles notifications
+            setInterval(function () {
+                appNotifications.loadNumber();
+            }, 180000);
 
-      // On charge les notifications
-      appNotifications.loadAll();
+            // Binding de marquage comme lue desktop
+            $('.notification-read-desktop').on('click', function (event) {
+                appNotifications.markAsReadDesktop(event, $(this));
+            });
 
-      // Polling
-      // Toutes les 3 minutes on vérifie si il n'y a pas de nouvelles notifications
-      setInterval(function () {
-        appNotifications.loadNumber();
-      }, 180000);
+        },
 
-      // Binding de marquage comme lue desktop
-      $('.notification-read-desktop').on('click', function (event) {
-        appNotifications.markAsReadDesktop(event, $(this));
-      });
+        // Déclenche le chargement du nombre et des notifs
+        loadAll: function () {
 
-    },
+            // On ne charge les notifs que si il y a une différence
+            // Ou si il n'y a aucune notifs
+            if (count !== lastCount || count === 0) {
+                appNotifications.load();
+            }
+            appNotifications.loadNumber();
 
-    // Déclenche le chargement du nombre et des notifs
-    loadAll: function () {
+        },
 
-      // On ne charge les notifs que si il y a une différence
-      // Ou si il n'y a aucune notifs
-      if (count !== lastCount || count === 0) {
-        appNotifications.load();
-      }
-      appNotifications.loadNumber();
+        // Masque de chargement pour l'icône et le badge
+        badgeLoadingMask: function (show) {
+            if (show === true) {
+                $("#notificationsBadge").html(appNotifications.badgeSpinner);
+                $("#notificationsBadge").show();
+                // Mobile
+                $("#notificationsBadgeMobile").html(count);
+                $("#notificationsBadgeMobile").show();
+            } else {
+                $("#notificationsBadge").html(count);
+                if (count > 0) {
+                    $("#notificationsIcon").removeClass("fa-bell-o");
+                    $("#notificationsIcon").addClass("fa-bell");
+                    $("#notificationsBadge").show();
+                    // Mobile
+                    $("#notificationsIconMobile").removeClass("fa-bell-o");
+                    $("#notificationsIconMobile").addClass("fa-bell");
+                    $("#notificationsBadgeMobile").show();
+                } else {
+                    $("#notificationsIcon").addClass("fa-bell-o");
+                    $("#notificationsBadge").hide();
+                    // Mobile
+                    $("#notificationsIconMobile").addClass("fa-bell-o");
+                    $("#notificationsBadgeMobile").hide();
+                }
 
-    },
+            }
+        },
 
-    // Masque de chargement pour l'icône et le badge
-    badgeLoadingMask: function (show) {
-      if (show === true) {
-        $("#notificationsBadge").html(appNotifications.badgeSpinner);
-        $("#notificationsBadge").show();
-        // Mobile
-        $("#notificationsBadgeMobile").html(count);
-        $("#notificationsBadgeMobile").show();
-      }
-      else {
-        $("#notificationsBadge").html(count);
-        if (count > 0) {
-          $("#notificationsIcon").removeClass("fa-bell-o");
-          $("#notificationsIcon").addClass("fa-bell");
-          $("#notificationsBadge").show();
-          // Mobile
-          $("#notificationsIconMobile").removeClass("fa-bell-o");
-          $("#notificationsIconMobile").addClass("fa-bell");
-          $("#notificationsBadgeMobile").show();
-        }
-        else {
-          $("#notificationsIcon").addClass("fa-bell-o");
-          $("#notificationsBadge").hide();
-          // Mobile
-          $("#notificationsIconMobile").addClass("fa-bell-o");
-          $("#notificationsBadgeMobile").hide();
-        }
+        // Indique si chargement des notifications
+        loadingMask: function (show) {
 
-      }
-    },
+            if (show === true) {
+                $("#notificationAucune").hide();
+                $("#notificationsLoader").show();
+            } else {
+                $("#notificationsLoader").hide();
+                if (count > 0) {
+                    $("#notificationAucune").hide();
+                } else {
+                    $("#notificationAucune").show();
+                }
+            }
 
-    // Indique si chargement des notifications
-    loadingMask: function (show) {
+        },
 
-      if (show === true) {
-        $("#notificationAucune").hide();
-        $("#notificationsLoader").show();
-      } else {
-        $("#notificationsLoader").hide();
-        if (count > 0) {
-          $("#notificationAucune").hide();
-        }
-        else {
-          $("#notificationAucune").show();
-        }
-      }
+        // Chargement du nombre de notifications
+        loadNumber: function () {
+            appNotifications.badgeLoadingMask(true);
 
-    },
+            // TODO : API Call pour récupérer le nombre
 
-    // Chargement du nombre de notifications
-    loadNumber: function () {
-      appNotifications.badgeLoadingMask(true);
+            // TEMP : pour le template
+            setTimeout(function () {
+                $("#notificationsBadge").html(count);
+                appNotifications.badgeLoadingMask(false);
+            }, 1000);
+        },
 
-      // TODO : API Call pour récupérer le nombre
+        // Chargement de notifications
+        load: function () {
+            appNotifications.loadingMask(true);
 
-      // TEMP : pour le template
-      setTimeout(function () {
-        $("#notificationsBadge").html(count);
-        appNotifications.badgeLoadingMask(false);
-      }, 1000);
-    },
+            // On vide les notifs
+            $('#notificationsContainer').html("");
 
-    // Chargement de notifications
-    load: function () {
-      appNotifications.loadingMask(true);
+            // Sauvegarde du nombre de notifs
+            lastCount = count;
 
-      // On vide les notifs
-      $('#notificationsContainer').html("");
+            // TEMP : pour le template
+            setTimeout(function () {
 
-      // Sauvegarde du nombre de notifs
-      lastCount = count;
+                // TEMP : pour le template
+                for (i = 0; i < count; i++) {
 
-      // TEMP : pour le template
-      setTimeout(function () {
+                    var template = $('#notificationTemplate').html();
+                    template = template.replace("{{href}}", notifications[i].href);
+                    template = template.replace("{{image}}", notifications[i].image);
+                    template = template.replace("{{texte}}", notifications[i].texte);
+                    template = template.replace("{{date}}", notifications[i].date);
 
-        // TEMP : pour le template
-        for (i = 0; i < count; i++) {
+                    $('#notificationsContainer').append(template);
+                }
 
-          var template = $('#notificationTemplate').html();
-          template = template.replace("{{href}}", notifications[i].href);
-          template = template.replace("{{image}}", notifications[i].image);
-          template = template.replace("{{texte}}", notifications[i].texte);
-          template = template.replace("{{date}}", notifications[i].date);
+                // On bind le marquage comme lue
+                $('.notification-read').on('click', function (event) {
+                    appNotifications.markAsRead(event, $(this));
+                });
 
-          $('#notificationsContainer').append(template);
-        }
+                // On arrête le chargement
+                appNotifications.loadingMask(false);
 
-        // On bind le marquage comme lue
-        $('.notification-read').on('click', function (event) {
-          appNotifications.markAsRead(event, $(this));
-        });
+                // On réactive le bouton
+                $("#notifications-dropdown").prop("disabled", false);
+            }, 1000);
+        },
 
-        // On arrête le chargement
-        appNotifications.loadingMask(false);
+        // Marquer une notification comme lue
+        markAsRead: function (event, elem) {
+            // Permet de garde la liste ouverte
+            event.preventDefault();
+            event.stopPropagation();
 
-        // On réactive le bouton
-        $("#notifications-dropdown").prop("disabled", false);
-      }, 1000);
-    },
+            // Suppression de la notification
+            elem.parent('.dropdown-notification').remove();
 
-    // Marquer une notification comme lue
-    markAsRead: function (event, elem) {
-      // Permet de garde la liste ouverte
-      event.preventDefault();
-      event.stopPropagation();
+            // TEMP : pour le template
+            count--;
 
-      // Suppression de la notification
-      elem.parent('.dropdown-notification').remove();
+            // Mise à jour du nombre
+            appNotifications.loadAll();
+        },
 
-      // TEMP : pour le template
-      count--;
+        // Marquer une notification comme lue version bureau
+        markAsReadDesktop: function (event, elem) {
+            // Permet de ne pas change de page
+            event.preventDefault();
+            event.stopPropagation();
 
-      // Mise à jour du nombre
-      appNotifications.loadAll();
-    },
+            // Suppression de la notification
+            elem.parent('.dropdown-notification').removeClass("notification-unread");
+            elem.remove();
 
-    // Marquer une notification comme lue version bureau
-    markAsReadDesktop: function (event, elem) {
-      // Permet de ne pas change de page
-      event.preventDefault();
-      event.stopPropagation();
+            // On supprime le focus
+            if (document.activeElement) {
+                document.activeElement.blur();
+            }
 
-      // Suppression de la notification
-      elem.parent('.dropdown-notification').removeClass("notification-unread");
-      elem.remove();
+            // TEMP : pour le template
+            count--;
 
-      // On supprime le focus
-      if (document.activeElement) {
-        document.activeElement.blur();
-      }
+            // Mise à jour du nombre
+            appNotifications.loadAll();
+        },
 
-      // TEMP : pour le template
-      count--;
+        add: function () {
+            lastCount = count;
+            count++;
+        },
 
-      // Mise à jour du nombre
-      appNotifications.loadAll();
-    },
+        // Template du badge
+        badgeSpinner: '<i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i>'
+    };
 
-    add: function () {
-      lastCount = count;
-      count++;
-    },
-
-    // Template du badge
-    badgeSpinner: '<i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i>'
-  };
-
-  appNotifications.init();
+    appNotifications.init();
 
 });
-</script>
-    
+    </script>
+
 </html>
 <?php $this->endPage() ?>
