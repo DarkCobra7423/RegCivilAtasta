@@ -63,18 +63,18 @@ class Profile extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'idprofile' => 'Idprofile',
-            'name' => 'Name',
-            'lastname' => 'Lastname',
-            'gender' => 'Gender',
-            'birthdate' => 'Birthdate',
-            'phone' => 'Phone',
-            'address' => 'Address',
-            'photo' => 'Photo',
-            'review' => 'Review',
-            'fkjobtitle' => 'Fkjobtitle',
+            'idprofile' => 'ID',
+            'name' => 'Nombre',
+            'lastname' => 'Apellidos',
+            'gender' => 'Genero',
+            'birthdate' => 'Fecha Nacimiento',
+            'phone' => 'Telefono',
+            'address' => 'Direccion',
+            'photo' => 'Avatar',
+            'review' => 'Reseña',
+            'fkjobtitle' => 'Tipo Usuario',
             'fkworksin' => 'Labora en',
-            'fkuser' => 'User',
+            'fkuser' => 'ID Usuario',
             'username' => 'Nombre Usuario',
         ];
     }
@@ -141,5 +141,17 @@ class Profile extends \yii\db\ActiveRecord {
         //var_dump($this->fkuser0); die();
         return $this->fkuser0->username;
     }
-
+    
+    public function getAvatar(){
+        return Yii::$app->homeUrl . 'resourcesFiles/avatar/' . $this->photo;
+    }
+    
+    public function getJobtitle(){
+        return $this->fkjobtitle0->jobtitle;
+    }
+    
+    public function getNamelastname(){
+        return $this->name . " ". $this->lastname;
+    }
+    
 }

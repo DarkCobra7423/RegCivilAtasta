@@ -20,13 +20,19 @@ class OfficefileController extends Controller
     public function behaviors()
     {
         return [
+            'ghost-access' => [
+                'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+            ],
+        ];
+        /*
+        return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
-        ];
+        ];*/
     }
 
     /**

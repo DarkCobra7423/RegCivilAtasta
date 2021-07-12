@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Administrativeunit;
+use app\models\Office;
 
 class SiteController extends Controller {
 
@@ -76,14 +77,20 @@ class SiteController extends Controller {
         return $this->render('index', ['units' => $units, 'carousels' => $carousels]);
     }
     
-    public function actionCreateoffice() {
+    public function actionCreateoffice($id) {
         
-        //$units = Administrativeunit::find()->orderBy('RAND()')->all();
-        $units = Administrativeunit::find()->all();
+        $model = new Office();
         
-        $carousels = Administrativeunit::find()->orderBy('RAND()')->limit(3)->all();
-        
-        return $this->render('newoffice', ['units' => $units, 'carousels' => $carousels]);
+        $modelUnit = Administrativeunit::find()->where(['idadministrativeunit' => $id])->one();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->idoffice]);
+        }
+
+        return $this->render('newoffice', [
+                    'modelUnit' => $modelUnit,
+                    'model' => $model,
+        ]);
     }
     
     public function actionModoprueba(){
