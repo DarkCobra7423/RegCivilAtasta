@@ -20,7 +20,8 @@ AppAsset::register($this);
     <head>
         <meta charset="<?= Yii::$app->charset ?>">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+        <meta name="viewport" content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <?php $this->registerCsrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
@@ -168,8 +169,9 @@ AppAsset::register($this);
     </body>
 
     <!-- TEMPLATE NOTIFICATION -->
+    <!--
     <script id="notificationTemplate" type="text/html">
-        <!-- NOTIFICATION -->
+        <!-- NOTIFICATION --
         <a class="dropdown-item dropdown-notification" href="{{href}}">
             <div class="notification-read">
                 <i class="fa fa-times" aria-hidden="true"></i>
@@ -182,41 +184,78 @@ AppAsset::register($this);
                 </p>
             </div>
         </a>
+    </script>-->
+    <script src="<?= Yii::$app->homeUrl ?>js/notificationsdesktop.js" type="text/javascript"></script>
+    
+    
+    <script type="text/javascript" id="iddesktop">
+        
     </script>
-
+    
     <script type="text/javascript">
 $(function () {
 
-    var count = 1;
+    var count = 2;
     var lastCount = 0;
 
     // Pour la maquette
     //$.post(Yii::$app->homeUrl."office/worksin?unit="+$(this).val()
-    var notifications = new Array();
     /*
-    var notifications = new Array([
-            //var notifications = 
+    console.log($.post("<? Yii::$app->homeUrl ?>notifications/not", function( data ) {
+  alert( "Data Loaded: " + data );
+}));*/
+/*
+var notifications = new Array();
+//var notifications;
+
+$.post("<? Yii::$app->homeUrl ?>notifications/not", function( data ) {
+  
+//notifications = new Array(data);
+notifications.push({
+     href: "#",
+     image: "#aqui la imagen1111",
+     texte: "Acta Nacimiento " + makeBadge("Pendiente"),
+     date: "Mercredi 10 Mai, à 9h53"
+   },);  
+//console.log(data);
+  //alert( "Data Loaded: " + data );
+
+});
+*/
+    //console.log($.post("<? Yii::$app->homeUrl ?>notifications/not", function(data){}));
+    //var notifications = new Array(data);
+    /*
+    var notifications = new Array(
+            
             {
                 "href": "#",
                 "image": "#aqui la imagen",
                 "texte": "Acta Nacimiento " + makeBadge("Pendiente"),
                 "date": "Mercredi 10 Mai, à 9h53"
-                /*
-                href: "#",
-                image: "#aqui la imagen",
-                texte: "Acta Nacimiento " + makeBadge("Pendiente"),
-                date: "Mercredi 10 Mai, à 9h53"
-                *
-            },
-            //alert(notifications);
-    ]);*/
+                
+            },            
+    );*/
+
+
+/*
+    var notifications = new Array();
     
      notifications.push({
      href: "#",
      image: "#aqui la imagen",
      texte: "Acta Nacimiento " + makeBadge("Pendiente"),
      date: "Mercredi 10 Mai, à 9h53"
-     });
+     },{
+     href: "#",
+     image: "#aqui la imagen",
+     texte: "Acta Nacimiento " + makeBadge("Pendiente"),
+     date: "Mercredi 10 Mai, à 9h53"
+     },);
+     
+
+     console.log(notifications);
+*/
+     //console.log(notifications1);
 
     function makeBadge(texte) {
         return "<span class=\"badge badge-warning\">" + texte + "11</span>";
@@ -279,7 +318,11 @@ $(function () {
                 $("#notificationsBadgeMobile").html(count);
                 $("#notificationsBadgeMobile").show();
             } else {
-                $("#notificationsBadge").html(count);
+                //$("#notificationsBadge").html(count);
+                $.post("<?= Yii::$app->homeUrl ?>notifications/countnotification", function( data ) {
+                    //alert( "Data Loaded: " + data );                                        
+                    $("#notificationsBadge").html(data);
+                });
                 if (count > 0) {
                     $("#notificationsIcon").removeClass("fa-bell-o");
                     $("#notificationsIcon").addClass("fa-bell");
@@ -324,8 +367,14 @@ $(function () {
 
             // TEMP : pour le template
             setTimeout(function () {
-                $("#notificationsBadge").html(count);
-                appNotifications.badgeLoadingMask(false);
+                //$("#notificationsBadge").html(count);
+                $.post("<?= Yii::$app->homeUrl ?>notifications/countnotification", function( data ) {
+                    //alert( "Data Loaded: " + data );
+                    //document.getElementById('notificationsBadge').innerHTML = data;
+                    appNotifications.badgeLoadingMask(false);
+                    $("#notificationsBadge").html(data);
+                });
+                
             }, 1000);
         },
 
@@ -343,9 +392,19 @@ $(function () {
             setTimeout(function () {
 
                 // TEMP : pour le template
+                //notificationsContainer
+                //document.getElementById('notificationsContainer').innerHTML = '<a class="dropdown-item dropdown-notification" href="#Url"><div class="notification-read"><i class="fa fa-times" aria-hidden="true"></i></div> <img class="notification-img" src="//placehold.it/48x48" alt="Icone" /><div class="notifications-body"><p class="notification-texte">Acta de nacimiento</p><p class="notification-date text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> 21/06/2121</p></div></a>';
+                $.post("<?= Yii::$app->homeUrl ?>notifications/notifications", function( data ) {
+                    //alert( "Data Loaded: " + data );
+                    document.getElementById('notificationsContainer').innerHTML = data;
+                    appNotifications.desktop();
+                });
+                
+                /*
                 for (i = 0; i < count; i++) {
 
                     var template = $('#notificationTemplate').html();
+                    
                     template = template.replace("{{href}}", notifications[i].href);
                     template = template.replace("{{image}}", notifications[i].image);
                     template = template.replace("{{texte}}", notifications[i].texte);
@@ -353,6 +412,7 @@ $(function () {
 
                     $('#notificationsContainer').append(template);
                 }
+                */
 
                 // On bind le marquage comme lue
                 $('.notification-read').on('click', function (event) {
@@ -365,6 +425,19 @@ $(function () {
                 // On réactive le bouton
                 $("#notifications-dropdown").prop("disabled", false);
             }, 1000);
+        },
+        
+        desktop: function (){
+        
+        //window.onload = onNotificationButtonClick;
+        window.onload = desktopNot('<?= Yii::$app->homeUrl ?>');
+        /*
+            $.post("<? Yii::$app->homeUrl ?>notifications/desktop", function( data ) {
+                //data;
+                console.log(data);
+                    //alert( "Data Loaded: " + data );
+                 document.getElementById('iddesktop').innerHTML = data;
+                });*/
         },
 
         // Marquer une notification comme lue
@@ -418,6 +491,7 @@ $(function () {
 
 });
     </script>
+   
 
 </html>
 <?php $this->endPage() ?>

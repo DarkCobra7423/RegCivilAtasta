@@ -12,13 +12,12 @@ use yii\filters\VerbFilter;
 /**
  * NotificationsController implements the CRUD actions for Notifications model.
  */
-class NotificationsController extends Controller
-{
+class NotificationsController extends Controller {
+
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
+    public function behaviors() {
 
         return [
             'ghost-access' => [
@@ -26,29 +25,123 @@ class NotificationsController extends Controller
             ],
         ];
         /*
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];*/
+          return [
+          'verbs' => [
+          'class' => VerbFilter::className(),
+          'actions' => [
+          'delete' => ['POST'],
+          ],
+          ],
+          ]; */
     }
 
     /**
      * Lists all Notifications models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new NotificationsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public function actionNotifications() {
+
+        $notifications = Notifications::find()->all();
+
+        foreach ($notifications as $notification) {
+
+            echo '<a class="dropdown-item dropdown-notification" href="#">
+            <div class="notification-read">
+                <span class="fa fa-times" aria-hidden="true"></span>
+            </div>
+            <!--<img class="notification-img" src="#" alt="Notification" />-->
+            <span class="notification-img" style="font-size: 30px;"><i class="fas fa-bell"></i></span>
+            <div class="notifications-body">
+                <p class="notification-texte">' . $notification->title . '</p>
+                <p class="notification-date text-muted">
+                    <i class="far fa-clock"></i> ' . $notification->datatime . '
+                </p>
+            </div>
+        </a>';
+        }
+    }
+
+    public function actionCountnotification() {
+        //SELECT Count(*) AS counts FROM notifications WHERE fkprofile = 2 OR fkadministrativeunit = 1         
+
+        $num = Notifications::find()->select('COUNT(*) AS number')->where(['OR', 'fkprofile = 2', 'fkadministrativeunit = 1'])->one();
+
+        echo $num->number;
+    }
+
+    public function actionDesktop() {
+        //SELECT *  FROM `notifications` WHERE `read` = 0 AND `fkprofile` = 2 OR `fkadministrativeunit` = 1
+                
+        $desktops = Notifications::find()->where(['AND', '`read` = 0', ['OR', 'fkprofile = 2', 'fkadministrativeunit = 1']])->all();
+        
+        foreach ($desktops as $desktop) {
+            
+        }
+        //echo $desktops;
+        echo '/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+window.onload = onNotificationButtonClick();
+
+           
+// Validamos y activamos el Permiso para Notificar
+if(Notification.permission!=="granted") {
+	Notification.requestPermission();
+}
+
+// var notificador = document.getElementById("notificadorThingy");
+
+// Instanciamos el botón, para que al hacer Click en el, se proceda a lanzar la Notificación o un mensaje para actualizar el Navegador
+// 
+//document.getElementById("btn_notificar").addEventListener("click", onNotificationButtonClick);
+
+
+// Validamos si el Navegador soporta las Notificaciones en HTML 5
+function onNotificationButtonClick() {
+	if (!isNotificationSupported()) {
+		logg("Tu navegador no soporta Notificaciones. Por favor, utiliza una versión Reciente del Navegador Google Chrome o Safari.");
+	return;
+	}
+
+	// Si el Navegador soporta las Notificaciones HTML 5, entonces que proceda a Notificar
+	var notificacion = new Notification("Nuevas Notificaciones", {
+	    
+            icon: "../resources/img/logo1.png",
+	    body: "Abrir Bandeja de Gmail Funciona este."
+	});
+
+	// Redireccionamos a un determinado Destino o URL al hacer click en la Notificación
+	notificacion.onclick = function() {
+		window.open("http://gmail.com/");
+	};					
+}
+		
+// Solicitamos los Permisos del Sistema
+function requestPermissions() {
+
+}
+
+// Luego del Permiso del Sistema, le indicamos que nos Muestre la Notificación
+function isNotificationSupported() {
+	return ("Notification" in window);
+}
+
+// Mostramos el Mensaje de la Notificación
+function logg(mensaje) {
+	notificador.innerHTML += "<p>"+mensaje+"</p>";
+}';
     }
 
     /**
@@ -57,10 +150,9 @@ class NotificationsController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -69,8 +161,7 @@ class NotificationsController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new Notifications();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -78,7 +169,7 @@ class NotificationsController extends Controller
         }
 
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -89,8 +180,7 @@ class NotificationsController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -98,7 +188,7 @@ class NotificationsController extends Controller
         }
 
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -109,8 +199,7 @@ class NotificationsController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -123,12 +212,12 @@ class NotificationsController extends Controller
      * @return Notifications the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = Notifications::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
 }

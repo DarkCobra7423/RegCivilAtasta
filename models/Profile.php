@@ -56,7 +56,7 @@ class Profile extends \yii\db\ActiveRecord {
                 [['address'], 'string', 'max' => 100],
                 [['photo'], 'string', 'max' => 255],
                 [['avatars'], 'safe'],
-                [['avatars'], 'file', 'extensions' => 'jpg, gif, png'],
+                [['avatars'], 'file', 'extensions' => 'jpg, jpeg, png'],
                 [['avatars'], 'file', 'maxSize' => '100000000'], 
                 [['fkworksin'], 'exist', 'skipOnError' => true, 'targetClass' => Administrativeunit::className(), 'targetAttribute' => ['fkworksin' => 'idadministrativeunit']],
                 [['fkjobtitle'], 'exist', 'skipOnError' => true, 'targetClass' => Jobtitle::className(), 'targetAttribute' => ['fkjobtitle' => 'idjobtitle']],
