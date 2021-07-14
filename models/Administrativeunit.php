@@ -42,7 +42,7 @@ class Administrativeunit extends \yii\db\ActiveRecord {
                 [['name'], 'string', 'max' => 50],
                 [['note'], 'string', 'max' => 30],
                 [['img'], 'safe'],
-                [['img'], 'file', 'extensions' => 'jpg, gif, png'],
+                [['img'], 'file', 'extensions' => 'jpg, gif, png, webp, pdf, doc, docx, txt'],
                 [['img'], 'file', 'maxSize' => '100000000'],
                 [['fkheadline'], 'exist', 'skipOnError' => true, 'targetClass' => Profile::className(), 'targetAttribute' => ['fkheadline' => 'idprofile']],
         ];
@@ -104,7 +104,7 @@ class Administrativeunit extends \yii\db\ActiveRecord {
     }
     
      public function getImagen() {
-        return Yii::$app->homeUrl . '../web/image/' . $this->image;
+        return Yii::$app->homeUrl . 'resourcesFiles/administrativeunit/' . $this->image;
     }
 
 

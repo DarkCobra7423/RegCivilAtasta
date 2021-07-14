@@ -66,8 +66,8 @@ class AdministrativeunitController extends Controller
                 $name = explode(".", $img->name);
                 $ext = end($name);
                 $model->image = Yii::$app->security->generateRandomString() . ".{$ext}";
-                $resourcesImage = Yii::$app->basePath . '../web/image/';
-                $path = $resourcesImage . $model->image;
+                $resourcesUnit = Yii::$app->basePath . '/web/resourcesFiles/administrativeunit/';
+                $path = $resourcesUnit . $model->image;
                 if ($img->saveAs($path)) {
                     if ($model->save()) {
                         return $this->redirect(['view', 'id' => $model->idadministrativeunit]);
@@ -112,8 +112,8 @@ class AdministrativeunitController extends Controller
                 $name = explode(".", $img->name);
                 $ext = end($name);
                 $model->image = Yii::$app->security->generateRandomString() . ".{$ext}";
-                $resourcesImage = Yii::$app->basePath . '../web/image/';
-                $path = $resourcesImage . $model->image;
+                $resourcesUnit = Yii::$app->basePath . '/web/resourcesFiles/administrativeunit/';
+                $path = $resourcesUnit . $model->image;
                 if ($img->saveAs($path)) {
                     if ($model->save()) {
                         return $this->redirect(['view', 'id' => $model->idadministrativeunit]);
@@ -147,8 +147,8 @@ class AdministrativeunitController extends Controller
                 $name = explode(".", $img->name);
                 $ext = end($name);
                 $model->image = Yii::$app->security->generateRandomString() . ".{$ext}";
-                $resourcesImage = Yii::$app->basePath . '../web/image/';
-                $path = $resourcesImage . $model->image;
+                $resourcesUnit = Yii::$app->basePath . '/web/resourcesFiles/administrativeunit/';
+                $path = $resourcesUnit . $model->image;
                 if ($img->saveAs($path)) {
                     if ($model->save()) {
                         return $this->redirect(['view', 'id' => $model->idadministrativeunit]);

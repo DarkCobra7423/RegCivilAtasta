@@ -16,8 +16,8 @@ use kartik\file\FileInput;
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <?php // $form->field($model, 'file')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'files')->widget(FileInput::classname(), ['options' => ['accept' => 'files/*'],]); ?>
-
+    <?php // $form->field($model, 'files')->widget(FileInput::classname(), ['options' => ['accept' => 'files/*'],]); ?>
+    <?= $form->field($model, 'files[]')->widget(FileInput::classname(), ['options' => ['multiple' => true],]); ?>
     <?= $form->field($model, 'format')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'size')->textInput(['maxlength' => true]) ?>

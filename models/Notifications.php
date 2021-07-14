@@ -21,6 +21,8 @@ use Yii;
  * @property Profile $fkprofile0
  */
 class Notifications extends \yii\db\ActiveRecord {
+    
+    public $number;
 
     /**
      * {@inheritdoc}
