@@ -17,16 +17,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->idprofile], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->idprofile], [
+        <?=
+        Html::a('Delete', ['delete', 'id' => $model->idprofile], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ])
+        ?>
     </p>
 
-    <?= DetailView::widget([
+    <?=
+    DetailView::widget([
         'model' => $model,
         'attributes' => [
             'idprofile',
@@ -36,12 +39,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'birthdate',
             'phone',
             'address',
-            'photo',            
+            'photo', 
+                ['attribute' => 'avatar',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return Html::img($model->avatar);
+                }
+            ],
             'review:ntext',
             'fkjobtitle',
             'fkworksin',
             'fkuser',
         ],
-    ]) ?>
+    ])
+    ?>
 
 </div>

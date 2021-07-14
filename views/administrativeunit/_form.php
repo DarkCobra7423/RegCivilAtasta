@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\file\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Administrativeunit */
@@ -12,7 +13,8 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+    <?php // $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'img')->widget(FileInput::classname(), ['options' => ['accept' => 'img/*'],]); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 

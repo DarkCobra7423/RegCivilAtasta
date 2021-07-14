@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\file\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Profile */
@@ -24,7 +25,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'photo')->textInput(['maxlength' => true]) ?>
+    <?php  // $form->field($model, 'photo')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'avatars')->widget(FileInput::classname(), ['options' => ['accept' => 'avatars/*'],]); ?>
 
     <?= $form->field($model, 'review')->textarea(['rows' => 6]) ?>
 

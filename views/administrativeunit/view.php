@@ -17,25 +17,35 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->idadministrativeunit], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->idadministrativeunit], [
+        <?=
+        Html::a('Delete', ['delete', 'id' => $model->idadministrativeunit], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ])
+        ?>
     </p>
 
-    <?= DetailView::widget([
+    <?=
+    DetailView::widget([
         'model' => $model,
         'attributes' => [
             'idadministrativeunit',
             'image',
+                ['attribute' => 'imagen',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return Html::img($model->imagen);
+                }
+            ],
             'name',
             'description:ntext',
             'note',
             'fkheadline',
         ],
-    ]) ?>
+    ])
+    ?>
 
 </div>

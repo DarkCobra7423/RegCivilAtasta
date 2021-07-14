@@ -11,6 +11,8 @@ use yii\filters\VerbFilter;
 use webvimark\components\AdminDefaultController;
 use webvimark\modules\UserManagement\models\User;
 use webvimark\modules\UserManagement\models\search\UserSearch;
+use yii\web\UploadedFile;
+
 
 /*
   use webvimark\components\AdminDefaultController;
@@ -165,9 +167,23 @@ class ProfileController extends Controller {
      */
     public function actionCreate() {
         $model = new Profile();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+     /*   if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idprofile]);
+        }*/
+         if ($model->load(Yii::$app->request->post())) {
+            $avatars = UploadedFile::getInstance($model, 'avatars');
+            if (!is_null($avatars)) {
+                $name = explode(".", $avatars->name);
+                $ext = end($name);
+                $model->photo = Yii::$app->security->generateRandomString() . ".{$ext}";
+                $resourcesFiles1 = Yii::$app->basePath . '/web/resourcesFiles/avatar/';
+                $path = $resourcesFiles1 . $model->photo;
+                if ($avatars->saveAs($path)) {
+                    if ($model->save()) {
+                        return $this->redirect(['view', 'id' => $model->idprofile]);
+                    }
+                }
+            }
         }
 
         return $this->render('create', [
@@ -185,10 +201,25 @@ class ProfileController extends Controller {
     public function actionUpdate($id) {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+       /* if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idprofile]);
+        }*/
+         if ($model->load(Yii::$app->request->post())) {
+            $avatars = UploadedFile::getInstance($model, 'avatars');
+            if (!is_null($avatars)) {
+                $name = explode(".", $avatars->name);
+                $ext = end($name);
+                $model->photo = Yii::$app->security->generateRandomString() . ".{$ext}";
+                $resourcesFiles1 = Yii::$app->basePath . '/web/resourcesFiles/avatar/';
+                $path = $resourcesFiles1 . $model->photo;
+                if ($avatars->saveAs($path)) {
+                    if ($model->save()) {
+                        return $this->redirect(['view', 'id' => $model->idprofile]);
+                    }
+                }
+            }
         }
-
+        
         return $this->render('update', [
                     'model' => $model,
         ]);

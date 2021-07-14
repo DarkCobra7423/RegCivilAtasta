@@ -3,6 +3,9 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Profile;
+use kartik\file\FileInput;
+use yii\web\UploadedFile;
+
 
 $this->title = "Nueva Unidad Administrativa";
 
@@ -22,7 +25,8 @@ $profiles = ArrayHelper::map(Profile::find()->all(), 'idprofile', 'namelastname'
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         
         <!-- File Button -->
-        <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+        <?php // $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'img')->widget(FileInput::classname(), ['options' => ['accept' => 'img/*'],]); ?>
 
         <!-- Textarea -->
         <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>

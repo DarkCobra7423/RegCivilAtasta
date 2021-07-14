@@ -8,6 +8,7 @@ use app\models\AdministrativeunitSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * AdministrativeunitController implements the CRUD actions for Administrativeunit model.
@@ -56,8 +57,23 @@ class AdministrativeunitController extends Controller
     {
         $model = new Administrativeunit();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+       /* if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idadministrativeunit]);
+        }*/
+         if ($model->load(Yii::$app->request->post())) {
+            $img = UploadedFile::getInstance($model, 'img');
+            if (!is_null($img)) {
+                $name = explode(".", $img->name);
+                $ext = end($name);
+                $model->image = Yii::$app->security->generateRandomString() . ".{$ext}";
+                $resourcesImage = Yii::$app->basePath . '../web/image/';
+                $path = $resourcesImage . $model->image;
+                if ($img->saveAs($path)) {
+                    if ($model->save()) {
+                        return $this->redirect(['view', 'id' => $model->idadministrativeunit]);
+                    }
+                }
+            }
         }
 
         return $this->render('createunit', [
@@ -87,8 +103,23 @@ class AdministrativeunitController extends Controller
     {
         $model = new Administrativeunit();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+       /* if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idadministrativeunit]);
+        }*/
+         if ($model->load(Yii::$app->request->post())) {
+            $img = UploadedFile::getInstance($model, 'img');
+            if (!is_null($img)) {
+                $name = explode(".", $img->name);
+                $ext = end($name);
+                $model->image = Yii::$app->security->generateRandomString() . ".{$ext}";
+                $resourcesImage = Yii::$app->basePath . '../web/image/';
+                $path = $resourcesImage . $model->image;
+                if ($img->saveAs($path)) {
+                    if ($model->save()) {
+                        return $this->redirect(['view', 'id' => $model->idadministrativeunit]);
+                    }
+                }
+            }
         }
 
         return $this->render('create', [
@@ -107,8 +138,23 @@ class AdministrativeunitController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+       /* if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idadministrativeunit]);
+        }*/
+         if ($model->load(Yii::$app->request->post())) {
+            $img = UploadedFile::getInstance($model, 'img');
+            if (!is_null($img)) {
+                $name = explode(".", $img->name);
+                $ext = end($name);
+                $model->image = Yii::$app->security->generateRandomString() . ".{$ext}";
+                $resourcesImage = Yii::$app->basePath . '../web/image/';
+                $path = $resourcesImage . $model->image;
+                if ($img->saveAs($path)) {
+                    if ($model->save()) {
+                        return $this->redirect(['view', 'id' => $model->idadministrativeunit]);
+                    }
+                }
+            }
         }
 
         return $this->render('update', [

@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use webvimark\modules\UserManagement\models\User;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "profile".
@@ -30,6 +31,8 @@ use webvimark\modules\UserManagement\models\User;
  */
 class Profile extends \yii\db\ActiveRecord {
 
+    public $avatars;
+
     /**
      * {@inheritdoc}
      */
@@ -52,6 +55,9 @@ class Profile extends \yii\db\ActiveRecord {
                 [['gender'], 'string', 'max' => 10],
                 [['address'], 'string', 'max' => 100],
                 [['photo'], 'string', 'max' => 255],
+                [['avatars'], 'safe'],
+                [['avatars'], 'file', 'extensions' => 'jpg, gif, png'],
+                [['avatars'], 'file', 'maxSize' => '100000000'], 
                 [['fkworksin'], 'exist', 'skipOnError' => true, 'targetClass' => Administrativeunit::className(), 'targetAttribute' => ['fkworksin' => 'idadministrativeunit']],
                 [['fkjobtitle'], 'exist', 'skipOnError' => true, 'targetClass' => Jobtitle::className(), 'targetAttribute' => ['fkjobtitle' => 'idjobtitle']],
                 [['fkuser'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['fkuser' => 'id']],
@@ -63,19 +69,20 @@ class Profile extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'idprofile' => 'ID',
-            'name' => 'Nombre',
-            'lastname' => 'Apellidos',
-            'gender' => 'Genero',
-            'birthdate' => 'Fecha Nacimiento',
-            'phone' => 'Telefono',
-            'address' => 'Direccion',
-            'photo' => 'Avatar',
-            'review' => 'Reseña',
+            'idprofile'  => 'ID',
+            'name'       => 'Nombre',
+            'lastname'   => 'Apellidos',
+            'gender'     => 'Genero',
+            'birthdate'  => 'Fecha Nacimiento',
+            'phone'      => 'Telefono',
+            'address'    => 'Direccion',
+            'photo'      => 'Avatar',
+            'review'     => 'Reseña',
             'fkjobtitle' => 'Tipo Usuario',
-            'fkworksin' => 'Labora en',
-            'fkuser' => 'ID Usuario',
-            'username' => 'Nombre Usuario',
+            'fkworksin'  => 'Labora en',
+            'fkuser'     => 'ID Usuario',
+            'username'   => 'Nombre Usuario',
+            'avatars'    => 'Avatar',
         ];
     }
 
@@ -130,7 +137,7 @@ class Profile extends \yii\db\ActiveRecord {
      * @return \yii\db\ActiveQuery
      */
     public function getFkuser0() {
-         return $this->hasOne(User::className(), ['id' => 'fkuser']);
+        return $this->hasOne(User::className(), ['id' => 'fkuser']);
     }
 
     public function getWorksin() {
@@ -141,17 +148,17 @@ class Profile extends \yii\db\ActiveRecord {
         //var_dump($this->fkuser0); die();
         return $this->fkuser0->username;
     }
-    
-    public function getAvatar(){
+
+    public function getAvatar() {
         return Yii::$app->homeUrl . 'resourcesFiles/avatar/' . $this->photo;
     }
-    
-    public function getJobtitle(){
+
+    public function getJobtitle() {
         return $this->fkjobtitle0->jobtitle;
     }
-    
-    public function getNamelastname(){
-        return $this->name . " ". $this->lastname;
+
+    public function getNamelastname() {
+        return $this->name . " " . $this->lastname;
     }
-    
+
 }

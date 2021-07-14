@@ -19,44 +19,47 @@ use Yii;
  * @property Office[] $offices
  * @property Profile[] $profiles
  */
-class Administrativeunit extends \yii\db\ActiveRecord
-{
+class Administrativeunit extends \yii\db\ActiveRecord {
+
+    public $img;
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'administrativeunit';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['name', 'description', 'fkheadline'], 'required'],
-            [['description'], 'string'],
-            [['fkheadline'], 'integer'],
-            [['image'], 'string', 'max' => 255],
-            [['name'], 'string', 'max' => 50],
-            [['note'], 'string', 'max' => 30],
-            [['fkheadline'], 'exist', 'skipOnError' => true, 'targetClass' => Profile::className(), 'targetAttribute' => ['fkheadline' => 'idprofile']],
+                [['name', 'description', 'fkheadline'], 'required'],
+                [['description'], 'string'],
+                [['fkheadline'], 'integer'],
+                [['image'], 'string', 'max' => 255],
+                [['name'], 'string', 'max' => 50],
+                [['note'], 'string', 'max' => 30],
+                [['img'], 'safe'],
+                [['img'], 'file', 'extensions' => 'jpg, gif, png'],
+                [['img'], 'file', 'maxSize' => '100000000'],
+                [['fkheadline'], 'exist', 'skipOnError' => true, 'targetClass' => Profile::className(), 'targetAttribute' => ['fkheadline' => 'idprofile']],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'idadministrativeunit' => 'ID',
-            'image' => 'Imagen',
-            'name' => 'Nombre',
-            'description' => 'Descripcion',
-            'note' => 'Nota',
-            'fkheadline' => 'Titular',
+            'image'                => 'Imagen',
+            'name'                 => 'Nombre',
+            'description'          => 'Descripcion',
+            'note'                 => 'Nota',
+            'fkheadline'           => 'Titular',
+            'img'                  => 'Imagen',
         ];
     }
 
@@ -65,8 +68,7 @@ class Administrativeunit extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getFkheadline0()
-    {
+    public function getFkheadline0() {
         return $this->hasOne(Profile::className(), ['idprofile' => 'fkheadline']);
     }
 
@@ -75,8 +77,7 @@ class Administrativeunit extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getNotifications()
-    {
+    public function getNotifications() {
         return $this->hasMany(Notifications::className(), ['fkadministrativeunit' => 'idadministrativeunit']);
     }
 
@@ -85,8 +86,7 @@ class Administrativeunit extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getOffices()
-    {
+    public function getOffices() {
         return $this->hasMany(Office::className(), ['fkadministrativeunit' => 'idadministrativeunit']);
     }
 
@@ -95,12 +95,17 @@ class Administrativeunit extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getProfiles()
-    {
+    public function getProfiles() {
         return $this->hasMany(Profile::className(), ['fkworksin' => 'idadministrativeunit']);
     }
-    
-    public function getHeadline(){
-        return $this->fkheadline0->name . " ". $this->fkheadline0->lastname;
+
+    public function getHeadline() {
+        return $this->fkheadline0->name . " " . $this->fkheadline0->lastname;
     }
+    
+     public function getImagen() {
+        return Yii::$app->homeUrl . '../web/image/' . $this->image;
+    }
+
+
 }
