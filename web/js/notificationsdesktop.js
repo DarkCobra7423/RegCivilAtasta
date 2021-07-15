@@ -30,15 +30,16 @@ function onNotificationButtonClick() {
 	}
 
 	// Si el Navegador soporta las Notificaciones HTML 5, entonces que proceda a Notificar
-	var notificacion = new Notification("Nuevas Notificaciones", {	    
+	var notificacion = new Notification("Tiene Notificaciones Sin Abrir", {	    
             icon: '../../web/image/regcivil1.png',
+            //icon: homeurl + 'image/regcivil1.png',
 	    body: 'Abrir Bandeja De Notificaciones.'
 	});
 
 	// Redireccionamos a un determinado Destino o URL al hacer click en la Notificación
 	notificacion.onclick = function() {
             //alert(homeurl);
-		window.open(homeurl + "notifications/index");
+		window.open(homeurl + "notifications/allnotifications");
 	};					
 }
 		

@@ -51,13 +51,13 @@ class NotificationsController extends Controller {
 
     public function actionNotifications() {
 
-        $notifications = Notifications::find()->all();
+        $notifications = Notifications::find()->where(['AND', '`read` = 0', ['OR', 'fkprofile = ' . Yii::$app->profile->idprofile, 'fkadministrativeunit = ' . Yii::$app->profile->fkworksin]])->all();
 
         foreach ($notifications as $notification) {
 
-            echo '<a class="dropdown-item dropdown-notification" href="#">
+            echo '<a class="dropdown-item dropdown-notification" href="' . Yii::$app->homeUrl . 'office/evaluating/' . $notification->fkoffice . '">
             <div class="notification-read">
-                <span class="fa fa-times" aria-hidden="true"></span>
+                <!--<span class="fa fa-times" aria-hidden="true"></span>-->
             </div>
             <!--<img class="notification-img" src="#" alt="Notification" />-->
             <span class="notification-img" style="font-size: 30px;"><i class="fas fa-bell"></i></span>
@@ -74,9 +74,18 @@ class NotificationsController extends Controller {
     public function actionCountnotification() {
         //SELECT Count(*) AS counts FROM notifications WHERE fkprofile = 2 OR fkadministrativeunit = 1         
 
-        $num = Notifications::find()->select('COUNT(*) AS number')->where(['OR', 'fkprofile = 2', 'fkadministrativeunit = 1'])->one();
+        $num = Notifications::find()->select('COUNT(*) AS number')->where(['AND', '`read` = 0', ['OR', 'fkprofile = ' . Yii::$app->profile->idprofile, 'fkadministrativeunit = ' . Yii::$app->profile->fkworksin]])->one();
 
         echo $num->number;
+    }
+    
+    public function actionAllnotifications() {
+        
+        $alls = Notifications::find()->where(['OR', 'fkprofile = ' . Yii::$app->profile->idprofile, 'fkadministrativeunit = ' . Yii::$app->profile->fkworksin])->orderBy(['datatime' => SORT_ASC])->all();
+        
+        return $this->render('allnotifications', [
+                    'alls' => $alls,
+        ]);
     }
 
     public function actionDesktop() {

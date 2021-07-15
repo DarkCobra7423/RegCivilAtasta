@@ -41,6 +41,7 @@ class File extends \yii\db\ActiveRecord
             [['files'], 'safe'],
             [['files'], 'file', 'extensions' => 'jpg, gif, png, webp, pdf, doc, docx, txt'],
             [['files'], 'file', 'maxSize' => '100000000'],
+            [['files'], 'file', 'maxFiles' => 6],
         ];
     }
 
