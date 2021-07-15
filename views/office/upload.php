@@ -33,6 +33,8 @@ $unit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadministrativeuni
             $form = ActiveForm::begin([
                              'method' => 'post',
                              'action' => ['office/upload'],
+                "enableClientValidation" => true,
+     "options" => ["enctype" => "multipart/form-data"],
             ]);
             ?>
 
@@ -58,7 +60,14 @@ $unit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadministrativeuni
                 </div>
                 <div class="row">
                     <div class="col-md-12">                        
-                        <?= $form->field($modelfile, 'files')->widget(FileInput::classname(), ['options' => ['accept' => 'files/*'],]); ?>                        
+                        <?php // $form->field($modelfile, 'files')->widget(FileInput::classname(), ['options' => ['accept' => 'files/*'],]); ?>                        
+                        <?php // $form->field($modelfile, 'files[]')->widget(FileInput::classname(), ['options' => ['multiple' => true, 'accept' => 'files/*'],]); ?>
+                        <?php // $form->field($modelfile, 'files[]')->widget(FileInput::classname(), ['options' => ['multiple' => true, 'accept' => 'files/*'],]); ?>
+                        <?= FileInput::widget([
+    'model' => $modelfile,
+    'attribute' => 'files[]',
+    'options' => ['multiple' => true]
+]); ?>
                     </div>
 
                     <!------------------------->

@@ -66,8 +66,15 @@ class OfficeController extends Controller {
         
         $modelfile = new File();
         
+        //print_r($_FILES); die();
+        
         if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
             $files = UploadedFile::getInstance($modelfile, 'files');
+            echo '<pre>';
+                print_r($modelfile); 
+                echo '</pre>';
+                die();
+            print_r($files); die();
             if (!is_null($files)) {
                 $name = explode(".", $files->name);
                 $ext = end($name);

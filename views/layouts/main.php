@@ -195,7 +195,7 @@ AppAsset::register($this);
     <script type="text/javascript">
 $(function () {
 
-    var count = 2;
+    var count = 1;
     var lastCount = 0;
 
     // Pour la maquette
@@ -371,6 +371,10 @@ notifications.push({
                 $.post("<?= Yii::$app->homeUrl ?>notifications/countnotification", function( data ) {
                     //alert( "Data Loaded: " + data );
                     //document.getElementById('notificationsBadge').innerHTML = data;
+                    ///////////////////////////
+                    appNotifications.load();
+                    appNotifications.desktop();
+                    ////////////////////////////
                     appNotifications.badgeLoadingMask(false);
                     $("#notificationsBadge").html(data);
                 });
@@ -397,7 +401,11 @@ notifications.push({
                 $.post("<?= Yii::$app->homeUrl ?>notifications/notifications", function( data ) {
                     //alert( "Data Loaded: " + data );
                     document.getElementById('notificationsContainer').innerHTML = data;
-                    appNotifications.desktop();
+                    
+                    if(data != data){
+                        appNotifications.desktop();
+                    }
+                    
                 });
                 
                 /*
@@ -430,7 +438,8 @@ notifications.push({
         desktop: function (){
         
         //window.onload = onNotificationButtonClick;
-        window.onload = desktopNot('<?= Yii::$app->homeUrl ?>');
+        //window.onload = 
+                desktopNot('<?= Yii::$app->homeUrl ?>');
         /*
             $.post("<? Yii::$app->homeUrl ?>notifications/desktop", function( data ) {
                 //data;
