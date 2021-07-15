@@ -13,14 +13,15 @@ use kartik\file\FileInput;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'name[]')->textInput(['maxlength' => true]) ?>
 
     <?php // $form->field($model, 'file')->textInput(['maxlength' => true]) ?>
     <?php // $form->field($model, 'files')->widget(FileInput::classname(), ['options' => ['accept' => 'files/*'],]); ?>
     <?= $form->field($model, 'files[]')->widget(FileInput::classname(), ['options' => ['multiple' => true],]); ?>
-    <?= $form->field($model, 'format')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'format[]')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'size')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'size[]')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
