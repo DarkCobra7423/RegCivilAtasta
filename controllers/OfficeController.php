@@ -32,7 +32,7 @@ class OfficeController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
-        $searchModel = new OfficeSearch();        
+        $searchModel = new OfficeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -40,148 +40,157 @@ class OfficeController extends Controller {
                     'dataProvider' => $dataProvider,
         ]);
     }
-    
+
     public function actionFilter() {
         $searchModel = new OfficeSearch();
         //var_dump(Yii::$app->request->queryParams); die();
         //$dataProvider = $searchModel->search(Office::find()->where(['AND','fkadministrativeunit = '.Yii::$app->profile->fkworksin, 'fkstateoffice = 2 OR fkstateoffice = 3'])->all());
         $dataProvider = $searchModel->searchFilter(Yii::$app->request->queryParams);
         /*
-        echo '<pre>';
-        print_r($dataProvider); 
-        echo '<br>Aqui es otro--------------------------------';
-        var_dump($dataProvider);
-        echo '</pre>';
-        die();*/
+          echo '<pre>';
+          print_r($dataProvider);
+          echo '<br>Aqui es otro--------------------------------';
+          var_dump($dataProvider);
+          echo '</pre>';
+          die(); */
 
         return $this->render('filter', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
         ]);
     }
-    
+
     public function actionUpload() {
 
         $model = new Office();
-        
+
         $modelfile = new File();
-        
+
         //print_r($_FILES); die();
+        /*
+        echo '<pre>';
+            print_r($modelfile);
+            echo '</pre><br><br><br>--------------------------------';
+            //die();
+            $files = UploadedFile::getInstance($modelfile, 'files[]');
+            print_r($files); 
+            die();
+            */
         
-        if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
-            $files = UploadedFile::getInstance($modelfile, 'files');
-            echo '<pre>';
-                print_r($modelfile); 
-                echo '</pre>';
-                die();
-            print_r($files); die();
+        
+
+           /*
+
             if (!is_null($files)) {
                 $name = explode(".", $files->name);
                 $ext = end($name);
                 $modelfile->file = Yii::$app->security->generateRandomString() . ".{$ext}";
                 $resourcesFiles = Yii::$app->basePath . '/web/resourcesFiles/office/';
                 $path = $resourcesFiles . $modelfile->file;
-                                
+
                 //Aqui los datos
-                
+
                 $modelfile->name = "{$files->name}";
                 $modelfile->format = ".{$ext}";
                 $modelfile->size = "{$files->size}";
                 /*
-                echo '<pre>';
-                print_r($modelfile); 
-                echo '</pre>';
-                die();
-                
-                */
-                /*
-                if($modelfile->save()){
-                    echo 'se guardo'; die();
-                }else{
-                    echo 'no se guardo '; die();
-                }*/
-                
+                  echo '<pre>';
+                  print_r($modelfile);
+                  echo '</pre>';
+                  die();
+
+                  if($modelfile->save()){
+                  echo 'se guardo'; die();
+                  }else{
+                  echo 'no se guardo '; die();
+                  } *
+
                 if ($files->saveAs($path)) {
                     if ($model->save() && $modelfile->save()) {
-                        
+
                         $officefile = new \app\models\Officefile();
-                        
+
                         $officefile->idoffice = $model->idoffice;
                         $officefile->idfile = $modelfile->idfile;
-                        
-                        if($officefile->save()){
+
+                        if ($officefile->save()) {
                             return $this->redirect(['uploadconfirm', 'id' => $model->idoffice]);
-                        }                        
+                        }
                     }
                 }
             }
-        }
+               */
+           // }            
+           
         
+        
+        
+        ///este no
         /*
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['uploadconfirm', 'id' => $model->idoffice]);
-        }*/
-
+          if ($model->load(Yii::$app->request->post()) && $model->save()) {
+          return $this->redirect(['uploadconfirm', 'id' => $model->idoffice]);
+          } */
+          
         return $this->render('upload', [
                     'modelfile' => $modelfile,
                     'model' => $model,
                     'sends' => NULL,
         ]);
     }
-    
+
     public function actionUploadconfirm($id) {
 
         $model = new Office();
-        
+
         $modelfile = new File();
         //print_r($_POST);
         //if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //return $this->redirect(['view', 'id' => $model->idoffice]);
-            $sends = Office::find()->select('expedient')->where(['idoffice' => $id])->one();
-            //print_r($send); die();
-            return $this->render('upload', [
+        //return $this->redirect(['view', 'id' => $model->idoffice]);
+        $sends = Office::find()->select('expedient')->where(['idoffice' => $id])->one();
+        //print_r($send); die();
+        return $this->render('upload', [
                     'modelfile' => $modelfile,
                     'model' => $model,
                     'sends' => $sends,
         ]);
         //}
         /*
-        return $this->render('upload', [
-                    'model' => $model,
-                    'sends' => NULL,
-        ]);*/
+          return $this->render('upload', [
+          'model' => $model,
+          'sends' => NULL,
+          ]); */
     }
-    
+
     public function actionEvaluate() {
-        
-        $offices = Office::find()->where(['AND','fkadministrativeunit = '.Yii::$app->profile->fkworksin, 'fkstateoffice = 2 OR fkstateoffice = 3'])->orderBy('creationdate ASC')->all();
-        $formes = Office::find()->where(['AND','fkadministrativeunit = '.Yii::$app->profile->fkworksin, 'fkstateoffice = 2 OR fkstateoffice = 3', 'fkto = '.Yii::$app->profile->idprofile])->orderBy('creationdate ASC')->all();
-        
+
+        $offices = Office::find()->where(['AND', 'fkadministrativeunit = ' . Yii::$app->profile->fkworksin, 'fkstateoffice = 2 OR fkstateoffice = 3'])->orderBy('creationdate ASC')->all();
+        $formes = Office::find()->where(['AND', 'fkadministrativeunit = ' . Yii::$app->profile->fkworksin, 'fkstateoffice = 2 OR fkstateoffice = 3', 'fkto = ' . Yii::$app->profile->idprofile])->orderBy('creationdate ASC')->all();
+
         return $this->render('evaluate', [
-                    'offices' => $offices,                    
-                    'formes' => $formes,                    
+                    'offices' => $offices,
+                    'formes' => $formes,
         ]);
     }
-    
-    public function actionEvaluating($id){
+
+    public function actionEvaluating($id) {
         $model = $this->findModel($id);
-        
+
         $offices = Office::find()->where(['fkadministrativeunit' => Yii::$app->profile->fkworksin, 'idoffice' => $id])->all();
-        
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idoffice]);
         }
-        
+
         return $this->render('evaluating', [
                     'offices' => $offices,
                     'model' => $model,
         ]);
     }
-    
-    public function actionWorksin($unit){
+
+    public function actionWorksin($unit) {
         $tos = \app\models\Profile::find()->where(['fkworksin' => $unit])->all();
         echo "<option value=''>Selecione uno...</option>\n";
-        foreach ($tos as $to){
+        foreach ($tos as $to) {
             echo "<option value='{$to->idprofile}'>{$to->name} {$to->lastname}</option>\n";
         }
     }
