@@ -80,7 +80,7 @@ class FileValidator extends Validator
      * @see https://secure.php.net/manual/en/ini.core.php#ini.max-file-uploads
      * @see tooMany for the customized message when too many files are uploaded.
      */
-    public $maxFiles = 1;
+    public $maxFiles = 20;
     /**
      * @var int the minimum file count the given attribute can hold.
      * Defaults to 0. Higher value means at least that number of files should be uploaded.
