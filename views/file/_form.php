@@ -13,20 +13,20 @@ use kartik\file\FileInput;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name[]')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <?php // $form->field($model, 'file')->textInput(['maxlength' => true]) ?>
-    <?php // $form->field($model, 'files')->widget(FileInput::classname(), ['options' => ['accept' => 'files/*'],]); ?>
-    <?php // $form->field($model, 'files[]')->widget(FileInput::classname(), ['options' => ['multiple' => true],]); ?>
-    <?= FileInput::widget([
+    <?= $form->field($model, 'files')->widget(FileInput::classname(), ['options' => ['accept' => 'files/*'],]); ?>
+    <?php //$form->field($model, 'files')->widget(FileInput::classname(), ['options' => ['multiple' => true],]); ?>
+    <?php /* FileInput::widget([
     'model' => $model,
     'attribute' => 'files[]',
     'options' => ['multiple' => true]
-]); ?>
+]);*/ ?>
     
-    <?= $form->field($model, 'format[]')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'format')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'size[]')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'size')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

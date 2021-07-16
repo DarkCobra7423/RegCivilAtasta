@@ -106,8 +106,17 @@ class FileController extends Controller
        /* if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idfile]);
         }*/
+     print_r($_FILES);
+     echo '<br><br>';
           if ($model->load(Yii::$app->request->post())) {
+              var_dump(Yii::$app->request->post());
+              echo '<br><br>';
+              
             $files = UploadedFile::getInstance($model, 'files');
+            
+            print_r($files);
+             // die();
+            
             if (!is_null($files)) {
                 $name = explode(".", $files->name);
                 $ext = end($name);

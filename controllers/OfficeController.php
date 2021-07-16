@@ -76,34 +76,10 @@ class OfficeController extends Controller {
             print_r($files); 
             die();
             */
-
-        if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
         
-            //foreach ($modelfile as $mdf) {
-              //$files = UploadedFile::getInstance($modelfile, 'files');
-            $files = $_FILES;
-            foreach($files as $file)
-        {
-                
-                //echo '<h1 style="color: red;">'.$file.'</h1>';
-                echo '<pre>';
-                print_r($file['name']);
-                echo '</pre><br>--------------------------';
-        }
-            
-            echo '<pre>';
-            var_dump(Yii::$app->request->post());
-            echo '</pre><br><br><br>--------------------------------';
-            //die();
-            print_r($files); 
-            echo '<br><br>';
-            echo '<pre>';
-            print_r($_FILES);
-            echo '</pre>';
-            echo '<h1 style="color: red;">'.$files->name.'</h1>';
-            die();
-            
+        
 
+           /*
 
             if (!is_null($files)) {
                 $name = explode(".", $files->name);
@@ -127,7 +103,7 @@ class OfficeController extends Controller {
                   echo 'se guardo'; die();
                   }else{
                   echo 'no se guardo '; die();
-                  } */
+                  } *
 
                 if ($files->saveAs($path)) {
                     if ($model->save() && $modelfile->save()) {
@@ -143,10 +119,10 @@ class OfficeController extends Controller {
                     }
                 }
             }
-               
+               */
            // }            
            
-        }
+        
         
         
         ///este no
