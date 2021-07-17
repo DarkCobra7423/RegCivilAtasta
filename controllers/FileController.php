@@ -16,82 +16,77 @@ use yii\web\UploadedFile;
 /**
  * FileController implements the CRUD actions for File model.
  */
-class FileController extends Controller
-{
+class FileController extends Controller {
+
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'ghost-access' => [
                 'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
             ],
         ];
         /*
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];*/
+          return [
+          'verbs' => [
+          'class' => VerbFilter::className(),
+          'actions' => [
+          'delete' => ['POST'],
+          ],
+          ],
+          ]; */
     }
 
     /**
      * Lists all File models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new FileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
-    public function actionFiles()
-    {
+    public function actionFiles() {
         //$searchModel = new FileSearch();
         //$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $offices = Office::find()->where(['fkadministrativeunit' => Yii::$app->profile->fkworksin])->all();
-        
+
         //$officefiles = Officefile::find();
-        
         //$files = File::find();
-        
+
         $unit = Administrativeunit::find()->where(['idadministrativeunit' => Yii::$app->profile->fkworksin])->one();
         //print_r($unit); die();
         return $this->render('files', [
-            'unit' => $unit,
-            'offices' => $offices,
-            //'officefiles' => $officefiles,
-            //'files' => $files,
-            //'searchModel' => $searchModel,
-            //'dataProvider' => $dataProvider,
+                    'unit' => $unit,
+                    'offices' => $offices,
+                        //'officefiles' => $officefiles,
+                        //'files' => $files,
+                        //'searchModel' => $searchModel,
+                        //'dataProvider' => $dataProvider,
         ]);
     }
-    
-    public function actionDocumentviewer($id)
-    {
+
+    public function actionDocumentviewer($id) {
         return $this->render('documentviewer', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
+
     /**
      * Displays a single File model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -100,39 +95,65 @@ class FileController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new File();
-       /* if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idfile]);
-        }*/
-     print_r($_FILES);
-     echo '<br><br>';
-          if ($model->load(Yii::$app->request->post())) {
-              var_dump(Yii::$app->request->post());
-              echo '<br><br>';
-              
-            $files = UploadedFile::getInstance($model, 'files');
-            
-            print_r($files);
-             // die();
-            
-            if (!is_null($files)) {
-                $name = explode(".", $files->name);
-                $ext = end($name);
-                $model->file = Yii::$app->security->generateRandomString() . ".{$ext}";
-                $resourcesFiles = Yii::$app->basePath . '/web/resourcesFiles/office/';
-                $path = $resourcesFiles . $model->file;
-                if ($files->saveAs($path)) {
-                    if ($model->save()) {
-                        return $this->redirect(['view', 'id' => $model->idfile]);
+
+        ///////////////////////////////////////////////////
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            $filess = UploadedFile::getInstances($model, 'imageFiles');
+
+            foreach ($filess as $files) {
+
+                if (!is_null($files)) {
+
+                    $name = explode(".", $files->name);
+                    $ext = end($name);
+                    $fileurl = Yii::$app->security->generateRandomString() . ".{$ext}";
+                    $model->file = $fileurl;
+                    $resourcesFiles = Yii::$app->basePath . '/web/resourcesFiles/office/prueba/';
+                    $path = $resourcesFiles . $model->file;                    
+
+                    //IMPOTANTE PARA PASAR LA VALIDACION
+                    $model->name = $files->name;
+                    $model->format = "{$ext}";
+                    $model->size = $files->size . " K";
+                    /////////////////////////
+                    $filename = $files->name;
+                    $fileformat = "{$ext}";
+                    $filesize = $files->size . " K";
+
+                    if ($files->saveAs($path)) {
+
+                        if (Yii::$app->db->createCommand("INSERT INTO file (`name`, `file`, `format`, `size`) VALUES ('" . $filename . "','" . $fileurl . "','" . $fileformat . "','" . $filesize . "')")->execute()) {
+                            /*
+                              echo '<br>funciona el save modekl<br>';
+                              echo '<pre>';
+                              print_r($model->getAttributes());
+                              echo '<br><br>';
+                              print_r($model->getErrors());
+                              echo '</pre>';
+                             */
+                        } else {
+                            /*
+                              echo "<br>no funciona el save model<br>";
+                              echo "MODEL NOT SAVED";
+                              echo '<pre>';
+                              print_r($model->getAttributes());
+                              echo '<br><br>';
+                              print_r($model->getErrors());
+                              echo '</pre>';
+                              exit;
+                             */
+                        }
                     }
                 }
             }
         }
 
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -143,8 +164,7 @@ class FileController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -152,7 +172,7 @@ class FileController extends Controller
         }
 
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -163,8 +183,7 @@ class FileController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -177,12 +196,12 @@ class FileController extends Controller
      * @return File the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = File::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
 }

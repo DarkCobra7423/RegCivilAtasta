@@ -18,7 +18,9 @@ use yii\helpers\Html;
  */
 class File extends \yii\db\ActiveRecord
 {
-        public $files;
+        //public $files;
+        public $maxid;
+        public $imageFiles;
     /**
      * {@inheritdoc}
      */
@@ -34,13 +36,17 @@ class File extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'file', 'format', 'size'], 'required'],
+            //[['file'], 'required'],
             [['name'], 'string', 'max' => 100],
             [['file'], 'string', 'max' => 255],
             [['format'], 'string', 'max' => 10],
             [['size'], 'string', 'max' => 40],
+            /*
             [['files'], 'safe'],
             [['files'], 'file', 'extensions' => 'jpg, gif, png, webp, pdf, doc, docx, txt'],
-            [['files'], 'file', 'maxSize' => '100000000'],            
+            [['files'], 'file', 'maxSize' => '100000000'],      */
+            [['imageFiles'], 'file', 'extensions' => 'png, jpg', 'maxFiles' => 10],
+            //[['imageFiles'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxFiles' => 4],
         ];
     }
 
@@ -55,7 +61,8 @@ class File extends \yii\db\ActiveRecord
             'file'       => 'File',
             'format'     => 'Format',
             'size'       => 'Size',
-            'files'      => 'File',
+            //'files'      => 'File',
+            'imageFiles'  => 'imageFiles',
         ];
     }
 
@@ -82,6 +89,7 @@ class File extends \yii\db\ActiveRecord
     public function getUrlfile(){
         return Yii::$app->homeUrl . 'resourcesFiles/office/' . $this->file; 
     }
+    
 
 
 }
