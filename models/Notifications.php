@@ -36,10 +36,10 @@ class Notifications extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-                [['title', 'read', 'fkprofile', 'fkoffice', 'fkadministrativeunit'], 'required'],
+                [['title', 'read', 'fkoffice', 'fkadministrativeunit'], 'required'],
                 [['datatime'], 'safe'],
                 [['read', 'fkprofile', 'fkoffice', 'fkadministrativeunit'], 'integer'],
-                [['title'], 'string', 'max' => 40],
+                [['title'], 'string', 'max' => 150],
                 [['message'], 'string', 'max' => 50],
                 [['fkadministrativeunit'], 'exist', 'skipOnError' => true, 'targetClass' => Administrativeunit::className(), 'targetAttribute' => ['fkadministrativeunit' => 'idadministrativeunit']],
                 [['fkoffice'], 'exist', 'skipOnError' => true, 'targetClass' => Office::className(), 'targetAttribute' => ['fkoffice' => 'idoffice']],

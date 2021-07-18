@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use app\models\File;
 use app\models\Officefile;
 use yii\web\UploadedFile;
+use app\models\Notifications;
 
 /**
  * OfficeController implements the CRUD actions for Office model.
@@ -68,6 +69,8 @@ class OfficeController extends Controller {
         $modelfile = new File();
 
         $officefile = new Officefile;
+        
+        $notify = new Notifications();
 
         if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
             ///////////////////
@@ -81,7 +84,8 @@ class OfficeController extends Controller {
 
             if (Yii::$app->db->createCommand("INSERT INTO office (`expedient`, `nooffice`, `subject`, `creationdate`, `category`, `fkstateoffice`, `fkadministrativeunit`) VALUES ('" . $expedient . "','" . $nooffice . "','" . $subject . "','" . $creationdate . "','" . $category . "','" . $fkstateoffice . "','" . $fkadministrativeunit . "')")->execute()) {
                 $idofficeinsert = Office::find()->select('idoffice')->where(['expedient' => $expedient, 'nooffice' => $nooffice])->one();
-
+                
+                Yii::$app->db->createCommand("INSERT INTO notifications (`title`, `message`, `read`, `fkprofile`, `fkoffice`, `fkadministrativeunit`) VALUES ('Nuevo oficio en estado pendiente. <span class=badge-success>".$category."</span><br>Expediente (".$expedient.") y No. Oficio (".$nooffice.")','".$subject."','0','".Yii::$app->profile->idprofile."','".$idofficeinsert->idoffice."','".$fkadministrativeunit."')")->execute();
                 //////////////////////////////////////////////
 
 
@@ -182,7 +186,8 @@ class OfficeController extends Controller {
         $offices = Office::find()->where(['fkadministrativeunit' => Yii::$app->profile->fkworksin, 'idoffice' => $id])->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idoffice]);
+            //return $this->redirect(['view', 'id' => $model->idoffice]);
+            return $this->redirect(Yii::$app->homeUrl."office/evaluate");
         }
 
         return $this->render('evaluating', [
@@ -295,9 +300,22 @@ class OfficeController extends Controller {
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id) {
+        
         $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        /*
+        $model = $this->findModel($id);
+        
+        $urlimagen = "resourcesFiles/office/".$model->file;
+        
+        if(file_exists($urlimagen)){
+            unlink($urlimagen);
+        }
+        
+        $model->delete();
+        */
+        //return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->homeUrl."office/evaluate");
+        
     }
 
     /**

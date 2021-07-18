@@ -62,7 +62,7 @@ class File extends \yii\db\ActiveRecord
             'format'     => 'Format',
             'size'       => 'Size',
             //'files'      => 'File',
-            'imageFiles'  => 'imageFiles',
+            'imageFiles'  => 'Archivos',
         ];
     }
 

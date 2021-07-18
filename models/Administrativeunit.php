@@ -42,7 +42,7 @@ class Administrativeunit extends \yii\db\ActiveRecord {
                 [['name'], 'string', 'max' => 50],
                 [['note'], 'string', 'max' => 30],
                 [['img'], 'safe'],
-                [['img'], 'file', 'extensions' => 'jpg, gif, png, webp, pdf, doc, docx, txt'],
+                [['img'], 'file', 'extensions' => 'jpg, gif, png, webp, jpeg'],
                 [['img'], 'file', 'maxSize' => '100000000'],
                 [['fkheadline'], 'exist', 'skipOnError' => true, 'targetClass' => Profile::className(), 'targetAttribute' => ['fkheadline' => 'idprofile']],
         ];

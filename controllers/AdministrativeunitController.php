@@ -70,9 +70,15 @@ class AdministrativeunitController extends Controller
                 $path = $resourcesUnit . $model->image;
                 if ($img->saveAs($path)) {
                     if ($model->save()) {
-                        return $this->redirect(['view', 'id' => $model->idadministrativeunit]);
+                        //return $this->redirect(['view', 'id' => $model->idadministrativeunit]);
+                        return $this->redirect(Yii::$app->homeurl);
                     }
                 }
+            }else{
+                if ($model->save()) {
+                        //return $this->redirect(['view', 'id' => $model->idadministrativeunit]);
+                        return $this->redirect(Yii::$app->homeUrl);
+                    }
             }
         }
 
@@ -80,6 +86,41 @@ class AdministrativeunitController extends Controller
             'model' => $model,
         ]);
     }
+    
+    public function actionUpdateunit($id)
+    {
+        $model = $this->findModel($id);
+
+       /* if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->idadministrativeunit]);
+        }*/
+         if ($model->load(Yii::$app->request->post())) {
+            $img = UploadedFile::getInstance($model, 'img');
+            if (!is_null($img)) {
+                $name = explode(".", $img->name);
+                $ext = end($name);
+                $model->image = Yii::$app->security->generateRandomString() . ".{$ext}";
+                $resourcesUnit = Yii::$app->basePath . '/web/resourcesFiles/administrativeunit/';
+                $path = $resourcesUnit . $model->image;
+                if ($img->saveAs($path)) {
+                    if ($model->save()) {
+                        //return $this->redirect(['view', 'id' => $model->idadministrativeunit]);
+                        return $this->redirect(Yii::$app->homeUrl);
+                    }
+                }
+            }else{
+                if ($model->save()) {
+                        //return $this->redirect(['view', 'id' => $model->idadministrativeunit]);
+                        return $this->redirect(Yii::$app->homeUrl);
+                    }
+            }
+        }
+
+        return $this->render('createunit', [
+            'model' => $model,
+        ]);
+    }
+
 
     /**
      * Displays a single Administrativeunit model.
@@ -151,7 +192,7 @@ class AdministrativeunitController extends Controller
                 $path = $resourcesUnit . $model->image;
                 if ($img->saveAs($path)) {
                     if ($model->save()) {
-                        return $this->redirect(['view', 'id' => $model->idadministrativeunit]);
+                        return $this->redirect(['view', 'id' => $model->idadministrativeunit]);                        
                     }
                 }
             }
@@ -171,9 +212,18 @@ class AdministrativeunitController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        
+        $urlimagen = "resourcesFiles/administrativeunit/".$model->image;
+        
+        if(file_exists($urlimagen)){
+            unlink($urlimagen);
+        }
+        
+        $model->delete();
 
-        return $this->redirect(['index']);
+        //return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->homeUrl);
     }
 
     /**

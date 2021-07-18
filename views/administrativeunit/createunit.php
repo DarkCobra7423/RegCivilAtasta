@@ -15,8 +15,8 @@ $profiles = ArrayHelper::map(Profile::find()->all(), 'idprofile', 'namelastname'
 <div class="container">
   <?php $form = ActiveForm::begin(); ?>
     <div class="row">
-      <div class="card col-md-5">
-        <iframe class="col-md-12 responsive-iframe" src="" frameborder="0" width="90%" height="200px" id="previsualizar1"></iframe>
+      <div class="col-md-5">
+        <?= $form->field($model, 'img')->widget(FileInput::classname(), ['options' => ['accept' => 'img/*'],]); ?>
       </div>
 
       <div class="col-md-7">
@@ -24,10 +24,6 @@ $profiles = ArrayHelper::map(Profile::find()->all(), 'idprofile', 'namelastname'
         <!-- Text input-->
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         
-        <!-- File Button -->
-        <?php // $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'img')->widget(FileInput::classname(), ['options' => ['accept' => 'img/*'],]); ?>
-
         <!-- Textarea -->
         <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 

@@ -81,7 +81,7 @@ $this->title = 'Inicio';
         ?>
         <?php foreach ($carousels as $carousel): ?>
             <div class="item-class">
-                <img src="<?= $carousel->image; ?>" alt="<?= $carousel->name; ?>">
+                <img src="<?= $carousel->imagen; ?>" alt="<?= $carousel->name; ?>">
             </div>
         <?php endforeach; ?>      
         <?php OwlCarouselWidget::end(); ?>
@@ -93,7 +93,7 @@ $this->title = 'Inicio';
             <?php foreach ($units as $unit): ?>
                 <div class="col-md-4">
                     <div class="card mb-4 text-white bg-dark" style="max-height: 443px;min-height: 443px;">
-                        <img class="card-img-top" src="<?= $unit->image; ?>" alt="<?= $unit->name ?>">
+                        <img class="card-img-top" src="<?= $unit->imagen; ?>" alt="<?= $unit->name ?>">
                         <div class="card-body">
                             <h5 class="card-title">
                                 <font style="vertical-align: inherit;">
@@ -113,7 +113,7 @@ $this->title = 'Inicio';
                             <?php if (Yii::$app->user->isSuperadmin) { ?>                                
                                 <?= Html::a('<font style="vertical-align: inherit;">
                                     <font style="vertical-align: inherit; font-size: 17px;">Editar</font>                       
-                                    </font>', ['administrativeunit/update', 'id' => $unit->idadministrativeunit], ['class' => 'btn btn-outline-light btn-sm']) ?>
+                                    </font>', ['administrativeunit/updateunit', 'id' => $unit->idadministrativeunit], ['class' => 'btn btn-outline-light btn-sm']) ?>
 
                                 <?=
                                 Html::a('<font style="vertical-align: inherit;">

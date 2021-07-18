@@ -51,7 +51,7 @@ class NotificationsController extends Controller {
 
     public function actionNotifications() {
 
-        $notifications = Notifications::find()->where(['AND', '`read` = 0', ['OR', 'fkprofile = ' . Yii::$app->profile->idprofile, 'fkadministrativeunit = ' . Yii::$app->profile->fkworksin]])->all();
+        $notifications = Notifications::find()->where(['AND', '`read` = 0', ['OR', 'fkprofile = ' . Yii::$app->profile->idprofile, 'fkadministrativeunit = ' . Yii::$app->profile->fkworksin]])->orderBy(['datatime' => SORT_DESC])->all();
 
         foreach ($notifications as $notification) {
 
@@ -69,6 +69,7 @@ class NotificationsController extends Controller {
             </div>
         </a>';
         }
+        exit;
     }
 
     public function actionCountnotification() {

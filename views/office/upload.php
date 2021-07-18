@@ -43,10 +43,10 @@ $unit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadministrativeuni
 
                 <div class="row">
                     <div class="col-md-6">                            
-                        <?= $form->field($model, 'expedient')->textInput(['maxlength' => true, 'placeholder' => 'Por favor, introduzca el no. expediente', 'onchange' => '$.post("' . Yii::$app->homeUrl . 'office/existexpedient?value="+$(this).val(), function(data){if(data == "true"){$(this).val("");alert("El no. expediente ya se encuentra registrado");}else{}});']) ?>
+                        <?= $form->field($model, 'expedient')->textInput(['maxlength' => true, 'placeholder' => 'Por favor, introduzca el no. expediente', 'onchange' => '$.post("' . Yii::$app->homeUrl . 'office/existexpedient?value="+$(this).val(), function(data){if(data == "true"){$(this).val("");document.getElementById("office-expedient").value = "";alert("El no. expediente ya se encuentra registrado");}else{}});']) ?>
                     </div>
                     <div class="col-md-6">
-                        <?= $form->field($model, 'nooffice')->textInput(['placeholder' => 'Por favor, introduzca el no. oficio', 'onchange' => '$.post("' . Yii::$app->homeUrl . 'office/existnooficce?value="+$(this).val(), function(data){if(data == "true"){$(this).val("");alert("El no. oficio ya se encuentra registrado");}else{}});']) ?>
+                        <?= $form->field($model, 'nooffice')->textInput(['placeholder' => 'Por favor, introduzca el no. oficio', 'onchange' => '$.post("' . Yii::$app->homeUrl . 'office/existnooficce?value="+$(this).val(), function(data){if(data == "true"){$(this).val("");document.getElementById("office-nooffice").value = "";alert("El no. oficio ya se encuentra registrado");}else{}});']) ?>
                     </div>
                 </div>
                 <div class="row">
