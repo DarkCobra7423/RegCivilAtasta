@@ -26,7 +26,7 @@ $unit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadministrativeuni
         </div>
         </div>
         <?php }else{} ?>
-
+               
         <div class="col-lg-8 col-lg-offset-2">
 
             <?php
@@ -43,10 +43,10 @@ $unit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadministrativeuni
 
                 <div class="row">
                     <div class="col-md-6">                            
-                        <?= $form->field($model, 'expedient')->textInput(['maxlength' => true, 'placeholder' => 'Por favor, introduzca el no. expediente']) ?>
+                        <?= $form->field($model, 'expedient')->textInput(['maxlength' => true, 'placeholder' => 'Por favor, introduzca el no. expediente', 'onchange' => '$.post("' . Yii::$app->homeUrl . 'office/existexpedient?value="+$(this).val(), function(data){if(data == "true"){$(this).val("");alert("El no. expediente ya se encuentra registrado");}else{}});']) ?>
                     </div>
                     <div class="col-md-6">
-                        <?= $form->field($model, 'nooffice')->textInput(['placeholder' => 'Por favor, introduzca el no. oficio']) ?>
+                        <?= $form->field($model, 'nooffice')->textInput(['placeholder' => 'Por favor, introduzca el no. oficio', 'onchange' => '$.post("' . Yii::$app->homeUrl . 'office/existnooficce?value="+$(this).val(), function(data){if(data == "true"){$(this).val("");alert("El no. oficio ya se encuentra registrado");}else{}});']) ?>
                     </div>
                 </div>
                 <div class="row">
@@ -58,11 +58,8 @@ $unit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadministrativeuni
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">                        
-                        <?php // $form->field($modelfile, 'files')->widget(FileInput::classname(), ['options' => ['accept' => 'files/*'],]); ?>                        
-                        <?= $form->field($modelfile, 'files[]')->widget(FileInput::classname(), ['options' => ['multiple' => true, 'accept' => 'files/*'],]); ?>
-                        <?php // $form->field($modelfile, 'files[]')->widget(FileInput::classname(), ['options' => ['multiple' => true, 'accept' => 'files/*']]); ?>
-                        <?php // FileInput::widget(['model' => $modelfile,'attribute' => 'files[]','options' => ['multiple' => true]]); ?>
+                    <div class="col-md-12">
+                        <?= $form->field($modelfile, 'imageFiles[]')->widget(FileInput::classname(), ['options' => ['multiple' => true, 'accept' => 'image/*'],]); ?>
                     </div>
                     <!--<input readonly="" class="file-caption-name form-control kv-fileinput-caption" placeholder="Seleccionar archivos ..." title="">-->
                     <!--<input readonly="" class="file-caption-name form-control kv-fileinput-caption" placeholder="Seleccionar archivos ..." title="">-->

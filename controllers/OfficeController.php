@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\File;
+use app\models\Officefile;
 use yii\web\UploadedFile;
 
 /**
@@ -66,71 +67,74 @@ class OfficeController extends Controller {
 
         $modelfile = new File();
 
-        //print_r($_FILES); die();
-        /*
-        echo '<pre>';
-            print_r($modelfile);
-            echo '</pre><br><br><br>--------------------------------';
-            //die();
-            $files = UploadedFile::getInstance($modelfile, 'files[]');
-            print_r($files); 
-            die();
-            */
-        
-        
+        $officefile = new Officefile;
 
-           /*
+        if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
+            ///////////////////
+            $expedient = $model->expedient;
+            $nooffice = $model->nooffice;
+            $subject = $model->subject;
+            $fkadministrativeunit = $model->fkadministrativeunit;
+            $creationdate = $model->creationdate;
+            $category = $model->category;
+            $fkstateoffice = $model->fkstateoffice;
 
-            if (!is_null($files)) {
-                $name = explode(".", $files->name);
-                $ext = end($name);
-                $modelfile->file = Yii::$app->security->generateRandomString() . ".{$ext}";
-                $resourcesFiles = Yii::$app->basePath . '/web/resourcesFiles/office/';
-                $path = $resourcesFiles . $modelfile->file;
+            if (Yii::$app->db->createCommand("INSERT INTO office (`expedient`, `nooffice`, `subject`, `creationdate`, `category`, `fkstateoffice`, `fkadministrativeunit`) VALUES ('" . $expedient . "','" . $nooffice . "','" . $subject . "','" . $creationdate . "','" . $category . "','" . $fkstateoffice . "','" . $fkadministrativeunit . "')")->execute()) {
+                $idofficeinsert = Office::find()->select('idoffice')->where(['expedient' => $expedient, 'nooffice' => $nooffice])->one();
 
-                //Aqui los datos
+                //////////////////////////////////////////////
 
-                $modelfile->name = "{$files->name}";
-                $modelfile->format = ".{$ext}";
-                $modelfile->size = "{$files->size}";
-                /*
-                  echo '<pre>';
-                  print_r($modelfile);
-                  echo '</pre>';
-                  die();
 
-                  if($modelfile->save()){
-                  echo 'se guardo'; die();
-                  }else{
-                  echo 'no se guardo '; die();
-                  } *
+                $filess = UploadedFile::getInstances($modelfile, 'imageFiles');
 
-                if ($files->saveAs($path)) {
-                    if ($model->save() && $modelfile->save()) {
+                foreach ($filess as $files) {
 
-                        $officefile = new \app\models\Officefile();
+                    if (!is_null($files)) {
 
-                        $officefile->idoffice = $model->idoffice;
-                        $officefile->idfile = $modelfile->idfile;
+                        $name = explode(".", $files->name);
+                        $ext = end($name);
+                        $fileurl = Yii::$app->security->generateRandomString() . ".{$ext}";
+                        $modelfile->file = $fileurl;
+                        $resourcesFiles = Yii::$app->basePath . '/web/resourcesFiles/office/';
+                        $path = $resourcesFiles . $modelfile->file;
 
-                        if ($officefile->save()) {
-                            return $this->redirect(['uploadconfirm', 'id' => $model->idoffice]);
+                        //IMPOTANTE PARA PASAR LA VALIDACION
+                        $modelfile->name = $files->name;
+                        $modelfile->format = ".{$ext}";
+                        $modelfile->size = $files->size . " K";
+                        /////////////////////////
+                        $filename = $files->name;
+                        $fileformat = ".{$ext}";
+                        //$filesize = $files->size . " K";
+                        $filesize = $this->formatSizeUnits($files->size);
+
+                        if ($files->saveAs($path)) {
+
+                            if (Yii::$app->db->createCommand("INSERT INTO file (`name`, `file`, `format`, `size`) VALUES ('" . $filename . "','" . $fileurl . "','" . $fileformat . "','" . $filesize . "')")->execute()) {
+
+                                $idfileinsert = File::find()->select('idfile')->where(['file' => $fileurl])->one();
+
+                                $OFidoffice = $idofficeinsert->idoffice;
+                                $OFidfile = $idfileinsert->idfile;
+
+                                if (Yii::$app->db->createCommand("INSERT INTO officefile (`idoffice`, `idfile`) VALUES ('" . $OFidoffice . "','" . $OFidfile . "')")->execute()) {
+                                    //return $this->redirect(['uploadconfirm', 'id' => $idofficeinsert->idoffice]); 
+                                }
+                            }
                         }
                     }
                 }
+                return $this->redirect(['uploadconfirm', 'id' => $idofficeinsert->idoffice]);
             }
-               */
-           // }            
-           
-        
-        
-        
+        }
+        //////////////////////////////////////////////
+        //
         ///este no
         /*
           if ($model->load(Yii::$app->request->post()) && $model->save()) {
           return $this->redirect(['uploadconfirm', 'id' => $model->idoffice]);
           } */
-          
+
         return $this->render('upload', [
                     'modelfile' => $modelfile,
                     'model' => $model,
@@ -192,6 +196,46 @@ class OfficeController extends Controller {
         echo "<option value=''>Selecione uno...</option>\n";
         foreach ($tos as $to) {
             echo "<option value='{$to->idprofile}'>{$to->name} {$to->lastname}</option>\n";
+        }
+    }
+
+    function formatSizeUnits($bytes) {
+        
+        if ($bytes >= 1073741824) {
+            $bytes = number_format($bytes / 1073741824, 2) . ' GB';
+        } elseif ($bytes >= 1048576) {
+            $bytes = number_format($bytes / 1048576, 2) . ' MB';
+        } elseif ($bytes >= 1024) {
+            $bytes = number_format($bytes / 1024, 2) . ' KB';
+        } elseif ($bytes > 1) {
+            $bytes = $bytes . ' bytes';
+        } elseif ($bytes == 1) {
+            $bytes = $bytes . ' byte';
+        } else {
+            $bytes = '0 bytes';
+        } 
+        return $bytes;
+        
+    }
+    
+    public function actionExistexpedient($value){
+        $exist = Office::find()->select('expedient')->where(['expedient' => $value])->one();
+        
+        if(empty($exist->expedient)){
+            echo 'false';
+        }else{
+            echo 'true';
+        }
+     //echo $exist->expedient;
+    }
+    
+    public function actionExistnooficce($value){
+        $exist = Office::find()->select('nooffice')->where(['nooffice' => $value])->one();
+        
+        if(empty($exist->nooffice)){
+            echo 'false';
+        }else{
+            echo 'true';
         }
     }
 
