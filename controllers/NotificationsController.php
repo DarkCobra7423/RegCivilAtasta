@@ -82,11 +82,19 @@ class NotificationsController extends Controller {
     
     public function actionAllnotifications() {
         
-        $alls = Notifications::find()->where(['OR', 'fkprofile = ' . Yii::$app->profile->idprofile, 'fkadministrativeunit = ' . Yii::$app->profile->fkworksin])->orderBy(['datatime' => SORT_ASC])->all();
+        $alls = Notifications::find()->where(['OR', 'fkprofile = ' . Yii::$app->profile->idprofile, 'fkadministrativeunit = ' . Yii::$app->profile->fkworksin])->orderBy(['datatime' => SORT_DESC])->all();
+        //$alls = Notifications::find()->all();
         
         return $this->render('allnotifications', [
                     'alls' => $alls,
         ]);
+    }
+    
+    public function actionRead($id){
+        $model = $this->findModel($id);  
+        $model->read = '1';
+        $model->save();
+        $this->redirect(Yii::$app->homeUrl.'notifications/allnotifications');
     }
 
     public function actionDesktop() {
