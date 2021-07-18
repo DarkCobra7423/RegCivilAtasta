@@ -112,7 +112,7 @@ class FileController extends Controller {
                     $ext = end($name);
                     $fileurl = Yii::$app->security->generateRandomString() . ".{$ext}";
                     $model->file = $fileurl;
-                    $resourcesFiles = Yii::$app->basePath . '/web/resourcesFiles/office/prueba/';
+                    $resourcesFiles = Yii::$app->basePath . '/web/resourcesFiles/office/';
                     $path = $resourcesFiles . $model->file;                    
 
                     //IMPOTANTE PARA PASAR LA VALIDACION
