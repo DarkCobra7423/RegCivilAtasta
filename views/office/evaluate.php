@@ -1,6 +1,8 @@
 <?php
 
 use yii\helpers\Html;
+
+$this->title = 'Evaluar Oficios';
 ?>
 
 <style>
@@ -59,10 +61,10 @@ use yii\helpers\Html;
                                 <?= $forme->subject ?>
                             </td>
                             <td>
-                                <?php if ($forme->getState() == 'Turnado') { ?>
-                                    <span class="badge badge-warning"><?= $forme->getState(); ?></span>
+                                <?php if ($forme->getStateoffice() == 'Turnado') { ?>
+                                    <span class="badge badge-warning"><?= $forme->getStateoffice(); ?></span>
                                 <?php } else { ?>
-                                    <span class="badge badge-success"><?= $forme->getState(); ?></span>
+                                    <span class="badge badge-success"><?= $forme->getStateoffice(); ?></span>
                                 <?php } ?>
                             </td>
                             <td>
@@ -118,10 +120,10 @@ use yii\helpers\Html;
                                 <?= $office->subject ?>
                             </td>
                             <td>
-                                <?php if ($office->getState() == 'Turnado') { ?>
-                                    <span class="badge badge-warning"><?= $office->getState(); ?></span>
+                                <?php if ($office->getStateoffice() == 'Turnado') { ?>
+                                    <span class="badge badge-warning"><?= $office->getStateoffice(); ?></span>
                                 <?php } else { ?>
-                                    <span class="badge badge-success"><?= $office->getState(); ?></span>
+                                    <span class="badge badge-success"><?= $office->getStateoffice(); ?></span>
                                 <?php } ?>
                             </td>
                             <td>

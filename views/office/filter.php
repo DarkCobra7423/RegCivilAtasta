@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\OfficeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -12,10 +13,6 @@ $this->title = 'Filtrar Oficios';
 <div class="office-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Crear Oficio', ['upload'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
 
@@ -31,7 +28,7 @@ $this->title = 'Filtrar Oficios';
             'subject',
             'creationdate',
             'category',
-            'fkstateoffice',
+          //  'fkstateoffice',
             'stateoffice',
             //'fkadministrativeunit',
             //'shifteddate',

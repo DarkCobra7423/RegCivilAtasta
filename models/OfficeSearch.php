@@ -136,7 +136,7 @@ class OfficeSearch extends Office {
                 ->andFilterWhere(['like', 'category', $this->category])
                 ->andFilterWhere(['like', 'observations', $this->observations])
                 //-----------------------------
-                ->andFilterWhere(['like', 'stateoffice', $this->state]);
+                ->andFilterWhere(['like', 'stateoffice', $this->stateoffice]);
                 //-----------------------------
 
         return $dataProvider;

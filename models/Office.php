@@ -27,40 +27,37 @@ use Yii;
  * @property Officefile[] $officefiles
  * @property File[] $idfiles
  */
-class Office extends \yii\db\ActiveRecord
-{
+class Office extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'office';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['expedient', 'nooffice', 'subject', 'creationdate', 'category', 'fkstateoffice', 'fkadministrativeunit'], 'required'],
-            [['nooffice', 'fkstateoffice', 'fkadministrativeunit', 'fkto'], 'integer'],
-            [['creationdate', 'shifteddate', 'reviseddate'], 'safe'],
-            [['observations'], 'string'],
-            [['expedient'], 'string', 'max' => 45],
-            [['subject'], 'string', 'max' => 100],
-            [['category'], 'string', 'max' => 10],
-            [['fkadministrativeunit'], 'exist', 'skipOnError' => true, 'targetClass' => Administrativeunit::className(), 'targetAttribute' => ['fkadministrativeunit' => 'idadministrativeunit']],
-            [['fkto'], 'exist', 'skipOnError' => true, 'targetClass' => Profile::className(), 'targetAttribute' => ['fkto' => 'idprofile']],
-            [['fkstateoffice'], 'exist', 'skipOnError' => true, 'targetClass' => Stateoffice::className(), 'targetAttribute' => ['fkstateoffice' => 'idstateoffice']],
+                [['expedient', 'nooffice', 'subject', 'creationdate', 'category', 'fkstateoffice', 'fkadministrativeunit'], 'required'],
+                [['nooffice', 'fkstateoffice', 'fkadministrativeunit', 'fkto'], 'integer'],
+                [['creationdate', 'shifteddate', 'reviseddate'], 'safe'],
+                [['observations'], 'string'],
+                [['expedient'], 'string', 'max' => 45],
+                [['subject'], 'string', 'max' => 100],
+                [['category'], 'string', 'max' => 10],
+                [['fkadministrativeunit'], 'exist', 'skipOnError' => true, 'targetClass' => Administrativeunit::className(), 'targetAttribute' => ['fkadministrativeunit' => 'idadministrativeunit']],
+                [['fkto'], 'exist', 'skipOnError' => true, 'targetClass' => Profile::className(), 'targetAttribute' => ['fkto' => 'idprofile']],
+                [['fkstateoffice'], 'exist', 'skipOnError' => true, 'targetClass' => Stateoffice::className(), 'targetAttribute' => ['fkstateoffice' => 'idstateoffice']],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'idoffice' => 'ID',
             'expedient' => 'Expediente',
@@ -83,8 +80,7 @@ class Office extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getNotifications()
-    {
+    public function getNotifications() {
         return $this->hasMany(Notifications::className(), ['fkoffice' => 'idoffice']);
     }
 
@@ -93,8 +89,7 @@ class Office extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getFkadministrativeunit0()
-    {
+    public function getFkadministrativeunit0() {
         return $this->hasOne(Administrativeunit::className(), ['idadministrativeunit' => 'fkadministrativeunit']);
     }
 
@@ -103,8 +98,7 @@ class Office extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getFkto0()
-    {
+    public function getFkto0() {
         return $this->hasOne(Profile::className(), ['idprofile' => 'fkto']);
     }
 
@@ -113,8 +107,7 @@ class Office extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getFkstateoffice0()
-    {
+    public function getFkstateoffice0() {
         return $this->hasOne(Stateoffice::className(), ['idstateoffice' => 'fkstateoffice']);
     }
 
@@ -123,8 +116,7 @@ class Office extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getOfficefiles()
-    {
+    public function getOfficefiles() {
         return $this->hasMany(Officefile::className(), ['idoffice' => 'idoffice']);
     }
 
@@ -133,13 +125,12 @@ class Office extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdfiles()
-    {
+    public function getIdfiles() {
         return $this->hasMany(File::className(), ['idfile' => 'idfile'])->viaTable('officefile', ['idoffice' => 'idoffice']);
     }
-    
-    public function getState(){
-        //var_dump($this->fkstateoffice0); die();
+
+    public function getStateoffice() {
         return $this->fkstateoffice0->state;
-    }
+    } 
+
 }
