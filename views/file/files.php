@@ -190,7 +190,7 @@ use yii\helpers\Html;
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            <?php } else if (($file->format == '.mp3') || ($file->format == '.mp4')){ ?>
+                                            <?php } else if (($file->format == '.wav') || ($file->format == '.mp4')){ ?>
                                                 <!--AUDIO-->
                                                 <div class="drive-item module text-center">
                                                     <div class="drive-item-inner module-inner">

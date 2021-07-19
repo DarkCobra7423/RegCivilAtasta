@@ -45,7 +45,7 @@ class File extends \yii\db\ActiveRecord
             [['files'], 'safe'],
             [['files'], 'file', 'extensions' => 'jpg, gif, png, webp, pdf, doc, docx, txt'],
             [['files'], 'file', 'maxSize' => '100000000'],      */
-            [['imageFiles'], 'file', 'extensions' => 'png, jpg', 'maxFiles' => 10],
+            [['imageFiles'], 'file', 'extensions' => 'jpg, gif, png, webp, pdf, doc, docx, txt, jpeg, ppt, pptx, csv, xls, zip, rar, html, mp4, avi, wmv, mov, rmvb, mkb, mp3, mp4, wav', 'maxFiles' => 10],
             //[['imageFiles'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxFiles' => 4],
         ];
     }

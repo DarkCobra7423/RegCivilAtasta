@@ -13,7 +13,7 @@ $this->title = 'Visor de documentos';
         min-height: 100%;
     }
 </style>
-<?php if (($model->format == '.pdf') || ($model->format == '.mp4') || ($model->format == '.jpg' || ($model->format == '.jpeg') || ($model->format == '.png') || ($model->format == '.gif') || ($model->format == '.html'))) { ?>
+<?php if (($model->format == '.pdf') || ($model->format == '.mp4') || ($model->format == '.jpg' || ($model->format == '.jpeg') || ($model->format == '.png') || ($model->format == '.gif') || ($model->format == '.html') || ($model->format == '.gif'))) { ?>
     <div class="">
         <iframe id="viewfinder" src="<?= $model->urlfile; ?>" title="<?= $model->name ?>" width="600" height="600" style="border:0; width: 100%" allowfullscreen="" loading="lazy"></iframe>
     </div>
