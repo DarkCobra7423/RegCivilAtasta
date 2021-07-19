@@ -195,6 +195,27 @@ class OfficeController extends Controller {
                     'model' => $model,
         ]);
     }
+    
+     public function actionEvaluatingnotify($id, $not) {
+        $model = $this->findModel($id);
+
+        $offices = Office::find()->where(['fkadministrativeunit' => Yii::$app->profile->fkworksin, 'idoffice' => $id])->all();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //return $this->redirect(['view', 'id' => $model->idoffice]);
+            return $this->redirect(Yii::$app->homeUrl."office/evaluate");
+        }
+        
+        $model1 = Notifications::find()->where(['idnotifications' => $not])->one();  
+        $model1->read = '1';
+        $model1->save();
+        //$this->redirect(Yii::$app->homeUrl.'notifications/allnotifications');
+
+        return $this->render('evaluating', [
+                    'offices' => $offices,
+                    'model' => $model,
+        ]);
+    }
 
     public function actionWorksin($unit) {
         $tos = \app\models\Profile::find()->where(['fkworksin' => $unit])->all();

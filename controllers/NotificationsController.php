@@ -50,16 +50,17 @@ class NotificationsController extends Controller {
     }
 
     public function actionNotifications() {
+        
 
         $notifications = Notifications::find()->where(['AND', '`read` = 0', ['OR', 'fkprofile = ' . Yii::$app->profile->idprofile, 'fkadministrativeunit = ' . Yii::$app->profile->fkworksin]])->orderBy(['datatime' => SORT_DESC])->all();
 
         foreach ($notifications as $notification) {
-
-            echo '<a class="dropdown-item dropdown-notification" href="' . Yii::$app->homeUrl . 'office/evaluating/' . $notification->fkoffice . '">
+            
+           // $read = '$.post("'.Yii::$app->homeUrl.'notifications/read?id='.$notification->idnotifications;
+            
+            echo '<a class="dropdown-item dropdown-notification" href="' . Yii::$app->homeUrl . 'office/evaluatingnotify?id=' . $notification->fkoffice . '&not='.$notification->idnotifications.'>
             <div class="notification-read">
-                <!--<span class="fa fa-times" aria-hidden="true"></span>-->
-            </div>
-            <!--<img class="notification-img" src="#" alt="Notification" />-->
+            </div>       
             <span class="notification-img" style="font-size: 30px;"><i class="fas fa-bell"></i></span>
             <div class="notifications-body">
                 <p class="notification-texte">' . $notification->title . '</p>
