@@ -24,31 +24,8 @@ use yii\helpers\Html;
                                     <button id="idBtnList" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="List View" id="drive-list-toggle" onclick="viewList();"><i class="fa fa-list-ul"></i></button>
                                 </div>
                             </div>
-                            <div class="actions">
-                                <div class="btn-group">
-                                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="false">Todos los archivos <span class="caret"></span></button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#"><i class="fa fa-file"></i> Revisados</a></li>
-                                        <li><a href="#"><i class="fa fa-file-image-o"></i> Turnados</a></li>
-                                        <li><a href="#"><i class="fa fa-file-video-o"></i> Pendientes</a></li>
-                                        <li><a href="#"><i class="fa fa-folder"></i> Rechazados</a></li>
-                                    </ul>
-                                </div>
-                                <div class="btn-group">
-                                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="false"><i class="fa fa-filter"></i> Sorting <span class="caret"></span></button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Newest first</a></li>
-                                        <li><a href="#">Oldest first</a></li>
-                                    </ul>
-                                </div>
-                                <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Refresh"><i class="fa fa-refresh"></i></button>
-                                    <!--<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Archive"><i class="fa fa-archive"></i></button>-->
-
-                                    <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Report spam"><i class="fa fa-exclamation-triangle"></i></button>
-                                    <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Delete"><i class="fa fa-trash-o"></i></button>
-                                </div>
-                            </div>
+                            <div class="actions" style="padding-top: 46px;">
+                               
                         </div>
 
                         <div id="idGrid" class="drive-wrapper drive-grid-view">

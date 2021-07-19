@@ -58,7 +58,7 @@ class NotificationsController extends Controller {
             
            // $read = '$.post("'.Yii::$app->homeUrl.'notifications/read?id='.$notification->idnotifications;
             
-            echo '<a class="dropdown-item dropdown-notification" href="' . Yii::$app->homeUrl . 'office/evaluatingnotify?id=' . $notification->fkoffice . '&not='.$notification->idnotifications.'>
+            echo '<a class="dropdown-item dropdown-notification" href="' . Yii::$app->homeUrl . 'office/evaluatingnotify?id=' . $notification->fkoffice . '&not='.$notification->idnotifications.'">
             <div class="notification-read">
             </div>       
             <span class="notification-img" style="font-size: 30px;"><i class="fas fa-bell"></i></span>
