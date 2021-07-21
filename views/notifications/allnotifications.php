@@ -21,7 +21,7 @@ foreach ($alls as $all):
                 <p class="pull-right"><i class="far fa-clock"></i> <?= $all->datatime ?></p>
                 <div class="btn-group" style="margin-top: 10px;">
                     <?= Html::a('Leído', ['notifications/read', 'id' => $all->idnotifications], ['class' => 'Message-button', 'id' => 'js-showMe']) ?>
-                    <?= Html::a('Ver Oficio', ['office/evaluating', 'id' => $all->fkoffice], ['class' => 'Message-button js-messageClose']) ?>
+                    <?= Html::a('Ver Oficio', ['office/evaluating', 'id' => $all->fkoffice], ['class' => 'Message-button js-messageClose']) ?>                    
                 </div>
 
             </div>

@@ -7,6 +7,7 @@ use webvimark\modules\UserManagement\UserManagementModule;
 use yii\helpers\ArrayHelper;
 use app\models\Jobtitle;
 use app\models\Administrativeunit;
+use kartik\file\FileInput;
 
 $this->title = "Nuevo Perfil";
 
@@ -22,7 +23,7 @@ $administrativeunit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadm
 
             <div class="text-center">
                 <!--<img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">-->
-                <img src="<?php if ($model->avatar == Yii::$app->homeUrl . 'resourcesFiles/avatar/') { ?><?= Yii::$app->homeUrl ?>resourcesFiles/avatar/default.png<?php } else { ?><?= $model->avatar ?><?php } ?>" class="avatar img-circle img-thumbnail" alt="avatar">
+                <img src="<?= $model->avatar; ?>" class="avatar img-circle img-thumbnail" alt="avatar">
             </div><br>
 
             <div class="panel panel-default">
@@ -102,15 +103,17 @@ $administrativeunit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadm
                         </div>
                     </div>-->
                     <div class="form-group">
-                        <div class="col-xs-6">
-                            <?= $form->field($model, 'photo')->textInput(['maxlength' => true]) ?>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-6">
+                        <div class="col-md-12">
                             <?= $form->field($model, 'review')->textarea(['rows' => 6]) ?>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <?php // $form->field($model, 'photo')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($model, 'avatars')->widget(FileInput::classname(), ['options' => ['accept' => 'avatars/*'],]); ?>
+                        </div>
+                    </div>
+                    
                     <?php // $form->field($model, 'fkuser')->textInput() ?>
                     
                     <!------------------------------------------------------------------------------------>
@@ -138,20 +141,16 @@ $administrativeunit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadm
                             <?php endif; ?>
                         </div>
                     </div>
-
+                    <!--
                     <div class="form-group">
                         <div class="col-xs-6">
-                            <?php if (User::hasPermission('bindUserToIp')): ?>
-
-                                <?=
+                            <?php /* if (User::hasPermission('bindUserToIp')): 
                                         $form->field($modelUser, 'bind_to_ip')
                                         ->textInput(['maxlength' => 255])
                                         ->hint(UserManagementModule::t('back', 'For example: 123.34.56.78, 168.111.192.12'))
-                                ?>
-
-                            <?php endif; ?>
+                                 endif; */ ?>
                         </div>
-                    </div>
+                    </div>-->
 
                     <div class="form-group">
                         <div class="col-xs-6">
@@ -167,8 +166,7 @@ $administrativeunit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadm
                     <div class="form-group">
                         <div class="col-xs-12">
                             <br>
-                            <?= Html::submitButton('<i class="glyphicon glyphicon-ok-sign"></i> Save', ['class' => 'btn btn-lg btn-success']) ?>                            
-                            <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+                            <?= Html::submitButton('<i class="glyphicon glyphicon-ok-sign"></i> Save', ['class' => 'btn btn-lg btn-success']) ?>                                                        
                         </div>
                     </div>
                     <?php ActiveForm::end(); ?>

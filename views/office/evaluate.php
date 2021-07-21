@@ -17,7 +17,7 @@ $this->title = 'Evaluar Oficios';
         <div class="col-md-12">
 
             <div class="row" style="margin-bottom: 8px;margin-right: 0px;">
-                <div class="pull-right"><?= Html::a('Oficios', ['file/files'], ['class' => 'btn btn-primary']) ?> <?= Html::a('Filtrar Oficios', ['office/filter'], ['class' => 'btn btn-primary']) ?></div>
+                <div class="pull-right"><?= Html::a('Archivos', ['file/files'], ['class' => 'btn btn-primary']) ?> <?= Html::a('Filtrar Oficios', ['office/filter'], ['class' => 'btn btn-primary']) ?></div>
             </div>
 
             <table class="table">

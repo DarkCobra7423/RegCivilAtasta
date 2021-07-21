@@ -17,16 +17,26 @@ use yii\web\UploadedFile;
 
 class SiteController extends Controller {
 
+    public $freeAccess = true;
+
+    //public $freeAccessActions = ['index', 'logout', 'createoffice'];
+
     /**
      * {@inheritdoc}
      */
-    public $freeAccess = true;
+    //public $freeAccess = true;
+    
+
+    //public  $freeAccessActions = ['site/index', 'site/createoffice'];
     
     public function behaviors() {
+        
         return [
+            
             'ghost-access' => [
                 'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
             ],
+            
         ];
         /*
           return [
@@ -178,10 +188,6 @@ class SiteController extends Controller {
         
     }
     
-    public function actionModoprueba(){
-        return $this->render('modoprueba');
-    }
-
     /**
      * Login action.
      *

@@ -18,6 +18,7 @@ use app\models\Notifications;
  */
 class OfficeController extends Controller {
 
+    public $freeAccessActions = ['existexpedient', 'existnooficce'];
     /**
      * {@inheritdoc}
      */

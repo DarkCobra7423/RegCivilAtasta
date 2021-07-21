@@ -13,7 +13,6 @@ use webvimark\modules\UserManagement\models\User;
 use webvimark\modules\UserManagement\models\search\UserSearch;
 use yii\web\UploadedFile;
 
-
 /*
   use webvimark\components\AdminDefaultController;
   use Yii;
@@ -41,21 +40,21 @@ class ProfileController extends Controller {
       }
      */
     public function behaviors() {
-        
+
         return [
             'ghost-access' => [
                 'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
             ],
         ];
         /*
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];*/
+          return [
+          'verbs' => [
+          'class' => VerbFilter::className(),
+          'actions' => [
+          'delete' => ['POST'],
+          ],
+          ],
+          ]; */
     }
 
     /**
@@ -98,28 +97,40 @@ class ProfileController extends Controller {
     }
 
     public function actionNewprofile() {
-        /*
-          $model = new User(['scenario'=>'newUser']);
 
-          if ( $model->load(Yii::$app->request->post()) && $model->save() )
-          {
-          return $this->redirect(['view',	'id' => $model->id]);
-          }
-
-          return $this->renderIsAjax('create', compact('model'));
-         */
         $model = new Profile();
 
         $modelUser = new User(['scenario' => 'newUser']);
 
         if ($modelUser->load(Yii::$app->request->post()) && $modelUser->save()) {
-            
+
             $model->fkuser = "{$modelUser->id}";
-            
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->idprofile]);
+            ////////////////////////////
+            if ($model->load(Yii::$app->request->post())) {
+                $avatars = UploadedFile::getInstance($model, 'avatars');
+                if (!is_null($avatars)) {
+                    $name = explode(".", $avatars->name);
+                    $ext = end($name);
+                    $model->photo = Yii::$app->security->generateRandomString() . ".{$ext}";
+                    $resourcesFiles1 = Yii::$app->basePath . '/web/resourcesFiles/avatar/';
+                    $path = $resourcesFiles1 . $model->photo;
+                    if ($avatars->saveAs($path)) {
+                        if ($model->save()) {
+                            return $this->redirect(['view', 'id' => $model->idprofile]);
+                        }
+                    }
+                } else {
+                    $model->photo = "default.png";
+                    if ($model->save()) {
+                        return $this->redirect(['view', 'id' => $model->idprofile]);
+                    }
+                }
             }
-            //return $this->redirect(['view',	'id' => $model->id]);
+            ///////////////////////////
+            /*
+              if ($model->load(Yii::$app->request->post()) && $model->save()) {
+              return $this->redirect(['view', 'id' => $model->idprofile]);
+              } */
         }
 
 
@@ -128,20 +139,40 @@ class ProfileController extends Controller {
                     'modelUser' => $modelUser,
         ]);
     }
-    
+
     public function actionViewprofile($id) {
         return $this->render('viewprofile', [
                     'model' => $this->findModel($id),
         ]);
     }
-    
-    
+
     public function actionUpdateprofile($id) {
         $model = $this->findModel($id);
-
+        
+        if ($model->load(Yii::$app->request->post())) {
+            $avatars = UploadedFile::getInstance($model, 'avatars');
+            if (!is_null($avatars)) {
+                $name = explode(".", $avatars->name);
+                $ext = end($name);
+                $model->photo = Yii::$app->security->generateRandomString() . ".{$ext}";
+                $resourcesFiles1 = Yii::$app->basePath . '/web/resourcesFiles/avatar/';
+                $path = $resourcesFiles1 . $model->photo;
+                if ($avatars->saveAs($path)) {
+                    if ($model->save()) {
+                        return $this->redirect(['viewprofile', 'id' => $model->idprofile]);
+                    }
+                }
+            }else{
+                $model->photo = "default.png";
+                if ($model->save()) {
+                        return $this->redirect(['viewprofile', 'id' => $model->idprofile]);
+                    }
+            }
+        }
+        /*
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['viewprofile', 'id' => $model->idprofile]);
-        }
+        }*/
 
         return $this->render('updateprofile', [
                     'model' => $model,
@@ -167,10 +198,10 @@ class ProfileController extends Controller {
      */
     public function actionCreate() {
         $model = new Profile();
-     /*   if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idprofile]);
-        }*/
-         if ($model->load(Yii::$app->request->post())) {
+        /*   if ($model->load(Yii::$app->request->post()) && $model->save()) {
+          return $this->redirect(['view', 'id' => $model->idprofile]);
+          } */
+        if ($model->load(Yii::$app->request->post())) {
             $avatars = UploadedFile::getInstance($model, 'avatars');
             if (!is_null($avatars)) {
                 $name = explode(".", $avatars->name);
@@ -201,10 +232,10 @@ class ProfileController extends Controller {
     public function actionUpdate($id) {
         $model = $this->findModel($id);
 
-       /* if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idprofile]);
-        }*/
-         if ($model->load(Yii::$app->request->post())) {
+        /* if ($model->load(Yii::$app->request->post()) && $model->save()) {
+          return $this->redirect(['view', 'id' => $model->idprofile]);
+          } */
+        if ($model->load(Yii::$app->request->post())) {
             $avatars = UploadedFile::getInstance($model, 'avatars');
             if (!is_null($avatars)) {
                 $name = explode(".", $avatars->name);
@@ -219,7 +250,7 @@ class ProfileController extends Controller {
                 }
             }
         }
-        
+
         return $this->render('update', [
                     'model' => $model,
         ]);

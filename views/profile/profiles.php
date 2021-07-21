@@ -9,9 +9,6 @@ $this->title = "Perfiles";
 <?= Html::a('Nuevo Perfil', ['profile/newprofile'], ['class' => 'btn btn-warning']) ?>
         </div>
 
-        <div class="pull-right">
-            <input type="text" placeholder="Buscar">
-        </div>
     </div>
 </div>
 <br>

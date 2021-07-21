@@ -185,13 +185,10 @@ AppAsset::register($this);
             </div>
         </a>
     </script>-->
+    
+    <?php if(Yii::$app->user->isGuest){}else{ ?>
     <script src="<?= Yii::$app->homeUrl ?>js/notificationsdesktop.js" type="text/javascript"></script>
-    
-    
-    <script type="text/javascript" id="iddesktop">
-        
-    </script>
-    
+    <script type="text/javascript" id="iddesktop"></script>
     <script type="text/javascript">
 $(function () {
 
@@ -500,7 +497,7 @@ notifications.push({
 
 });
     </script>
-   
+    <?php } ?>
 
 </html>
 <?php $this->endPage() ?>

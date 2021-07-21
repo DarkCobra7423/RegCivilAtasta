@@ -10,6 +10,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Jobtitle;
 use app\models\Administrativeunit;
+use kartik\file\FileInput;
 
 $jobtitle = ArrayHelper::map(Jobtitle::find()->all(), 'idjobtitle', 'jobtitle');
 $administrativeunit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadministrativeunit', 'name');
@@ -29,7 +30,7 @@ $this->title = "Actualizar Perfil ".$model->name . " " . $model->lastname;
 
             <div class="text-center">
                 <!--<img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">-->
-                <img src="<?php if ($model->avatar == Yii::$app->homeUrl . 'resourcesFiles/avatar/') { ?><?= Yii::$app->homeUrl ?>resourcesFiles/avatar/default.png<?php } else { ?><?= $model->avatar ?><?php } ?>" class="avatar img-circle img-thumbnail" alt="avatar">
+                <img src="<?= $model->avatar; ?>" class="avatar img-circle img-thumbnail" alt="avatar">
             </div><br>
 
             <div class="panel panel-default">
@@ -102,13 +103,14 @@ $this->title = "Actualizar Perfil ".$model->name . " " . $model->lastname;
                     </div>
                     
                     <div class="form-group">
-                        <div class="col-xs-6">
-                            <?= $form->field($model, 'photo')->textInput(['maxlength' => true]) ?>
+                        <div class="col-xs-12">
+                            <?= $form->field($model, 'review')->textarea(['rows' => 6]) ?>
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-xs-6">
-                            <?= $form->field($model, 'review')->textarea(['rows' => 6]) ?>
+                        <div class="col-xs-12">
+                            <?php // $form->field($model, 'photo')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($model, 'avatars')->widget(FileInput::classname(), ['options' => ['accept' => 'avatars/*'],]); ?>
                         </div>
                     </div>
                     <?php // $form->field($model, 'fkuser')->textInput() ?>
