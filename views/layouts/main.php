@@ -129,7 +129,7 @@ AppAsset::register($this);
                                 [
                                 'label' => '<img class="profile-icon" src="' . Yii::$app->profile->avatar . '">', 'options' => ['class' => 'perzonalize'],
                                 'items' => [
-                                        ['label' => '<i class="far fa-user"></i> Perfil', 'url' => ['profile/profile']],
+                                        ['label' => '<i class="far fa-user"></i> Mi Perfil ('.Yii::$app->profile->name.')', 'url' => ['profile/profile']],
                                         ['label' => '<i class="fas fa-key"></i> Cambiar contraseña', 'url' => ['/user-management/auth/change-own-password']],
                                         ['label' => '<i class="far fa-check-circle"></i> Confirmación de E-mail', 'url' => ['/user-management/auth/confirm-email']],
                                         ['label' => '<i class="fas fa-sign-out-alt"></i> Cerrar Sesion', 'url' => ['/user-management/auth/logout']],

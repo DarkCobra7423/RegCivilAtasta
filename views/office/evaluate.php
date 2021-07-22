@@ -17,7 +17,11 @@ $this->title = 'Evaluar Oficios';
         <div class="col-md-12">
 
             <div class="row" style="margin-bottom: 8px;margin-right: 0px;">
-                <div class="pull-right"><?= Html::a('Archivos', ['file/files'], ['class' => 'btn btn-primary']) ?> <?= Html::a('Filtrar Oficios', ['office/filter'], ['class' => 'btn btn-primary']) ?></div>
+                <div class="pull-right">
+                    <?= Html::a('Oficios Enviados', ['office/officesend'], ['class' => 'btn btn-primary']) ?> 
+                    <?= Html::a('Archivos', ['file/files'], ['class' => 'btn btn-primary']) ?> 
+                    <?= Html::a('Filtrar Oficios', ['office/filter'], ['class' => 'btn btn-primary']) ?>
+                </div>
             </div>
 
             <table class="table">
@@ -135,23 +139,23 @@ $this->title = 'Evaluar Oficios';
                             </td>
                         </tr>
                     <?php endforeach; ?>      
-    <!--<tr class="success">
-        <td>
-            Column content
-        </td>
-        <td>
-            Column content
-        </td>
-        <td>
-            Column content
-        </td>
-        <td>
-            Column content
-        </td>
-        <td>
-            Column content
-        </td>
-    </tr>-->
+<!--<tr class="success">
+    <td>
+        Column content
+    </td>
+    <td>
+        Column content
+    </td>
+    <td>
+        Column content
+    </td>
+    <td>
+        Column content
+    </td>
+    <td>
+        Column content
+    </td>
+</tr>-->
                 </tbody>
             </table>
         </div>
