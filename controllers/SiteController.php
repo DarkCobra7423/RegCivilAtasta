@@ -14,6 +14,7 @@ use app\models\Office;
 use app\models\File;
 use app\models\Officefile;
 use yii\web\UploadedFile;
+use app\models\Guest;
 
 class SiteController extends Controller {
 
@@ -25,18 +26,14 @@ class SiteController extends Controller {
      * {@inheritdoc}
      */
     //public $freeAccess = true;
-    
-
     //public  $freeAccessActions = ['site/index', 'site/createoffice'];
-    
+
     public function behaviors() {
-        
+
         return [
-            
             'ghost-access' => [
                 'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
             ],
-            
         ];
         /*
           return [
@@ -81,25 +78,31 @@ class SiteController extends Controller {
      * @return string
      */
     public function actionIndex() {
-        
+
         //$units = Administrativeunit::find()->orderBy('RAND()')->all();
         $units = Administrativeunit::find()->all();
-        
+
         $carousels = Administrativeunit::find()->orderBy('RAND()')->limit(3)->all();
-        
+
         return $this->render('index', ['units' => $units, 'carousels' => $carousels]);
     }
     
+    public function actionModoprueba(){
+         return $this->render('modoprueba');    
+    }
+
     public function actionCreateoffice($id) {
-        
+
         $model = new Office();
-        
+
+        $modelGuest = new Guest();
+
         $modelUnit = Administrativeunit::find()->where(['idadministrativeunit' => $id])->one();
 
         $modelfile = new File();
 
         $officefile = new Officefile;
-        
+
         if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
             ///////////////////
             $expedient = $model->expedient;
@@ -112,12 +115,12 @@ class SiteController extends Controller {
 
             if (Yii::$app->db->createCommand("INSERT INTO office (`expedient`, `nooffice`, `subject`, `creationdate`, `category`, `fkstateoffice`, `fkadministrativeunit`) VALUES ('" . $expedient . "','" . $nooffice . "','" . $subject . "','" . $creationdate . "','" . $category . "','" . $fkstateoffice . "','" . $fkadministrativeunit . "')")->execute()) {
                 $idofficeinsert = Office::find()->select('idoffice')->where(['expedient' => $expedient, 'nooffice' => $nooffice])->one();
-                
-                Yii::$app->db->createCommand("INSERT INTO notifications (`title`, `message`, `read`, `fkoffice`, `fkadministrativeunit`) VALUES ('Nuevo oficio en estado pendiente. <span class=badge-warning>".$category."</span><br>Expediente (".$expedient.") y No. Oficio (".$nooffice.")','".$subject."','0','".$idofficeinsert->idoffice."','".$fkadministrativeunit."')")->execute();
+
+                Yii::$app->db->createCommand("INSERT INTO notifications (`title`, `message`, `read`, `fkoffice`, `fkadministrativeunit`) VALUES ('Nuevo oficio en estado pendiente. <span class=badge-warning>" . $category . "</span><br>Expediente (" . $expedient . ") y No. Oficio (" . $nooffice . ")','" . $subject . "','0','" . $idofficeinsert->idoffice . "','" . $fkadministrativeunit . "')")->execute();
                 //////////////////////////////////////////////
 
                 $filess = UploadedFile::getInstances($modelfile, 'imageFiles');
-                
+
                 foreach ($filess as $files) {
 
                     if (!is_null($files)) {
@@ -138,7 +141,7 @@ class SiteController extends Controller {
                         $fileformat = ".{$ext}";
                         //$filesize = $files->size . " K";
                         $filesize = $this->formatSizeUnits($files->size);
-                        
+
                         if ($files->saveAs($path)) {
 
                             if (Yii::$app->db->createCommand("INSERT INTO file (`name`, `file`, `format`, `size`) VALUES ('" . $filename . "','" . $fileurl . "','" . $fileformat . "','" . $filesize . "')")->execute()) {
@@ -159,18 +162,17 @@ class SiteController extends Controller {
             }
         }
         //////////////////////////////////////////////
-        
+
         return $this->render('newoffice', [
                     'modelfile' => $modelfile,
                     'modelUnit' => $modelUnit,
                     'model' => $model,
-            
+                    'modelGuest' => $modelGuest,
         ]);
- 
     }
-    
+
     function formatSizeUnits($bytes) {
-        
+
         if ($bytes >= 1073741824) {
             $bytes = number_format($bytes / 1073741824, 2) . ' GB';
         } elseif ($bytes >= 1048576) {
@@ -183,11 +185,10 @@ class SiteController extends Controller {
             $bytes = $bytes . ' byte';
         } else {
             $bytes = '0 bytes';
-        } 
+        }
         return $bytes;
-        
     }
-    
+
     /**
      * Login action.
      *

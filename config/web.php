@@ -43,7 +43,22 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+            /* 'transport' => ['class' => 'Swift_SmtpTransport',
+              'host' => 'smtp.mailtrap.io',
+              'username' => 'f8b66f8dc0eac1',
+              'password' => 'd5da52313fcdd9',
+              'port' => '25',
+              //'encryption' => 'tls',
+              ] */
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'yeseniadiazhernandez977@gmail.com',
+                'password' => 'yesenia97',
+                'port' => '587',
+                'encryption' => 'tls',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -101,12 +116,12 @@ $config = [
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
     /*
-    $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
-            // uncomment the following to add your IP if you are not connecting from localhost.
-            //'allowedIPs' => ['127.0.0.1', '::1'],
-    ];*/
+      $config['bootstrap'][] = 'debug';
+      $config['modules']['debug'] = [
+      'class' => 'yii\debug\Module',
+      // uncomment the following to add your IP if you are not connecting from localhost.
+      //'allowedIPs' => ['127.0.0.1', '::1'],
+      ]; */
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
