@@ -43,19 +43,12 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => false,
-            /* 'transport' => ['class' => 'Swift_SmtpTransport',
-              'host' => 'smtp.mailtrap.io',
-              'username' => 'f8b66f8dc0eac1',
-              'password' => 'd5da52313fcdd9',
-              'port' => '25',
-              //'encryption' => 'tls',
-              ] */
+            'useFileTransport' => false,            
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'smtp.gmail.com',
-                'username' => 'yeseniadiazhernandez977@gmail.com',
-                'password' => 'yesenia97',
+                'username' => 'correo-electronico-de-la-administracion@gmail.com',
+                'password' => 'contraseña-de-la-administracion',
                 'port' => '587',
                 'encryption' => 'tls',
             ],
