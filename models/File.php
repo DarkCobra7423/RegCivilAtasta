@@ -37,7 +37,7 @@ class File extends \yii\db\ActiveRecord
         return [
             [['name', 'file', 'format', 'size'], 'required'],
             //[['file'], 'required'],
-            [['name'], 'string', 'max' => 100],
+            [['name'], 'string', 'max' => 200],
             [['file'], 'string', 'max' => 255],
             [['format'], 'string', 'max' => 10],
             [['size'], 'string', 'max' => 40],

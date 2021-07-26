@@ -8,6 +8,7 @@ use kartik\file\FileInput;
 
 $unit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadministrativeunit', 'name');
 
+$this->title = "Enviar Oficio";
 /* @var $this yii\web\View */
 /* @var $model app\models\Office */
 /* @var $form yii\widgets\ActiveForm */

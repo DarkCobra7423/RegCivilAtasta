@@ -90,6 +90,17 @@ class SiteController extends Controller {
     public function actionModoprueba(){
          return $this->render('modoprueba');    
     }
+    
+    public function actionTrackcraft($code){
+        $guest = Guest::find()->where(['code' => $code])->one();
+        
+        if($guest !== null){
+         $office = Office::find()->where(['idoffice' => $guest->fkoffice])->one();        
+         return $this->render('trackcraft', ['office' => $office]);       
+        }else{
+            return $this->render('trackcrafterror');       
+        }         
+    }
 
     public function actionCreateoffice($id) {
 
@@ -103,7 +114,10 @@ class SiteController extends Controller {
 
         $officefile = new Officefile;
 
-        if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post()) && $modelGuest->load(Yii::$app->request->post())) {
+            
+            //print_r($modelGuest); die();
+            
             ///////////////////
             $expedient = $model->expedient;
             $nooffice = $model->nooffice;
@@ -115,8 +129,8 @@ class SiteController extends Controller {
 
             if (Yii::$app->db->createCommand("INSERT INTO office (`expedient`, `nooffice`, `subject`, `creationdate`, `category`, `fkstateoffice`, `fkadministrativeunit`) VALUES ('" . $expedient . "','" . $nooffice . "','" . $subject . "','" . $creationdate . "','" . $category . "','" . $fkstateoffice . "','" . $fkadministrativeunit . "')")->execute()) {
                 $idofficeinsert = Office::find()->select('idoffice')->where(['expedient' => $expedient, 'nooffice' => $nooffice])->one();
-
-                Yii::$app->db->createCommand("INSERT INTO notifications (`title`, `message`, `read`, `fkoffice`, `fkadministrativeunit`) VALUES ('Nuevo oficio en estado pendiente. <span class=badge-warning>" . $category . "</span><br>Expediente (" . $expedient . ") y No. Oficio (" . $nooffice . ")','" . $subject . "','0','" . $idofficeinsert->idoffice . "','" . $fkadministrativeunit . "')")->execute();
+                Yii::$app->db->createCommand("INSERT INTO guest (`email`, `nameandlastname`, `code`, `fkoffice`) VALUES ('".$modelGuest->email."','".$modelGuest->nameandlastname."','".$modelGuest->code."','".$idofficeinsert->idoffice."')")->execute();
+                Yii::$app->db->createCommand("INSERT INTO notifications (`title`, `message`, `datatime`, `read`, `fkoffice`, `fkadministrativeunit`) VALUES ('Nuevo oficio en estado pendiente. <span class=badge-warning>" . $category . "</span><br>Expediente (" . $expedient . ") y No. Oficio (" . $nooffice . ")','" . $subject . "','". date('Y-m-d H:i:s') ."','0','" . $idofficeinsert->idoffice . "','" . $fkadministrativeunit . "')")->execute();
                 //////////////////////////////////////////////
 
                 $filess = UploadedFile::getInstances($modelfile, 'imageFiles');

@@ -22,14 +22,14 @@ $this->title = 'Oficios Enviados';
                 Asunto
             </th>
             <th>
-                Estado
+                Estado Actual
             </th>
             <th>
                 Enviado
             </th>
-            <th>
-                Evaluar
-            </th>
+            <!--<th>
+                Seguimiento
+                </th>-->
         </tr>
     </thead>
     <tbody> 
@@ -61,7 +61,7 @@ $this->title = 'Oficios Enviados';
                     <?= $send->creationdate ?>
                 </td>
                 <td>
-                    <?= Html::a('<i class="far fa-edit"></i>', ['evaluating', 'id' => $send->idoffice], ['title' => 'Evaluar']) ?>                    
+                    <?= Html::a('<i class="far fa-eye"></i>', ['history', 'id' => $send->idoffice], ['title' => 'Seguimiento']) ?>                                        
                 </td>
             </tr>
         <?php

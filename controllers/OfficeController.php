@@ -13,6 +13,8 @@ use app\models\Officefile;
 use yii\web\UploadedFile;
 use app\models\Notifications;
 use app\models\Sendoffice;
+use app\models\Stateoffice;
+use app\models\Administrativeunit;
 
 /**
  * OfficeController implements the CRUD actions for Office model.
@@ -51,9 +53,9 @@ class OfficeController extends Controller {
         $sendoffices = Sendoffice::find()->where(['fkprofile' => Yii::$app->profile->idprofile])->all();
 
         return $this->render('officesend', [
-                        'sendoffices' => $sendoffices,
-                            //'dataProvider' => $dataProvider,
-            ]);
+                    'sendoffices' => $sendoffices,
+                        //'dataProvider' => $dataProvider,
+        ]);
     }
 
     public function actionFilter() {
@@ -95,12 +97,11 @@ class OfficeController extends Controller {
             $category = $model->category;
             $fkstateoffice = $model->fkstateoffice;
 
-            if (Yii::$app->db->createCommand("INSERT INTO office (`expedient`, `nooffice`, `subject`, `creationdate`, `category`, `fkstateoffice`, `fkadministrativeunit`) VALUES ('" . $expedient . "','" . $nooffice . "','" . $subject . "','" . $creationdate . "','" . $category . "','" . $fkstateoffice . "','" . $fkadministrativeunit . "')")->execute()) {
+            if (Yii::$app->db->createCommand("INSERT INTO office (`expedient`, `nooffice`, `subject`, `creationdate`, `category`, `fkstateoffice`, `fkadministrativeunit`, `tracing`) VALUES ('" . $expedient . "','" . $nooffice . "','" . $subject . "','" . $creationdate . "','" . $category . "','" . $fkstateoffice . "','" . $fkadministrativeunit . "','<b>Pendiente en:</b> " . $this->administrativeunit1($fkadministrativeunit) . " <i>" . date('Y-m-d H:i:s') . "</i><br>')")->execute()) {
                 $idofficeinsert = Office::find()->select('idoffice')->where(['expedient' => $expedient, 'nooffice' => $nooffice])->one();
-
-                Yii::$app->db->createCommand("INSERT INTO notifications (`title`, `message`, `read`, `fkprofile`, `fkoffice`, `fkadministrativeunit`) VALUES ('Nuevo oficio en estado pendiente. <span class=badge-success>" . $category . "</span><br>Expediente (" . $expedient . ") y No. Oficio (" . $nooffice . ")','" . $subject . "','0','" . Yii::$app->profile->idprofile . "','" . $idofficeinsert->idoffice . "','" . $fkadministrativeunit . "')")->execute();
+                Yii::$app->db->createCommand("INSERT INTO sendoffice (`fkprofile`, `fkoffice`)VALUES('" . Yii::$app->profile->idprofile . "','" . $idofficeinsert->idoffice . "')")->execute();
+                Yii::$app->db->createCommand("INSERT INTO notifications (`title`, `message`, `datatime`, `read`, `fkprofile`, `fkoffice`, `fkadministrativeunit`) VALUES ('Nuevo oficio en estado pendiente. <span class=badge-success>" . $category . "</span><br>Expediente (" . $expedient . ") y No. Oficio (" . $nooffice . ")','" . $subject . "','" . date('Y-m-d H:i:s') . "','0','" . Yii::$app->profile->idprofile . "','" . $idofficeinsert->idoffice . "','" . $fkadministrativeunit . "')")->execute();
                 //////////////////////////////////////////////
-
 
                 $filess = UploadedFile::getInstances($modelfile, 'imageFiles');
 
@@ -127,7 +128,7 @@ class OfficeController extends Controller {
 
                         if ($files->saveAs($path)) {
 
-                            if (Yii::$app->db->createCommand("INSERT INTO file (`name`, `file`, `format`, `size`) VALUES ('" . $filename . "','" . $fileurl . "','" . $fileformat . "','" . $filesize . "')")->execute()) {
+                            if (Yii::$app->db->createCommand("INSERT INTO file (`name`, `file`, `format`, `size`) VALUES ('Expediente: " . $expedient . " No. Oficio: " . $nooffice . " " . $filename . "','" . $fileurl . "','" . $fileformat . "','" . $filesize . "')")->execute()) {
 
                                 $idfileinsert = File::find()->select('idfile')->where(['file' => $fileurl])->one();
 
@@ -196,11 +197,22 @@ class OfficeController extends Controller {
     public function actionEvaluating($id) {
         $model = $this->findModel($id);
 
+        $tracing = $model->tracing;
+        
         $offices = Office::find()->where(['fkadministrativeunit' => Yii::$app->profile->fkworksin, 'idoffice' => $id])->all();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //return $this->redirect(['view', 'id' => $model->idoffice]);
-            return $this->redirect(Yii::$app->homeUrl . "office/evaluate");
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->fkstateoffice == "3"){
+                Yii::$app->db->createCommand("UPDATE `office` SET `tracing` = '" . $tracing . "<b>".$this->state($model->fkstateoffice)." por:</b> " . Yii::$app->profile->name . " " . Yii::$app->profile->lastname . "<br><b>".$this->state($model->fkstateoffice)." a: </b>".$this->administrativeunit1($model->fkadministrativeunit)." <i>" . date('Y-m-d H:i:s') . "</i><br>' WHERE `idoffice` = " . $id)->execute();
+            }else{
+                Yii::$app->db->createCommand("UPDATE `office` SET `tracing` = '" . $tracing . "<b>".$this->state($model->fkstateoffice)." por:</b> " . Yii::$app->profile->name . " " . Yii::$app->profile->lastname . "<br><b>Observaciones: </b>".$model->observations." <i>" . date('Y-m-d H:i:s') . "</i><br>' WHERE `idoffice` = " . $id)->execute();
+            }
+            Yii::$app->db->createCommand("INSERT INTO notifications (`title`, `message`, `datatime`, `read`, `fkprofile`, `fkoffice`, `fkadministrativeunit`) VALUES ('Nuevo oficio en estado ".$this->state($model->fkstateoffice).". <span class=badge-success>" . $model->category . "</span><br>Expediente (" . $model->expedient . ") y No. Oficio (" . $model->nooffice . ")','" . $model->subject . "','" . date('Y-m-d H:i:s') . "','0','" . Yii::$app->profile->idprofile . "','" . $id . "','" . $model->fkadministrativeunit . "')")->execute();
+            if($model->save()){                
+                return $this->redirect(Yii::$app->homeUrl . "office/evaluate");
+            }
+        } else {            
+            Yii::$app->db->createCommand("UPDATE `office` SET `tracing` = '" . $tracing . "<b>Visto por:</b> " . Yii::$app->profile->name . " " . Yii::$app->profile->lastname . " <i>" . date('Y-m-d H:i:s') . "</i><br>' WHERE `idoffice` = " . $id)->execute();
         }
 
         return $this->render('evaluating', [
@@ -211,13 +223,29 @@ class OfficeController extends Controller {
 
     public function actionEvaluatingnotify($id, $not) {
         $model = $this->findModel($id);
-
+        $tracing = $model->tracing;
+        
+        
         $offices = Office::find()->where(['fkadministrativeunit' => Yii::$app->profile->fkworksin, 'idoffice' => $id])->all();
 
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->fkstateoffice == "3"){
+                Yii::$app->db->createCommand("UPDATE `office` SET `tracing` = '" . $tracing . "<b>".$this->state($model->fkstateoffice)." por:</b> " . Yii::$app->profile->name . " " . Yii::$app->profile->lastname . "<br><b>".$this->state($model->fkstateoffice)." a: </b>".$this->administrativeunit1($model->fkadministrativeunit)." <i>" . date('Y-m-d H:i:s') . "</i><br>' WHERE `idoffice` = " . $id)->execute();
+            }else{
+                Yii::$app->db->createCommand("UPDATE `office` SET `tracing` = '" . $tracing . "<b>".$this->state($model->fkstateoffice)." por:</b> " . Yii::$app->profile->name . " " . Yii::$app->profile->lastname . "<br><b>Observaciones: </b>".$model->observations." <i>" . date('Y-m-d H:i:s') . "</i><br>' WHERE `idoffice` = " . $id)->execute();
+            }
+            Yii::$app->db->createCommand("INSERT INTO notifications (`title`, `message`, `datatime`, `read`, `fkprofile`, `fkoffice`, `fkadministrativeunit`) VALUES ('Nuevo oficio en estado ".$this->state($model->fkstateoffice).". <span class=badge-success>" . $model->category . "</span><br>Expediente (" . $model->expedient . ") y No. Oficio (" . $model->nooffice . ")','" . $model->subject . "','" . date('Y-m-d H:i:s') . "','0','" . Yii::$app->profile->idprofile . "','" . $id . "','" . $model->fkadministrativeunit . "')")->execute();
+            if($model->save()){                
+                return $this->redirect(Yii::$app->homeUrl . "office/evaluate");
+            }
+        } else {            
+            Yii::$app->db->createCommand("UPDATE `office` SET `tracing` = '" . $tracing . "<b>Visto por:</b> " . Yii::$app->profile->name . " " . Yii::$app->profile->lastname . " <i>" . date('Y-m-d H:i:s') . "</i><br>' WHERE `idoffice` = " . $id)->execute();
+        }
+        /*
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //return $this->redirect(['view', 'id' => $model->idoffice]);
             return $this->redirect(Yii::$app->homeUrl . "office/evaluate");
-        }
+        }*/
 
         $model1 = Notifications::find()->where(['idnotifications' => $not])->one();
         $model1->read = '1';
@@ -236,6 +264,22 @@ class OfficeController extends Controller {
         foreach ($tos as $to) {
             echo "<option value='{$to->idprofile}'>{$to->name} {$to->lastname}</option>\n";
         }
+    }
+    
+    public function actionHistory($id) {
+        return $this->render('history', [
+                    'model' => $this->findModel($id),
+        ]);
+    }
+
+    public function administrativeunit1($id) {
+        $unit = Administrativeunit::find()->where(['idadministrativeunit' => $id])->one();
+        return $unit->name;
+    }
+    
+    public function state($param) {
+        $state = Stateoffice::find()->where(['idstateoffice' => $param])->one();
+        return $state->state;
     }
 
     function formatSizeUnits($bytes) {

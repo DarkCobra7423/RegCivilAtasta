@@ -1,0 +1,511 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25/07/2021, 05:45:20 PM
+    Author     : DH-Sawyer
+*/
+/*! CSS Used from: http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css */
+
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+h1,
+h2 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+a {
+  color: #007bff;
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
+}
+a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+img {
+  vertical-align: middle;
+  border-style: none;
+}
+svg:not(:root) {
+  overflow: hidden;
+}
+button {
+  border-radius: 0;
+}
+button:focus {
+  outline: 1px dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+}
+button,
+input {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+button,
+input {
+  overflow: visible;
+}
+button {
+  text-transform: none;
+}
+[type="submit"],
+button {
+  -webkit-appearance: button;
+}
+[type="submit"]::-moz-focus-inner,
+button::-moz-focus-inner {
+  padding: 0;
+  border-style: none;
+}
+h1,
+h2 {
+  margin-bottom: 0.5rem;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.2;
+  color: inherit;
+}
+h1 {
+  font-size: 2.5rem;
+}
+h2 {
+  font-size: 2rem;
+}
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+.row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+.col-md-12,
+.col-md-6 {
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+@media (min-width: 768px) {
+  .col-md-6 {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .col-md-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+@media screen and (prefers-reduced-motion: reduce) {
+  .form-control {
+    transition: none;
+  }
+}
+.form-control::-ms-expand {
+  background-color: transparent;
+  border: 0;
+}
+.form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+.form-control::-webkit-input-placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
+.form-control::-moz-placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
+.form-control:-ms-input-placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
+.form-control::-ms-input-placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
+.form-control::placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
+.form-control:disabled {
+  background-color: #e9ecef;
+  opacity: 1;
+}
+.form-group {
+  margin-bottom: 1rem;
+}
+.d-flex {
+  display: -ms-flexbox !important;
+  display: flex !important;
+}
+.justify-content-center {
+  -ms-flex-pack: center !important;
+  justify-content: center !important;
+}
+.align-items-center {
+  -ms-flex-align: center !important;
+  align-items: center !important;
+}
+.text-center {
+  text-align: center !important;
+}
+@media print {
+  *,
+  ::after,
+  ::before {
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+  a:not(.btn) {
+    text-decoration: underline;
+  }
+  img {
+    page-break-inside: avoid;
+  }
+  h2,
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  h2 {
+    page-break-after: avoid;
+  }
+  body {
+    min-width: 992px !important;
+  }
+  .container {
+    min-width: 992px !important;
+  }
+}
+/*! CSS Used from: Embedded */
+body {
+  background: #fff;
+}
+.error-container {
+  /*height: 100vh !important;*/
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: montserrat, sans-serif;
+}
+.big-text {
+  font-size: 200px;
+  font-weight: 900;
+  font-family: sans-serif;
+  background: url(https://cdn.pixabay.com/photo/2018/05/30/15/39/thunderstorm-3441687_960_720.jpg)
+    no-repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: cover;
+  background-position: center;
+}
+.small-text {
+  font-family: montserrat, sans-serif;
+  color: rgb(0, 0, 0);
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.form-group {
+  display: flex;
+}
+.form-control {
+  overflow: hidden;
+  background: #fff;
+  border: 1px #53a0e4 solid;
+  border-right: none;
+  border-radius: 25px 0px 0px 25px;
+  font-size: 1rem;
+}
+.form-control:focus {
+  border-color: #61b045;
+  box-shadow: none;
+}
+form .search-btn {
+  all: unset;
+  width: 15%;
+  padding: 10px;
+  background: #1e50e2;
+  color: white;
+  font-size: 17px;
+  border: 1px #1e50e2 solid;
+  border-left: none;
+  border: 1px #53a0e4 solid;
+  border-radius: 0px 25px 25px 0px;
+  cursor: pointer;
+}
+form .search-btn:hover {
+  background: #0b7dda;
+}
+.button {
+  color: #fff;
+  padding: 12px 36px;
+  font-weight: 600;
+  border: none;
+  position: relative;
+  font-family: "Raleway", sans-serif;
+  display: inline-block;
+  text-transform: uppercase;
+  -webkit-border-radius: 90px;
+  -moz-border-radius: 90px;
+  border-radius: 90px;
+  margin: 2px;
+  margin-top: 2px;
+  background-image: linear-gradient(
+    to right,
+    #09b3ef 0%,
+    #1e50e2 51%,
+    #09b3ef 100%
+  );
+  background-size: 200% auto;
+  flex: 1 1 auto;
+  text-decoration: none;
+}
+.button:hover,
+.button:focus {
+  color: #ffffff;
+  background-position: right center;
+  -webkit-box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+}
+/*! CSS Used from: https://translate.googleapis.com/translate_static/css/translateelement.css */
+.goog-te-spinner-pos {
+  z-index: 1000;
+  position: fixed;
+  transition-delay: 0.6s;
+  left: -1000px;
+  top: -1000px;
+}
+.goog-te-spinner-animation {
+  background: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 104px;
+  height: 104px;
+  border-radius: 50px;
+  background: #fff
+    url(//www.gstatic.com/images/branding/product/2x/translate_24dp.png) 50% 50%
+    no-repeat;
+  transition: all 0.6s ease-in-out;
+  transform: scale(0.4);
+  opacity: 0;
+}
+.goog-te-spinner {
+  margin: 2px 0 0 2px;
+  animation: goog-te-spinner-rotator 1.4s linear infinite;
+}
+.goog-te-spinner-path {
+  stroke-dasharray: 187;
+  stroke-dashoffset: 0;
+  stroke: #4285f4;
+  transform-origin: center;
+  animation: goog-te-spinner-dash 1.4s ease-in-out infinite;
+}
+#goog-gt-tt div,
+#goog-gt-tt span,
+#goog-gt-tt h1,
+#goog-gt-tt img {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  text-align: left;
+  line-height: normal;
+}
+div#goog-gt-tt {
+  padding: 10px 14px;
+}
+#goog-gt-tt {
+  color: #222;
+  background-color: #ffffff;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  display: none;
+  font-family: arial;
+  font-size: 10pt;
+  width: 420px;
+  padding: 12px;
+  position: absolute;
+  z-index: 10000;
+}
+#goog-gt-tt .original-text {
+  clear: both;
+  font-size: 10pt;
+  position: relative;
+  text-align: justify;
+  width: 100%;
+}
+#goog-gt-tt .title {
+  color: #999;
+  font-family: arial, sans-serif;
+  margin: 4px 0;
+  text-align: left;
+}
+#goog-gt-tt .logo {
+  float: left;
+  margin: 0px;
+}
+#goog-gt-tt .activity-links {
+  display: inline-block;
+}
+#goog-gt-tt .started-activity-container {
+  display: none;
+  width: 100%;
+}
+#goog-gt-tt .activity-root {
+  margin-top: 20px;
+}
+#goog-gt-tt .bottom {
+  min-height: 15px;
+  position: relative;
+  height: 1%;
+}
+#goog-gt-tt .status-message {
+  background: -moz-linear-gradient(top, #29910d 0%, #20af0e 100%);
+  background: -webkit-linear-gradient(top, #29910d 0%, #20af0e 100%);
+  background: -o-linear-gradient(top, #29910d 0%, #20af0e 100%);
+  background: -ms-linear-gradient(top, #29910d 0%, #20af0e 100%);
+  background: linear-gradient(top, #29910d 0%, #20af0e 100%);
+  background: #29910d;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  box-shadow: inset 0px 2px 2px #1e6609;
+  -moz-box-shadow: inset 0px 2px 2px #1e6609;
+  -webkit-box-shadow: inset 0px 2px 2px #1e6609;
+  color: white;
+  font-size: 9pt;
+  font-weight: bolder;
+  margin-top: 12px;
+  padding: 6px;
+  text-shadow: 1px 1px 1px #1e6609;
+}
+#goog-gt-tt .activity-link {
+  color: #1155cc;
+  cursor: pointer;
+  font-family: arial;
+  font-size: 11px;
+  margin-right: 15px;
+  text-decoration: none;
+}
+#goog-gt-tt .gray {
+  color: #999;
+  font-family: arial, sans-serif;
+}
+#goog-gt-tt span:focus {
+  outline: none;
+}
+/*! CSS Used from: https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css */
+.fa {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+}
+.fa-search:before {
+  content: "\f002";
+}
+.fa {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+}
+/*! CSS Used keyframes */
+@keyframes goog-te-spinner-rotator {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(270deg);
+  }
+}
+@keyframes goog-te-spinner-dash {
+  0% {
+    stroke-dashoffset: 187;
+  }
+  50% {
+    stroke-dashoffset: 46.75;
+    transform: rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: 187;
+    transform: rotate(450deg);
+  }
+}

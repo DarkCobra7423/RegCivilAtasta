@@ -43,7 +43,7 @@ class Sendoffice extends \yii\db\ActiveRecord
     {
         return [
             'fkprofile' => 'Fkprofile',
-            'fkoffice' => 'Fkoffice',
+            'fkoffice' => 'Fkoffice',            
         ];
     }
 

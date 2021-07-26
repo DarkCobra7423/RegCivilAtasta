@@ -18,6 +18,7 @@ class EmailController extends Controller {
 
     public $freeAccess = true;
     public $sendCode = 0;
+
     /**
      * {@inheritdoc}
      */
@@ -47,10 +48,16 @@ class EmailController extends Controller {
         //https://github.com/yiisoft/yii2-swiftmailer
         //https://www.yiiframework.com/doc/guide/2.0/es/tutorial-mailing
         //USO BASICO
-        
+
         $code = $this->actionGeneratecode(6);
+        $existcode = \app\models\Guest::find()->select('code')->where(['code' => $code])->one();
+        $emailexist = \app\models\Guest::find()->where(['email' => $setto])->one();
         
-        $body = '<link href="' . Yii::$app->homeUrl . 'css/emailStyle.css" rel="stylesheet" type="text/css"/>  <div style="margin:0;padding:0">
+        if(!empty($emailexist)){
+            $code = "false";
+        }else if(empty($existcode)) {
+
+            $body = '<link href="' . Yii::$app->homeUrl . 'css/emailStyle.css" rel="stylesheet" type="text/css"/>  <div style="margin:0;padding:0">
             
   <table align="center" border="0" cellpadding="0" cellspacing="0" width="310" style="border-collapse:collapse;width:310px;margin:0 auto">
     <tbody>
@@ -102,21 +109,21 @@ class EmailController extends Controller {
   </div>
 </div>';
 
-        if (Yii::$app->mailer->compose()->
-                        //setFrom('yeseniadiazhernandez977@gmail.com')
-                        setFrom(Yii::$app->params['adminEmail'])
-                        ->setTo($setto)
-                        ->setSubject('Codigo de Verificación')
-                        //->setTextBody('Contenido en texto plano')
-                        ->setHtmlBody($body)
-                        ->send()) {
+            if (Yii::$app->mailer->compose()->
+                            //setFrom('yeseniadiazhernandez977@gmail.com')
+                            setFrom(Yii::$app->params['adminEmail'])
+                            ->setTo($setto)
+                            ->setSubject('Codigo de Verificación')
+                            //->setTextBody('Contenido en texto plano')
+                            ->setHtmlBody($body)
+                            ->send()) {
 
 
-            return $code;
+                return $code;
+            }
         } else {
-            return "No enviado";
+            $this->actionValidateemail($setto);
         }
-
         //USO QUE PODRIA SERVIRNOS PERO NO ESTOY SEGURO
         /*
           $message = Yii::$app->mailer->compose();
@@ -132,14 +139,14 @@ class EmailController extends Controller {
 
          */
         //return $this->render('index', []);
-        //return 'Enviado';
+        return $code;
     }
-    
+
     public function actionComparationcode($param, $send) {
-        
-        if($send == $param){
+
+        if ($send == $param) {
             return 'true';
-        }else{
+        } else {
             return 'false';
         }
     }

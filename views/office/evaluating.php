@@ -7,8 +7,10 @@ use app\models\Administrativeunit;
 use app\models\Stateoffice;
 use app\models\Profile;
 
+$this->title = 'Evaluar';
+
 $unit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadministrativeunit', 'name');
-$state = ArrayHelper::map(Stateoffice::find()->all(), 'idstateoffice', 'state');
+$state = ArrayHelper::map(Stateoffice::find()->where(['!=', 'idstateoffice', 2])->all(), 'idstateoffice', 'state');
 $profile = ArrayHelper::map(Profile::find()->all(), 'idprofile', 'name');
 ?>
 
@@ -281,6 +283,15 @@ $profile = ArrayHelper::map(Profile::find()->all(), 'idprofile', 'name');
             </div>
         </div>
     </div>
+    <?php if($model->observations != "" || $model->observations != NULL){ ?>
+    <div class="col-xs-12 col-sm-6 col-md-8">
+        <br>
+        <div class="container">
+            <b>Observaciones:</b><br>
+            <?= $model->observations ?>
+        </div>
+    </div>
+    <?php } ?>
 </div>
 <br>
 <style>
@@ -323,8 +334,9 @@ $profile = ArrayHelper::map(Profile::find()->all(), 'idprofile', 'name');
             document.getElementById("date2").value = "<?= date('Y-m-d H:i:s') ?>";
 
         } else {
-            idrevised.setAttribute("hidden", "");
+            //idrevised.setAttribute("hidden", "");
             idshifted.setAttribute("hidden", "");
+            idrevised.removeAttribute("hidden");
 
             document.getElementById("office-reviseddate").value = "";
             document.getElementById("office-observations").value = "";

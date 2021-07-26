@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\web\Controller;
 use app\models\Notifications;
 use yii\grid\GridView;
+
+$this->title = "Todas las notificaciones ";
 ?>
 <link href="<?= Yii::$app->homeUrl ?>css/notificationsStyle.css" rel="stylesheet" type="text/css"/>
 

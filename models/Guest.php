@@ -31,7 +31,7 @@ class Guest extends \yii\db\ActiveRecord
     {
         return [
             [['email', 'nameandlastname', 'fkoffice'], 'required'],
-            [['fkoffice'], 'integer'],
+            [['fkoffice', 'code'], 'integer'],
             [['email'], 'string', 'max' => 100],
             [['nameandlastname'], 'string', 'max' => 200],
             [['fkoffice'], 'exist', 'skipOnError' => true, 'targetClass' => Office::className(), 'targetAttribute' => ['fkoffice' => 'idoffice']],
@@ -46,7 +46,8 @@ class Guest extends \yii\db\ActiveRecord
         return [
             'idguest' => 'Idguest',
             'email' => 'Email',
-            'nameandlastname' => 'Nameandlastname',
+            'nameandlastname' => 'Nombre y Apellido',
+            'code' => 'code',
             'fkoffice' => 'Fkoffice',
         ];
     }

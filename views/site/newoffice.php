@@ -6,6 +6,8 @@ use yii\helpers\ArrayHelper;
 use app\models\Administrativeunit;
 use kartik\file\FileInput;
 
+$this->title = 'Enviar Oficio';
+
 $unit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadministrativeunit', 'name');
 ?>
 <link href="<?= Yii::$app->homeUrl ?>css/newofficeStyle.css" rel="stylesheet" type="text/css"/>
@@ -39,13 +41,24 @@ $unit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadministrativeuni
             }
         </style>
         <div class="card col-sm-4 col-md-6">
-            <div class="input-group">
+            <div id="idinfo" class="" style="margin-top: 10px;margin-bottom: 10px; color: #28a745" hidden="">
+                Le hemos enviado un codigo de 6 digitos a su correo electronico debera escribirlo en el campo correspondiente.<br>
+                El mismo codigo le servira para consultar el estado de su oficio en la parte superior de esta pagina se encuentra
+                la pestaña codigo.
+            </div>
+            <div id="idregister" class="" style="margin-top: 10px;margin-bottom: 10px; color: red" hidden="">
+                La direccion de correo electronico ya fue registrada.
+            </div>
+            <div class="form-group input-group">
                <!-- <input type="text" class="form-control" placeholder="Search for..."> -->
-                <input id="idhidden" hidden="">
-                 <?= $form->field($modelGuest, 'email')->textInput(['type' => 'email', 'maxlength' => true, 'class' => 'form-control', 'placeholder' => 'Por favor, introduzca su correo electronico', 'onchange' => '$.post("' . Yii::$app->homeUrl . 'email/validateemail?setto="+$(this).val(), function(data){document.getElementById("idhidden").value = data});']) ?>
+                <!--<input id="idhidden" name="Guest[code]" hidden="">-->
+                <!--<input type="text" id="idhidden" class="form-control" name="Guest[code]" disabled="">-->
+                <div hidden=""><?= $form->field($modelGuest, 'code')->textInput(['' => '']) ?></div>
+                
+                 <?= $form->field($modelGuest, 'email')->textInput(['type' => 'email', 'maxlength' => true, 'class' => 'form-control', 'placeholder' => 'Por favor, introduzca su correo electronico', 'onchange' => '$.post("' . Yii::$app->homeUrl . 'email/validateemail?setto="+$(this).val(), function(data){if(data == "false"){document.getElementById("idregister").removeAttribute("hidden");document.getElementById("idinfo").setAttribute("hidden", "");}else{document.getElementById("guest-code").value = data; document.getElementById("idinfo").removeAttribute("hidden");document.getElementById("idregister").setAttribute("hidden", "");}});']) ?>
                 <span class="input-group-btn">
                   <!--  <button class="btn btn-default" type="button">Go!</button>-->
-                  <input id="idcode" style="min-width: 80px;margin-top: 24px;" maxlength="6" type="text" class="form-control" placeholder="Codigo" onchange="$.post('<?= Yii::$app->homeUrl ?>email/comparationcode?param='+$(this).val()+'&send='+document.getElementById('idhidden').value, function(data){if(data == 'true'){document.getElementById('idcode').className = 'form-control correct';}else{document.getElementById('idcode').className = 'form-control error';}});">
+                  <input id="idcode" style="min-width: 80px;margin-top: 24px;" maxlength="6" type="text" class="form-control" placeholder="Codigo" onchange="$.post('<?= Yii::$app->homeUrl ?>email/comparationcode?param='+$(this).val()+'&send='+document.getElementById('guest-code').value, function(data){if(data == 'true'){document.getElementById('idcode').className = 'form-control correct';}else{document.getElementById('idcode').className = 'form-control error';}});">
                 </span>
             </div>
             <div class="form-group">

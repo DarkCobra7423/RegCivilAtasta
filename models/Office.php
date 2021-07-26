@@ -44,7 +44,7 @@ class Office extends \yii\db\ActiveRecord {
                 [['expedient', 'nooffice', 'subject', 'creationdate', 'category', 'fkstateoffice', 'fkadministrativeunit'], 'required'],
                 [['nooffice', 'fkstateoffice', 'fkadministrativeunit', 'fkto'], 'integer'],
                 [['creationdate', 'shifteddate', 'reviseddate'], 'safe'],
-                [['observations'], 'string'],
+                [['observations', 'tracing'], 'string'],
                 [['expedient'], 'string', 'max' => 45],
                 [['subject'], 'string', 'max' => 100],
                 [['category'], 'string', 'max' => 10],
@@ -71,7 +71,8 @@ class Office extends \yii\db\ActiveRecord {
             'fkto' => 'Para',
             'reviseddate' => 'Fecha Revisado',
             'observations' => 'Observaciones',
-            'stateoffice' => 'Estado Oficio'
+            'stateoffice' => 'Estado Oficio',
+            'tracing' => 'tracing'
         ];
     }
 

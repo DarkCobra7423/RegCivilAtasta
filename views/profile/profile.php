@@ -7,6 +7,7 @@ use webvimark\modules\UserManagement\UserManagementModule;
 use yii\helpers\ArrayHelper;
 use app\models\Jobtitle;
 use app\models\Administrativeunit;
+use kartik\file\FileInput;
 
 $jobtitle = ArrayHelper::map(Jobtitle::find()->all(), 'idjobtitle', 'jobtitle');
 $administrativeunit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadministrativeunit', 'name');
@@ -49,7 +50,7 @@ $this->title = "Perfil " . $model->name . " " . $model->lastname;
                 <div class="tab-pane active" id="generaldata">
                     <hr>
 
-                    <?php $form = ActiveForm::begin(); ?>
+                    <?php $form = ActiveForm::begin(['method' => 'post', 'action' => ['profile/updateprofile/'.$model->idprofile],]); ?>
                     <div class="form-group">
                         <div class="col-xs-6">
                             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
@@ -102,14 +103,16 @@ $this->title = "Perfil " . $model->name . " " . $model->lastname;
                             <?php // $form->field($model, 'fkuser')->textInput(['disabled' => '']) ?>
                         </div>
                     </div>-->
+                    
                     <div class="form-group">
-                        <div class="col-xs-6">
-                            <?= $form->field($model, 'photo')->textInput(['maxlength' => true]) ?>
+                        <div class="col-xs-12">
+                            <?= $form->field($model, 'review')->textarea(['rows' => 6]) ?>
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-xs-6">
-                            <?= $form->field($model, 'review')->textarea(['rows' => 6]) ?>
+                        <div class="col-xs-12">
+                            <?php // $form->field($model, 'photo')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($model, 'avatars')->widget(FileInput::classname(), ['options' => ['accept' => 'avatars/*'],]); ?>
                         </div>
                     </div>
 

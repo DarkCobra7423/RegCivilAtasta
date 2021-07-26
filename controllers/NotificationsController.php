@@ -52,7 +52,8 @@ class NotificationsController extends Controller {
     public function actionNotifications() {
         
 
-        $notifications = Notifications::find()->where(['AND', '`read` = 0', ['OR', 'fkprofile = ' . Yii::$app->profile->idprofile, 'fkadministrativeunit = ' . Yii::$app->profile->fkworksin]])->orderBy(['datatime' => SORT_DESC])->all();
+        //$notifications = Notifications::find()->where(['AND', '`read` = 0', ['OR', 'fkprofile = ' . Yii::$app->profile->idprofile, 'fkadministrativeunit = ' . Yii::$app->profile->fkworksin]])->orderBy(['datatime' => SORT_DESC])->all();
+        $notifications = Notifications::find()->where(['AND', '`read` = 0', 'fkadministrativeunit = ' . Yii::$app->profile->fkworksin])->orderBy(['datatime' => SORT_DESC])->all();
 
         foreach ($notifications as $notification) {
             
@@ -76,14 +77,15 @@ class NotificationsController extends Controller {
     public function actionCountnotification() {
         //SELECT Count(*) AS counts FROM notifications WHERE fkprofile = 2 OR fkadministrativeunit = 1         
 
-        $num = Notifications::find()->select('COUNT(*) AS number')->where(['AND', '`read` = 0', ['OR', 'fkprofile = ' . Yii::$app->profile->idprofile, 'fkadministrativeunit = ' . Yii::$app->profile->fkworksin]])->one();
+        //$num = Notifications::find()->select('COUNT(*) AS number')->where(['AND', '`read` = 0', ['OR', 'fkprofile = ' . Yii::$app->profile->idprofile, 'fkadministrativeunit = ' . Yii::$app->profile->fkworksin]])->one();
+        $num = Notifications::find()->select('COUNT(*) AS number')->where(['AND', '`read` = 0', 'fkadministrativeunit = ' . Yii::$app->profile->fkworksin])->one();
 
         echo $num->number;
     }
     
     public function actionAllnotifications() {
         
-        $alls = Notifications::find()->where(['OR', 'fkprofile = ' . Yii::$app->profile->idprofile, 'fkadministrativeunit = ' . Yii::$app->profile->fkworksin])->orderBy(['datatime' => SORT_DESC])->all();
+        $alls = Notifications::find()->where(['fkadministrativeunit' => Yii::$app->profile->fkworksin])->orderBy(['datatime' => SORT_DESC])->all();
         //$alls = Notifications::find()->all();
         
         return $this->render('allnotifications', [
