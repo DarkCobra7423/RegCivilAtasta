@@ -19,7 +19,7 @@ $this->title = 'Evaluar Oficios';
             <div class="row" style="margin-bottom: 8px;margin-right: 0px;">
                 <div class="pull-right">
                     <?= Html::a('Oficios Enviados', ['office/officesend'], ['class' => 'btn btn-primary']) ?> 
-                    <?= Html::a('Archivos', ['file/files'], ['class' => 'btn btn-primary']) ?> 
+                    <?php // Html::a('Archivos', ['file/files'], ['class' => 'btn btn-primary']) ?> 
                     <?= Html::a('Filtrar Oficios', ['office/filter'], ['class' => 'btn btn-primary']) ?>
                 </div>
             </div>

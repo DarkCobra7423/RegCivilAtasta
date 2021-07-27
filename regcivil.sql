@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-07-2021 a las 04:25:16
+-- Tiempo de generación: 27-07-2021 a las 02:17:16
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 8.0.3
 
@@ -430,28 +430,6 @@ CREATE TABLE `file` (
   `size` varchar(40) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `file`
---
-
-INSERT INTO `file` (`idfile`, `name`, `file`, `format`, `size`) VALUES
-(129, 'alumnos.jpg', 'RKFTUqmuu_0QdvottM53aVuKl-vddQak.jpg', '.jpg', '47.19 KB'),
-(130, 'cursos.jpg', 'S56KJFOCPzHLffKBb01y3JaiXigPkw7g.jpg', '.jpg', '37.49 KB'),
-(131, 'cursos.jpg', 'ISwmv7f43Hw22dwFwIlOF-JU4HCxpENk.jpg', '.jpg', '37.49 KB'),
-(132, 'itvh.jpg', '_kQRalWIO9wSRd7YybWpx0KutqaT6g4d.jpg', '.jpg', '66.57 KB'),
-(133, 'NO/06/2021 24 personas3.jpg', 'MTbZoWWdNY-nUiY3bnQHXVzHl90pzdLm.jpg', '.jpg', '77.83 KB'),
-(134, 'NO/06/2021 24 profesores.jpg', 'UXYP8oIHHufqXgwLPee7t6pni0ppUraa.jpg', '.jpg', '44.91 KB'),
-(135, 'Expediente: NO/05/2021 No. Oficio: 26 personas3.jpg', 'ikQLYrgWjiGlVM3rgGXCmrxkCp04OMbI.jpg', '.jpg', '77.83 KB'),
-(136, 'Expediente: NO/05/2021 No. Oficio: 26 registro_civil1.jpg', '1yzLNqezPrlA-lRMpjXm-er2CmK_Ypub.jpg', '.jpg', '60.32 KB'),
-(137, 'profesores.jpg', '9mXJbS0iMUglZpfDyR_V5EtrKaJdpXTG.jpg', '.jpg', '44.91 KB'),
-(138, 'cursos.jpg', 'POcT4nevmD_S_GhcbTXGv1dF23sx-TBP.jpg', '.jpg', '37.49 KB'),
-(139, 'cursos.jpg', '7kHZTjCF4NFcF1eq2eYmIh-k_yoO_zsM.jpg', '.jpg', '37.49 KB'),
-(140, 'alumnos.jpg', 'mDUjJFfDsnNo3r52lJi7Q014CmMr96IN.jpg', '.jpg', '47.19 KB'),
-(141, 'profesores.jpg', 'UtHf1u8NNi7bgwd3-BssT7FCytlWZTY1.jpg', '.jpg', '44.91 KB'),
-(142, 'personas3.jpg', '6QcJ9dJxo4XR3hCQ2KV71J3i9QHrQ-20.jpg', '.jpg', '77.83 KB'),
-(143, 'Expediente: NO/94/2021 No. Oficio: 30 profesores.jpg', 'UCq0PV76Vg_T6vlB0RB8CTUO6_JbQXuJ.jpg', '.jpg', '44.91 KB'),
-(144, 'cursos.jpg', 'WCGtSZ2WMlqQ2o7vFOOYnpIpCnePx75q.jpg', '.jpg', '37.49 KB');
-
 -- --------------------------------------------------------
 
 --
@@ -465,20 +443,6 @@ CREATE TABLE `guest` (
   `code` varchar(6) NOT NULL,
   `fkoffice` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `guest`
---
-
-INSERT INTO `guest` (`idguest`, `email`, `nameandlastname`, `code`, `fkoffice`) VALUES
-(1, 'carlosdanielangelpadilla1@gmail.com', 'CARLOS DANIEL ANGEL PADILLA', '0', 119),
-(2, 'carlosdanielangelpadilla2@gmail.com', 'CARLOS DANIEL ANGEL PADILLA', '0', 122),
-(3, 'yeseniadiazhernandez9771@gmail.com', 'CARLOS DANIEL ANGEL PADILLA', '37PISD', 123),
-(4, 'yeseniadiazhernandez9772@gmail.com', 'YESENIA DIAZ HERNANDEZ', 'BTAFWS', 124),
-(5, 'yeseniadiazhernandez191@gmail.com', 'YESENIA DIAZ HERNANDEZ', '3BWUY1', 125),
-(6, 'yeseniadiazhernandez977@gmail.com', 'YESENIA DIAZ HERNANDEZ', 'J92NMU', 126),
-(7, 'carlosdanielangelpadilla1@gmail.com', 'CARLOS DANIEL ANGEL PADILLA', 'LRYZMI', 127),
-(8, 'carlosdanielangelpadilla@gmail.com', 'CARLOS DANIEL ANGEL PADILLA', 'K9D1V0', 129);
 
 -- --------------------------------------------------------
 
@@ -519,36 +483,6 @@ CREATE TABLE `notifications` (
   `fkadministrativeunit` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `notifications`
---
-
-INSERT INTO `notifications` (`idnotifications`, `title`, `message`, `datatime`, `read`, `fkprofile`, `fkoffice`, `fkadministrativeunit`) VALUES
-(42, 'Nuevo oficio en estado pendiente. <span class=badge-success>Interno</span><br>Expediente (NO/04/2021) y No. Oficio (23)', 'Boda', '2021-07-22 12:42:39', 1, 3, 110, 8),
-(43, 'Nuevo oficio en estado pendiente. <span class=badge-success>Interno</span><br>Expediente (NO/78/5471) y No. Oficio (123)', 'Prueba 2 widget', '2021-07-22 12:52:48', 1, 2, 111, 1),
-(44, 'Nuevo oficio en estado pendiente. <span class=badge-success>Interno</span><br>Expediente (NO/06/2021) y No. Oficio (24)', 'Boda', '2021-07-22 17:33:52', 1, 3, 112, 8),
-(45, 'Nuevo oficio en estado pendiente. <span class=badge-success>Interno</span><br>Expediente (NO/05/2021) y No. Oficio (26)', 'Boda', '2021-07-22 17:37:48', 1, 3, 113, 8),
-(46, 'Nuevo oficio en estado Turnado. <span class=badge-success>Interno</span><br>Expediente (NO/05/2021) y No. Oficio (26)', 'Boda', '2021-07-22 18:21:22', 0, 5, 113, 8),
-(47, 'Nuevo oficio en estado Rechazado. <span class=badge-success>Interno</span><br>Expediente (NO/05/2021) y No. Oficio (26)', 'Boda', '2021-07-22 18:33:20', 0, 2, 113, 8),
-(48, 'Nuevo oficio en estado Revisado. <span class=badge-success>Interno</span><br>Expediente (NO/05/2021) y No. Oficio (26)', 'Boda', '2021-07-22 18:36:36', 0, 2, 113, 8),
-(49, 'Nuevo oficio en estado Rechazado. <span class=badge-success>Interno</span><br>Expediente (NO/05/2021) y No. Oficio (26)', 'Boda', '2021-07-22 18:46:28', 0, 2, 113, 8),
-(50, 'Nuevo oficio en estado Turnado. <span class=badge-success>Interno</span><br>Expediente (NO/05/2021) y No. Oficio (26)', 'Boda', '2021-07-22 23:34:20', 0, 2, 113, 8),
-(51, 'Nuevo oficio en estado pendiente. <span class=badge-warning>Externo</span><br>Expediente (NO/78/5453) y No. Oficio (123543)', 'Nacimiento de un bebe', '0000-00-00 00:00:00', 1, NULL, 119, 1),
-(52, 'Nuevo oficio en estado pendiente. <span class=badge-warning>Externo</span><br>Expediente (NO/78/5450) y No. Oficio (12375)', 'Nacimiento de un bebe', '0000-00-00 00:00:00', 1, NULL, 122, 1),
-(53, 'Nuevo oficio en estado pendiente. <span class=badge-warning>Externo</span><br>Expediente (NO/78/5865) y No. Oficio (1432432)', 'Nacimiento de un bebe', '0000-00-00 00:00:00', 1, NULL, 123, 1),
-(54, 'Nuevo oficio en estado pendiente. <span class=badge-warning>Externo</span><br>Expediente (NO/78/5244) y No. Oficio (24234)', 'Nacimiento de un bebe', '0000-00-00 00:00:00', 1, NULL, 124, 1),
-(55, 'Nuevo oficio en estado pendiente. <span class=badge-warning>Externo</span><br>Expediente (N0/20/2021) y No. Oficio (6)', 'BODA', '0000-00-00 00:00:00', 1, NULL, 125, 1),
-(56, 'Nuevo oficio en estado Turnado. <span class=badge-success>Externo</span><br>Expediente (N0/20/2021) y No. Oficio (6)', 'BODA', '2021-07-25 19:23:20', 0, 3, 125, 8),
-(57, 'Nuevo oficio en estado Revisado. <span class=badge-success>Externo</span><br>Expediente (N0/20/2021) y No. Oficio (6)', 'BODA', '2021-07-25 19:31:25', 0, 2, 125, 8),
-(58, 'Nuevo oficio en estado Rechazado. <span class=badge-success>Externo</span><br>Expediente (N0/20/2021) y No. Oficio (6)', 'BODA', '2021-07-25 19:33:07', 0, 2, 125, 8),
-(59, 'Nuevo oficio en estado pendiente. <span class=badge-warning>Externo</span><br>Expediente (NO/78/3454) y No. Oficio (12352)', 'Nacimiento de un bebe', '0000-00-00 00:00:00', 1, NULL, 126, 1),
-(60, 'Nuevo oficio en estado pendiente. <span class=badge-warning>Externo</span><br>Expediente (NO/78/5432) y No. Oficio (12353)', 'Prueba 2 widget', '0000-00-00 00:00:00', 1, NULL, 127, 1),
-(61, 'Nuevo oficio en estado pendiente. <span class=badge-success>Interno</span><br>Expediente (NO/94/2021) y No. Oficio (30)', 'Boda', '2021-07-25 20:38:14', 1, 3, 128, 1),
-(62, 'Nuevo oficio en estado pendiente. <span class=badge-warning>Externo</span><br>Expediente (NO/78/5424) y No. Oficio (14322)', 'Prueba 4 widget', '2021-07-25 20:45:08', 1, NULL, 129, 1),
-(63, 'Nuevo oficio en estado Turnado. <span class=badge-success>Externo</span><br>Expediente (NO/78/5424) y No. Oficio (14322)', 'Prueba 4 widget', '2021-07-25 20:56:27', 0, 3, 129, 8),
-(64, 'Nuevo oficio en estado Revisado. <span class=badge-success>Externo</span><br>Expediente (NO/78/5424) y No. Oficio (14322)', 'Prueba 4 widget', '2021-07-25 20:59:41', 1, 2, 129, 8),
-(65, 'Nuevo oficio en estado Rechazado. <span class=badge-success>Externo</span><br>Expediente (NO/78/5424) y No. Oficio (14322)', 'Prueba 4 widget', '2021-07-25 21:00:36', 1, 2, 129, 8);
-
 -- --------------------------------------------------------
 
 --
@@ -571,32 +505,6 @@ CREATE TABLE `office` (
   `tracing` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `office`
---
-
-INSERT INTO `office` (`idoffice`, `expedient`, `nooffice`, `subject`, `creationdate`, `category`, `fkstateoffice`, `fkadministrativeunit`, `shifteddate`, `fkto`, `reviseddate`, `observations`, `tracing`) VALUES
-(110, 'NO/04/2021', 23, 'Boda', '2021-07-22 12:42:01', 'Interno', 2, 8, NULL, NULL, NULL, NULL, '<b>Pendiente en:</b> Coordinación De Modernización E Innovación.<br><b>Visto:</b> 2021-07-22 13:02:21<br><b>Visto por:</b> Erick Montero 2021-07-22 13:07:01<br><b>Visto por:</b> Erick Montero 2021-07-22 13:07:55<br><b>Visto por:</b> Erick Montero 2021-07-22 13:15:18<br><b>Visto por:</b> Erick Montero 2021-07-22 13:19:05<br><b>Visto por:</b> Leonardo no se 2021-07-22 16:51:11<br><b>Visto por:</b> Leonardo no se 2021-07-22 16:52:02<br><b>Visto por:</b> Erick Montero 2021-07-22 17:09:09<br><b>Visto por:</b> Erick Montero 2021-07-22 17:15:13<br><b>Visto por:</b> Erick Montero 2021-07-22 17:21:54<br><b>Visto por:</b> Erick Montero 2021-07-22 17:25:17<br><b>Visto por:</b> Erick Montero 2021-07-22 17:26:11<br><b>Visto por:</b> Leonardo no se 2021-07-22 18:08:20<br>'),
-(111, 'NO/78/5471', 123, 'Prueba 2 widget', '2021-07-22 12:52:11', 'Interno', 2, 1, NULL, NULL, NULL, NULL, '<b>Pendiente en:</b> Coordinación de Salud<br><b>Visto por:</b> Karina Apellidos 2021-07-22 17:03:45<br>'),
-(112, 'NO/06/2021', 24, 'Boda', '2021-07-22 17:28:34', 'Interno', 2, 8, NULL, NULL, NULL, NULL, '<b>Pendiente en:</b> Coordinación De Modernización E Innovación 2021-07-22 17:33:52<br><b>Visto por:</b> Erick Montero 2021-07-22 17:35:10<br><b>Visto por:</b> Erick Montero 2021-07-23 21:00:14<br><b>Visto por:</b> Erick Montero 2021-07-23 21:02:22<br><b>Visto por:</b> Erick Montero 2021-07-23 21:02:56<br><b>Visto por:</b> Erick Montero 2021-07-23 21:11:15<br><b>Visto por:</b> Erick Montero 2021-07-23 21:11:52<br>'),
-(113, 'NO/05/2021', 26, 'Boda', '2021-07-22 17:37:13', 'Interno', 3, 8, '2021-07-22 23:33:52', NULL, NULL, 'edssesefsefsesefsf', '<b>Pendiente en:</b> Coordinación De Modernización E Innovación 2021-07-22 17:37:48<br><b>Visto por:</b> Erick Montero 2021-07-22 17:39:36<br><b>Visto por:</b> Erick Montero 2021-07-22 17:42:02<br><b>Visto por:</b> Erick Montero 2021-07-22 17:47:22<br><b>Visto por:</b> Erick Montero 2021-07-22 17:48:00<br><b>Turnado por:</b> Erick Montero 2021-07-22 18:03:43<br> A : Secretaría Particular<b>Visto por:</b> Leonardo no se 2021-07-22 18:09:36<br><b>Visto por:</b> Leonardo no se 2021-07-22 18:10:36<br><b>Turnado por:</b> Leonardo no se<br>Turnado a: Coordinación De Modernización E Innovación 2021-07-22 18:11:33<br><b>Visto por:</b> Erick Montero 2021-07-22 18:11:57<br><b>Turnado por:</b> Erick Montero<br><b>Turnado a: </b>Secretaría Particular 2021-07-22 18:13:04<br><b>Visto por:</b> Leonardo no se 2021-07-22 18:14:12<br><b>Turnado por:</b> Leonardo no se<br><b>Turnado a: </b>Coordinación De Modernización E Innovación 2021-07-22 18:21:22<br><b>Visto por:</b> Erick Montero 2021-07-22 18:22:21<br><b>Visto por:</b> Erick Montero 2021-07-22 18:32:08<br><b>Rechazado por:</b> Erick Montero<br>Observaciones: Falta la firma de alguien 2021-07-22 18:33:20<br><b>Visto por:</b> Erick Montero 2021-07-22 18:35:49<br><b>Revisado por:</b> Erick Montero<br><b>Observaciones: Le daremos respuesta en persona</b><i>2021-07-22 18:36:36</i><br><b>Visto por:</b> Erick Montero 2021-07-22 18:43:36<br><b>Rechazado por:</b> Erick Montero<br><b>Observaciones: </b>Faltan firmas<i>2021-07-22 18:46:27</i><br><b>Visto por:</b> Erick Montero 2021-07-22 23:33:51<br><b>Turnado por:</b> Erick Montero<br><b>Turnado a: </b>Coordinación De Modernización E Innovación <i>2021-07-22 23:34:20</i><br><b>Visto por:</b> Erick Montero 2021-07-23 21:04:22<br><b>Visto por:</b> Erick Montero 2021-07-23 21:05:49<br><b>Visto por:</b> Erick Montero 2021-07-23 21:06:30<br><b>Visto por:</b> Erick Montero 2021-07-23 21:08:12<br><b>Visto por:</b> Erick Montero 2021-07-23 21:09:01<br><b>Visto por:</b> Erick Montero 2021-07-23 21:10:26<br><b>Visto por:</b> Erick Montero 2021-07-23 21:10:51<br><b>Visto por:</b> Erick Montero 2021-07-23 21:12:17<br><b>Visto por:</b> Erick Montero 2021-07-23 21:13:02<br>'),
-(114, 'NO/78/5454', 1432, 'Nacimiento de un bebe', '2021-07-25 11:01:12', 'Externo', 2, 1, NULL, NULL, NULL, NULL, NULL),
-(115, 'NO/78/5454', 1432, 'Nacimiento de un bebe', '2021-07-25 11:01:12', 'Externo', 2, 1, NULL, NULL, NULL, NULL, NULL),
-(116, 'NO/78/5458', 12311, 'Nacimiento de un bebe', '2021-07-25 12:44:51', 'Externo', 2, 1, NULL, NULL, NULL, NULL, NULL),
-(117, 'NO/78/5455', 12323, 'Nacimiento de un bebe', '2021-07-25 13:17:20', 'Externo', 2, 1, NULL, NULL, NULL, NULL, NULL),
-(118, 'NO/78/5455', 12323, 'Nacimiento de un bebe', '2021-07-25 13:17:20', 'Externo', 2, 1, NULL, NULL, NULL, NULL, NULL),
-(119, 'NO/78/5453', 123543, 'Nacimiento de un bebe', '2021-07-25 13:24:45', 'Externo', 2, 1, NULL, NULL, NULL, NULL, '<b>Visto por:</b> Karina Apellidos <i>2021-07-25 21:15:24</i><br>'),
-(120, 'NO/78/5453', 123543, 'Nacimiento de un bebe', '2021-07-25 13:24:45', 'Externo', 2, 1, NULL, NULL, NULL, NULL, NULL),
-(121, 'NO/78/5453', 123543, 'Nacimiento de un bebe', '2021-07-25 13:24:45', 'Externo', 2, 1, NULL, NULL, NULL, NULL, NULL),
-(122, 'NO/78/5450', 12375, 'Nacimiento de un bebe', '2021-07-25 14:33:49', 'Externo', 2, 1, NULL, NULL, NULL, NULL, '<b>Visto por:</b> Karina Apellidos <i>2021-07-25 21:15:41</i><br>'),
-(123, 'NO/78/5865', 1432432, 'Nacimiento de un bebe', '2021-07-25 14:38:31', 'Externo', 2, 1, NULL, NULL, NULL, NULL, NULL),
-(124, 'NO/78/5244', 24234, 'Nacimiento de un bebe', '2021-07-25 19:09:34', 'Externo', 2, 1, NULL, NULL, NULL, NULL, '<b>Visto por:</b> Karina Apellidos 2021-07-25 19:13:36<br><b>Visto por:</b> Karina Apellidos <i>2021-07-25 21:15:56</i><br>'),
-(125, 'N0/20/2021', 6, 'BODA', '2021-07-25 19:16:13', 'Externo', 4, 8, NULL, NULL, NULL, 'Rechazado por que yo quiero', '<b>Visto por:</b> Karina Apellidos 2021-07-25 19:22:01<br><b>Turnado por:</b> Karina Apellidos<br><b>Turnado a: </b>Coordinación De Modernización E Innovación <i>2021-07-25 19:23:20</i><br><b>Visto por:</b> Erick Montero 2021-07-25 19:29:43<br><b>Revisado por:</b> Erick Montero<br><b>Observaciones: </b>Oficio aceptado por razones desconocidas <i>2021-07-25 19:31:25</i><br><b>Visto por:</b> Erick Montero 2021-07-25 19:32:40<br><b>Rechazado por:</b> Erick Montero<br><b>Observaciones: </b>Rechazado por que yo quiero <i>2021-07-25 19:33:07</i><br>'),
-(126, 'NO/78/3454', 12352, 'Nacimiento de un bebe', '2021-07-25 20:07:45', 'Externo', 2, 1, NULL, NULL, NULL, NULL, '<b>Visto por:</b> Karina Apellidos 2021-07-25 20:11:38<br><b>Visto por:</b> Karina Apellidos 2021-07-25 20:27:10<br>'),
-(127, 'NO/78/5432', 12353, 'Prueba 2 widget', '2021-07-25 20:23:05', 'Externo', 2, 1, NULL, NULL, NULL, NULL, '<b>Visto por:</b> Karina Apellidos 2021-07-25 20:27:50<br>'),
-(128, 'NO/94/2021', 30, 'Boda', '2021-07-25 20:36:29', 'Interno', 2, 1, NULL, NULL, NULL, NULL, '<b>Pendiente en:</b> Coordinación de Salud <i>2021-07-25 20:38:13</i><br><b>Visto por:</b> Karina Apellidos <i>2021-07-25 21:15:08</i><br>'),
-(129, 'NO/78/5424', 14322, 'Prueba 4 widget', '2021-07-25 20:43:23', 'Externo', 4, 8, NULL, NULL, NULL, 'Ya fue rechazado', '<b>Visto por:</b> Karina Apellidos 2021-07-25 20:45:40<br><b>Visto por:</b> Karina Apellidos <i>2021-07-25 20:52:12</i><br><b>Visto por:</b> Karina Apellidos <i>2021-07-25 20:53:40</i><br><b>Visto por:</b> Karina Apellidos <i>2021-07-25 20:53:53</i><br><b>Visto por:</b> Karina Apellidos <i>2021-07-25 20:54:35</i><br><b>Visto por:</b> Karina Apellidos <i>2021-07-25 20:55:20</i><br><b>Turnado por:</b> Karina Apellidos<br><b>Turnado a: </b>Coordinación De Modernización E Innovación <i>2021-07-25 20:56:27</i><br><b>Visto por:</b> Erick Montero <i>2021-07-25 20:57:36</i><br><b>Revisado por:</b> Erick Montero<br><b>Observaciones: </b>Ya fue revisado <i>2021-07-25 20:59:41</i><br><b>Visto por:</b> Erick Montero <i>2021-07-25 21:00:14</i><br><b>Rechazado por:</b> Erick Montero<br><b>Observaciones: </b>Ya fue rechazado <i>2021-07-25 21:00:36</i><br><b>Visto por:</b> Erick Montero <i>2021-07-25 21:01:50</i><br><b>Visto por:</b> Erick Montero <i>2021-07-25 21:02:16</i><br>');
-
 -- --------------------------------------------------------
 
 --
@@ -607,28 +515,6 @@ CREATE TABLE `officefile` (
   `idoffice` int(11) NOT NULL,
   `idfile` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `officefile`
---
-
-INSERT INTO `officefile` (`idoffice`, `idfile`) VALUES
-(110, 129),
-(110, 130),
-(111, 131),
-(111, 132),
-(112, 133),
-(112, 134),
-(113, 135),
-(113, 136),
-(119, 137),
-(122, 138),
-(123, 139),
-(124, 140),
-(125, 141),
-(127, 142),
-(128, 143),
-(129, 144);
 
 -- --------------------------------------------------------
 
@@ -671,17 +557,6 @@ CREATE TABLE `sendoffice` (
   `fkprofile` int(11) NOT NULL,
   `fkoffice` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `sendoffice`
---
-
-INSERT INTO `sendoffice` (`fkprofile`, `fkoffice`) VALUES
-(3, 110),
-(2, 111),
-(3, 112),
-(3, 113),
-(3, 128);
 
 -- --------------------------------------------------------
 
@@ -753,18 +628,6 @@ CREATE TABLE `user_visit_log` (
   `browser` varchar(30) DEFAULT NULL,
   `os` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `user_visit_log`
---
-
-INSERT INTO `user_visit_log` (`id`, `token`, `ip`, `language`, `user_agent`, `user_id`, `visit_time`, `browser`, `os`) VALUES
-(32, '60f8bb4b88d35', '127.0.0.1', 'es', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0', 3, 1626913611, 'Firefox', 'Windows'),
-(33, '60f8ce4ca2011', '127.0.0.1', 'es', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', 1, 1626918476, 'Chrome', 'Windows'),
-(34, '60f9bf085ded0', '127.0.0.1', 'es', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36 OPR/77.0.4054.277', 9, 1626980104, 'Chrome', 'Windows'),
-(35, '60fddbb0a51ef', '127.0.0.1', 'es', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', 3, 1627249584, 'Chrome', 'Windows'),
-(36, '60fdfe0d61e32', '127.0.0.1', 'es', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', 1, 1627258381, 'Chrome', 'Windows'),
-(37, '60fe01c764721', '127.0.0.1', 'es', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36 OPR/77.0.4054.277', 3, 1627259335, 'Chrome', 'Windows');
 
 --
 -- Índices para tablas volcadas
@@ -906,13 +769,13 @@ ALTER TABLE `administrativeunit`
 -- AUTO_INCREMENT de la tabla `file`
 --
 ALTER TABLE `file`
-  MODIFY `idfile` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+  MODIFY `idfile` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
 
 --
 -- AUTO_INCREMENT de la tabla `guest`
 --
 ALTER TABLE `guest`
-  MODIFY `idguest` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idguest` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `jobtitle`
@@ -924,13 +787,13 @@ ALTER TABLE `jobtitle`
 -- AUTO_INCREMENT de la tabla `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `idnotifications` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `idnotifications` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT de la tabla `office`
 --
 ALTER TABLE `office`
-  MODIFY `idoffice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
+  MODIFY `idoffice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
 
 --
 -- AUTO_INCREMENT de la tabla `profile`
@@ -954,7 +817,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `user_visit_log`
 --
 ALTER TABLE `user_visit_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
