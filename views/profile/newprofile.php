@@ -166,7 +166,7 @@ $administrativeunit = ArrayHelper::map(Administrativeunit::find()->all(), 'idadm
                     <div class="form-group">
                         <div class="col-xs-12">
                             <br>
-                            <?= Html::submitButton('<i class="glyphicon glyphicon-ok-sign"></i> Save', ['class' => 'btn btn-lg btn-success']) ?>                                                        
+                            <?= Html::submitButton('<i class="glyphicon glyphicon-ok-sign"></i> Guardar', ['class' => 'btn btn-lg btn-success']) ?>                                                        
                         </div>
                     </div>
                     <?php ActiveForm::end(); ?>
